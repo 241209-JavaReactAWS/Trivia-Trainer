@@ -10,14 +10,14 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.revature.RevTrivia.DAO.QuizRepository;
+import com.revature.RevTrivia.DAO.QuizDAO;
 import com.revature.RevTrivia.Models.Quiz;
 
 @Service
 public class QuizService {
 
     @Autowired
-    private QuizRepository quizRepository;
+    private QuizDAO quizRepository;
 
         public Quiz createQuiz(Quiz quiz){
         return quizRepository.save(quiz);

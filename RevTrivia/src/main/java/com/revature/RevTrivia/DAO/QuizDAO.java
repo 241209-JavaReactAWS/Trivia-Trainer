@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import com.revature.RevTrivia.Models.Quiz;
 @Repository
-public interface QuizRepository extends JpaRepository<Quiz, Integer>{
+public interface QuizDAO extends JpaRepository<Quiz, Integer>{
     
 }
