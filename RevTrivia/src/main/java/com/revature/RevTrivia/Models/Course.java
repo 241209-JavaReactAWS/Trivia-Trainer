@@ -33,22 +33,16 @@ public class Course {
     @Column(nullable = false)
     private double fee;
 
-    public Course(){}
-
-    public Course(int courseId, String name, String description, int programId, double fee) {
-        this.courseId = courseId;
+    public Course(String name, String description, Program program, Educator educator, double fee) {
         this.name = name;
         this.description = description;
-        this.programId = programId;
+        this.program = program;
+        this.educator = educator;
         this.fee = fee;
     }
 
     public int getCourseId() {
         return courseId;
-    }
-
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
     }
 
     public String getName() {
