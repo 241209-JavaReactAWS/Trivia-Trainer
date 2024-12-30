@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 import com.revature.RevTrivia.Models.Course;
 
 @Repository
-public interface CourseRepository extends JpaRepository<Course, Integer>{
+public interface CourseDAO extends JpaRepository<Course, Integer>{
     
 }

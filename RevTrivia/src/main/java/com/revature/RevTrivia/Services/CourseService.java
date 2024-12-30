@@ -10,14 +10,14 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.revature.RevTrivia.DAO.CourseRepository;
+import com.revature.RevTrivia.DAO.CourseDAO;
 import com.revature.RevTrivia.Models.Course;
 
 @Service
 public class CourseService {
 
     @Autowired
-    private CourseRepository courseRepository;
+    private CourseDAO courseRepository;
 
     public Course createCourse(Course course){
         return courseRepository.save(course);
