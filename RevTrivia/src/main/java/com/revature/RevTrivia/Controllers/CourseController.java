@@ -5,7 +5,7 @@
 package com.revature.RevTrivia.Controllers;
 
 import com.revature.RevTrivia.Models.Course;
-import com.revature.RevTrivia.Service.CourseService;
+import com.revature.RevTrivia.Services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
