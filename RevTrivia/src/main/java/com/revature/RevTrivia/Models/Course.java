@@ -22,21 +22,15 @@ public class Course {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "program_id", nullable = false)
-    private Program program;
-
-
-    @ManyToOne
     @JoinColumn(name = "educator_id", nullable = false)
     private Educator educator;
 
     @Column(nullable = false)
     private double fee;
 
-    public Course(String name, String description, Program program, Educator educator, double fee) {
+    public Course(String name, String description, Educator educator, double fee) {
         this.name = name;
         this.description = description;
-        this.program = program;
         this.educator = educator;
         this.fee = fee;
     }
@@ -59,14 +53,6 @@ public class Course {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public int getProgramId() {
-        return programId;
-    }
-
-    public void setProgramId(int programId) {
-        this.programId = programId;
     }
 
     public double getFee() {

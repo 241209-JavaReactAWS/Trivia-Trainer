@@ -16,14 +16,15 @@ public class Educator {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "educator_id")
-    private int studentId;
+    private int educator_id;
 
     @Column(unique = true)
     private String email;
 
     private String name;
 
-    private  String password;
+    @Column(unique = true)
+    private  String username;
 
     @Column(name = "professional_details")
     private String details;
