@@ -1,0 +1,45 @@
+.menu {
+    background-color: darkslategrey;
+    overflow: hidden;
+    width: 100%;
+    position: absolute; right: 0; left: 0; top: 0; 
+    margin-bottom: 1000px;
+}
+
+.menu a {
+    float: left;
+    color: lightgray;
+    text-decoration: none;
+    padding: 20px;
+    font-size: 20px;
+}
+
+.menu a:hover {
+    background-color: lightgray;
+    color: black;
+}
+
+.menu a.active {
+    background-color: darkslategrey;
+    color: lightgray;
+}
+
+.logoutButton {
+    float: right;
+    padding: 20px;
+    font-size: 20px;
+    background-color: darkslategrey;
+    color: lightgray;
+    overflow: hidden;
+    border-width: 0px;
+    margin-right: 10px;
+
+}
+
+.logoutButton a {
+    float: right;
+    color: lightgray;
+    text-decoration: none;
+    padding: 20px;
+    font-size: 20px;
+}
