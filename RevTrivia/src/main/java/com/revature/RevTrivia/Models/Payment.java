@@ -10,9 +10,13 @@ public class Payment {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int payment_id;
 
-    private int student_id;
+    @ManyToOne
+    @JoinColumn(name = "student_id", referencedColumnName = "student_id")
+    private Student student;
 
-    private int course_id;
+    @ManyToOne
+    @JoinColumn(name = "course_id", referencedColumnName = "course_id")
+    private Course course;
 
     private double amount;
 
@@ -20,29 +24,32 @@ public class Payment {
 
     private PayStatus status;
 
+    public Payment(Student student, Course course, double amount, LocalDate payment_date, PayStatus status) {
+        this.student = student;
+        this.course = course;
+        this.amount = amount;
+        this.payment_date = payment_date;
+        this.status = status;
+    }
 
     public int getPayment_id() {
         return payment_id;
     }
 
-    public void setPayment_id(int payment_id) {
-        this.payment_id = payment_id;
+    public Student getStudent() {
+        return student;
     }
 
-    public int getStudent_id() {
-        return student_id;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
-    public void setStudent_id(int student_id) {
-        this.student_id = student_id;
+    public Course getCourse() {
+        return course;
     }
 
-    public int getCourse_id() {
-        return course_id;
-    }
-
-    public void setCourse_id(int course_id) {
-        this.course_id = course_id;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     public double getAmount() {
@@ -68,4 +75,6 @@ public class Payment {
     public void setStatus(PayStatus status) {
         this.status = status;
     }
+
+    
 }
