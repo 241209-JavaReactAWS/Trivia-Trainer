@@ -13,6 +13,7 @@ public class Quiz {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "quiz_id")
     private int quizId;
 
     @ManyToOne
@@ -25,7 +26,7 @@ public class Quiz {
     @Column(nullable = false)
     private int timer;
 
-    @Column(nullable = false)
+    @Column(name = "attempt_limit", nullable = false)
     private int attemptLimit;
 
     public Quiz(Course course, String title, int timer, int attemptLimit) {

@@ -10,9 +10,13 @@ public class Enrollment {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int enrollment_id;
 
-    private int student_id;
+    @ManyToOne
+    @JoinColumn(name = "student_id", referencedColumnName = "student_id")
+    private Student student;
 
-    private int course_id;
+    @ManyToOne
+    @JoinColumn(name = "course_id", referencedColumnName = "course_id")
+    private Course course;
 
     private LocalDate enrollment_date;
 
@@ -22,29 +26,32 @@ public class Enrollment {
 
     private int rating;
 
+    //general constructor for enrollment
+    public Enrollment(Student student, Course course, LocalDate enrollment_date, EnrollStatus status) {
+        this.student = student;
+        this.course = course;
+        this.enrollment_date = enrollment_date;
+        this.status = status;
+    }
 
     public int getEnrollment_id() {
         return enrollment_id;
     }
 
-    public void setEnrollment_id(int enrollment_id) {
-        this.enrollment_id = enrollment_id;
+    public Student getStudent() {
+        return student;
     }
 
-    public int getStudent_id() {
-        return student_id;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
-    public void setStudent_id(int student_id) {
-        this.student_id = student_id;
+    public Course getCourse() {
+        return course;
     }
 
-    public int getCourse_id() {
-        return course_id;
-    }
-
-    public void setCourse_id(int course_id) {
-        this.course_id = course_id;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     public LocalDate getEnrollment_date() {
@@ -78,4 +85,6 @@ public class Enrollment {
     public void setRating(int rating) {
         this.rating = rating;
     }
+
+    
 }
