@@ -2,7 +2,7 @@
  * Author: Mauricio Ornelas Gutierrez
  * Version: 0.0
  */
-package com.revature.RevTrivia.Service;
+package com.revature.RevTrivia.Services;
 
 import java.util.List;
 import java.util.Optional;
