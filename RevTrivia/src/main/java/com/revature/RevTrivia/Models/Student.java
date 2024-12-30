@@ -18,6 +18,10 @@ public class Student {
     @Column(name = "student_id")
     private int studentId;
 
+    @ManyToMany
+    @JoinColumn(name = "attempt_id")
+    private QuizAttempt quizAttempt;
+
     @Column(unique = true)
     private String email;
 

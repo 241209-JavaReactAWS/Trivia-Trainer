@@ -20,6 +20,10 @@ public class Quiz {
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
+    @ManyToMany
+    @JoinColumn(name = "attempt_id")
+    private QuizAttempt quizAttempt;
+
     @Column(nullable = false)
     private String title;
 
