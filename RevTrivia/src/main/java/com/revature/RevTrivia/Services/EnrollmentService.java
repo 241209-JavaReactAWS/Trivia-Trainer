@@ -1,6 +1,6 @@
 package com.revature.RevTrivia.Services;
 
-import com.revature.RevTrivia.DAOs.EnrollmentDAO;
+import com.revature.RevTrivia.DAO.EnrollmentDAO;
 import com.revature.RevTrivia.Models.Enrollment;
 import org.springframework.beans.factory.annotation.Autowired;
 

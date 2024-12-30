@@ -1,6 +1,6 @@
 package com.revature.RevTrivia.Services;
 
-import com.revature.RevTrivia.DAOs.PaymentDAO;
+import com.revature.RevTrivia.DAO.PaymentDAO;
 import com.revature.RevTrivia.Models.Payment;
 
 import java.util.List;

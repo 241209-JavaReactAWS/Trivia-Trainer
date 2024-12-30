@@ -1,12 +1,12 @@
-package com.revature.RevTrivia.DAOs;
+package com.revature.RevTrivia.DAO;
+
 import com.revature.RevTrivia.Models.Payment;
-
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface PaymentDAO extends JpaRepository<Payment, Integer>{
