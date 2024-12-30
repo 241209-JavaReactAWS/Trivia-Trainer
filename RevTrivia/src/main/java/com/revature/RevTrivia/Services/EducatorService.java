@@ -17,18 +17,18 @@ public class EducatorService {
     }
 
     //Create New Student
-    Educator createEducator(Educator newEducator)
+    public Educator registerEducator(Educator newEducator)
     {
         return educatorDAO.save(newEducator);
     }
 
     //Get All Educators
-    List<Educator> getAllEducators()
+    public List<Educator> getAllEducators()
     {
         return educatorDAO.findAll();
     }
     //Delete Educators by ID
-    Optional<Educator> deleteEducatorByID(int educatorId)
+    public Optional<Educator> deleteEducatorByID(int educatorId)
     {
         Optional<Educator> retStudent = educatorDAO.findById(educatorId);
         educatorDAO.deleteById(educatorId);

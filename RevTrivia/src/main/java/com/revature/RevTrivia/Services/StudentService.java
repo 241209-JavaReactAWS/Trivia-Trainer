@@ -19,18 +19,18 @@ public class StudentService {
     }
 
     //Create New Student
-    Student createStudent(Student newStudent)
+    public Student registerStudent(Student newStudent)
     {
         return studentDAO.save(newStudent);
     }
 
     //Get All Students
-    List<Student> getAllStudents()
+    public List<Student> getAllStudents()
     {
         return studentDAO.findAll();
     }
     //Delete Student by ID
-    Optional<Student> deleteStudentByID(int studentId)
+    public Optional<Student> deleteStudentByID(int studentId)
     {
         Optional<Student> retStudent = studentDAO.findById(studentId);
         studentDAO.deleteById(studentId);
