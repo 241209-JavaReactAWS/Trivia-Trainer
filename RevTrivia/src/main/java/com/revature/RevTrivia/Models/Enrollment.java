@@ -16,7 +16,7 @@ public class Enrollment {
 
     private LocalDate enrollment_date;
 
-    private CurrentStatus status;
+    private EnrollStatus status;
 
     private String review;
 
@@ -55,11 +55,11 @@ public class Enrollment {
         this.enrollment_date = enrollment_date;
     }
 
-    public CurrentStatus getStatus() {
+    public EnrollStatus getStatus() {
         return status;
     }
 
-    public void setStatus(CurrentStatus status) {
+    public void setStatus(EnrollStatus status) {
         this.status = status;
     }
 

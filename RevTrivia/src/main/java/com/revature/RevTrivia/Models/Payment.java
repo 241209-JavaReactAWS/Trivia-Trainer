@@ -18,7 +18,7 @@ public class Payment {
 
     private LocalDate payment_date;
 
-    private CurrentStatus status;
+    private PayStatus status;
 
 
     public int getPayment_id() {
@@ -61,11 +61,11 @@ public class Payment {
         this.payment_date = payment_date;
     }
 
-    public CurrentStatus getStatus() {
+    public PayStatus getStatus() {
         return status;
     }
 
-    public void setStatus(CurrentStatus status) {
+    public void setStatus(PayStatus status) {
         this.status = status;
     }
 }

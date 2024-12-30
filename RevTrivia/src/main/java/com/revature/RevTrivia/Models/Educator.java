@@ -1,1 +1,1 @@
-package com.revature.project2.model
+package com.revature.RevTrivia.Models;
