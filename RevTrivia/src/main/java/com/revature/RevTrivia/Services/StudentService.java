@@ -10,14 +10,10 @@ import java.util.Optional;
 
 @Service
 public class StudentService {
-    private final StudentDAO studentDAO;
 
     @Autowired
-    public StudentService(StudentDAO studentDAO)
-    {
-        this.studentDAO = studentDAO;
-    }
-
+    private StudentDAO studentDAO;
+    
     //Create New Student
     public Student registerStudent(Student newStudent)
     {

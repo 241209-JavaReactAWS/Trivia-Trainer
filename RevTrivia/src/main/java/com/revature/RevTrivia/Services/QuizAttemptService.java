@@ -6,13 +6,11 @@ import com.revature.RevTrivia.Models.QuizAttempt;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 public class QuizAttemptService {
-
-    private final QuizAttemptDAO quizAttemptDAO;
-
-    public QuizAttemptService(QuizAttemptDAO quizAttemptDAO){
-        this.quizAttemptDAO = quizAttemptDAO;
-    }
+    @Autowired
+    private QuizAttemptDAO quizAttemptDAO;
 
     public QuizAttempt createNewAttmept(QuizAttempt newAttempt){
         return quizAttemptDAO.save(newAttempt);

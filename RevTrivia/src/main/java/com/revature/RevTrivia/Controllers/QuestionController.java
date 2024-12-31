@@ -11,17 +11,14 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("questions")
+@RequestMapping("/questions")
 public class QuestionController {
 
-    private final QuestionService questionService;
-
     @Autowired
-    public QuestionController(QuestionService questionService){
-        this.questionService = questionService;
-    }
+    private QuestionService questionService;
 
-    @PostMapping("create")
+
+    @PostMapping
     public ResponseEntity<Question> createQuestionHandler(@RequestParam(name = "quizId") int quizId, @RequestParam(name = "content") String content,
                                                 @RequestParam(name = "options") String options, @RequestParam(name = "correct") String correct){
         Question newQuestion = questionService.createQuestion(quizId, content, options, correct);
@@ -33,7 +30,7 @@ public class QuestionController {
         return questionService.getAllQuestions();
     }
 
-    @DeleteMapping("delete/{questionId}")
+    @DeleteMapping("/{questionId}")
     public ResponseEntity<Question> deleteQuestionByIdHandler(@PathVariable int questionId){
         Optional<Question> deletedQuestion = questionService.deleteQuestionById(questionId);
         if(deletedQuestion.isPresent())

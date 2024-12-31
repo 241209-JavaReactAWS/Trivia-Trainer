@@ -11,17 +11,13 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("attempts")
+@RequestMapping("/attempts")
 public class QuizAttemptController {
 
-    private final QuizAttemptService quizAttemptService;
-
     @Autowired
-    public QuizAttemptController(QuizAttemptService quizAttemptService){
-        this.quizAttemptService = quizAttemptService;
-    }
+    private QuizAttemptService quizAttemptService;
 
-    @PostMapping("create")
+    @PostMapping
     public ResponseEntity<QuizAttempt> createNewAttemptHandler(@RequestBody QuizAttempt quizAttempt){
         QuizAttempt newAttempt = quizAttemptService.createNewAttmept(quizAttempt);
         return new ResponseEntity<>(newAttempt, HttpStatus.CREATED);
@@ -32,7 +28,7 @@ public class QuizAttemptController {
         return quizAttemptService.getAllAttempts();
     }
 
-    @DeleteMapping("delete/{attemptId}")
+    @DeleteMapping("/{attemptId}")
     public ResponseEntity<QuizAttempt> deleteAttemptByIdHandler(@PathVariable int attemptId){
         Optional<QuizAttempt> deletedAttempt = quizAttemptService.deleteAttemptById(attemptId);
         if(deletedAttempt.isPresent())

@@ -10,25 +10,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("payment")
+@RequestMapping("/enrollment")
 @CrossOrigin(origins = {"http://localhost:5173", "http://localhost:5174"}, allowCredentials = "true")
 public class EnrollmentController {
 
-    private final EnrollmentService enrollmentService;
-
-
-//    public EnrollmentController() {
-//
-//    }
-
     @Autowired
-    public EnrollmentController(EnrollmentService enrollmentService) {
-        this.enrollmentService = enrollmentService;
-    }
+    private EnrollmentService enrollmentService;
 
     // CREATE
     // Create a new enrollment
-    @PostMapping("enroll")
+    @PostMapping
     public ResponseEntity<Enrollment> createNewPayment(@RequestBody Enrollment enrollment) {
         Enrollment potentialEnrollment = enrollmentService.createNewEnrollment(enrollment);
         if (potentialEnrollment != null) {
@@ -39,14 +30,14 @@ public class EnrollmentController {
 
     // READ
     // Get all enrollments
-    @GetMapping()
+    @GetMapping
     public List<Enrollment> getAllEnrollments() {
         return enrollmentService.getAllEnrollments();
     }
 
     // UPDATE
     // Change the review of an Enrollment (just putting something for update)
-    @PatchMapping("review")
+    @PatchMapping
     public ResponseEntity<Enrollment> updateEnrollmentReview(@RequestBody Enrollment enrollment) {
         Enrollment updatedEnrollment = enrollmentService.updateReview(enrollment);
         if (updatedEnrollment == null) {
@@ -57,7 +48,7 @@ public class EnrollmentController {
 
     // DELETE
     // Delete an enrollment by enrollmentId
-    @DeleteMapping("{enrollmentId}")
+    @DeleteMapping("/{enrollmentId}")
     public void deleteEnrollment(@PathVariable int enrollmentId) {
         enrollmentService.deleteEnrollment(enrollmentId);
     }
