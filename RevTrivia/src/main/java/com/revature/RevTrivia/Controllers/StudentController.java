@@ -18,8 +18,8 @@ public class StudentController {
     private StudentService studentService;
 
     @PostMapping
-    public ResponseEntity<Student> registerStudentHandler(@RequestBody Student newStudent){
-        Student createdStudent = studentService.registerStudent(newStudent);
+    public ResponseEntity<Student> registerStudentHandler(@RequestBody Student studentToBeRegistered){
+        Student createdStudent = studentService.registerStudent(studentToBeRegistered);
         return new ResponseEntity<>(createdStudent, HttpStatus.CREATED);
     }
 

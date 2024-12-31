@@ -1,9 +1,11 @@
 package com.revature.RevTrivia.Models;
 import jakarta.persistence.*;
+import lombok.Data;
+
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "enrollment")
+@Data
 public class Enrollment {
 
     @Id
@@ -11,11 +13,11 @@ public class Enrollment {
     private int enrollment_id;
 
     @ManyToOne
-    @JoinColumn(name = "student_id", referencedColumnName = "student_id")
+    @JoinColumn(name = "student_id")
     private Student student;
 
     @ManyToOne
-    @JoinColumn(name = "course_id", referencedColumnName = "course_id")
+    @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
     private LocalDate enrollment_date;

@@ -5,10 +5,13 @@
 package com.revature.RevTrivia.Models;
 
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
+
+import java.util.Set;
 
 
 @Entity
-@Table(name = "courses")
+@NoArgsConstructor
 public class Course {
 
     @Id
@@ -24,6 +27,9 @@ public class Course {
     @ManyToOne
     @JoinColumn(name = "educator_id", nullable = false)
     private Educator educator;
+
+    @OneToMany(mappedBy = "course")
+    private Set<Enrollment> enrollments;
 
     @Column(nullable = false)
     private double fee;

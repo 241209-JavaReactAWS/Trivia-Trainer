@@ -11,18 +11,18 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "QuizAttempt")
 public class QuizAttempt {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "attempt_id")
     int attemptId;
 
-    @ManyToMany
+
+    @ManyToOne
     @JoinColumn(name = "quiz_id", nullable = false)
     private Quiz quiz;
 
-    @ManyToMany
+    @ManyToOne
     @JoinColumn(name = "student_id", nullable = false)
     private Student student;
 

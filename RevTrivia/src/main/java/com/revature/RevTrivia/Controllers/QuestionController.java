@@ -1,6 +1,7 @@
 package com.revature.RevTrivia.Controllers;
 
 import com.revature.RevTrivia.Models.Question;
+import com.revature.RevTrivia.Models.Quiz;
 import com.revature.RevTrivia.Services.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,11 +19,14 @@ public class QuestionController {
     private QuestionService questionService;
 
 
-    @PostMapping
-    public ResponseEntity<Question> createQuestionHandler(@RequestParam(name = "quizId") int quizId, @RequestParam(name = "content") String content,
-                                                @RequestParam(name = "options") String options, @RequestParam(name = "correct") String correct){
-        Question newQuestion = questionService.createQuestion(quizId, content, options, correct);
-        return new ResponseEntity<>(newQuestion, HttpStatus.CREATED);
+    @PostMapping("/{quizId}")
+    public ResponseEntity<Question> createQuestionHandler(@PathVariable int quizId, @RequestBody Question question){
+        try {
+            Question newQuestion = questionService.createQuestion(quizId, question.getContent(), question.getOptions(), question.getCorrect());
+            return new ResponseEntity<>(newQuestion, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping
