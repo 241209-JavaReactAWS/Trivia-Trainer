@@ -4,6 +4,7 @@ import Nav from "./components/nav/Nav";
 import Login from "./components/login/Login";
 import Home from "./components/home/Home";
 import Test1 from "./components/paymentTest/Test1";
+import Search from "./components/search/Search";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<Login></Login>}></Route>
           <Route path="/home" element={<Home></Home>}></Route>
           <Route path="/test1" element={<Test1></Test1>}></Route>
+          <Route path="/search" element={<Search></Search>}></Route>
 
           {/* <Route path="/test1" element={<Test1></Test1>}></Route>
           <Route path="/test2" element={<Test2></Test2>}></Route>
