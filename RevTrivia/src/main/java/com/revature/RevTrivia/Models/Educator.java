@@ -29,6 +29,8 @@ public class Educator {
     @Column(name = "professional_details")
     private String details;
 
+    private String password;
+
     private Role role;
 
 }

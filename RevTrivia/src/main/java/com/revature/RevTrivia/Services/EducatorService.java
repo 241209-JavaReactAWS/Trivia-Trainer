@@ -8,13 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class EducatorService {
-    private final EducatorDAO educatorDAO;
-
     @Autowired
-    public EducatorService(EducatorDAO educatorDAO)
-    {
-        this.educatorDAO = educatorDAO;
-    }
+    private EducatorDAO educatorDAO;
 
     //Create New Student
     public Educator registerEducator(Educator newEducator)

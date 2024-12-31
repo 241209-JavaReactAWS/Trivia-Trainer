@@ -10,12 +10,8 @@ import java.util.Optional;
 
 @Service
 public class QuestionService {
-    private final QuestionDAO questionDAO;
-
     @Autowired
-    public QuestionService(QuestionDAO questionDAO){
-        this.questionDAO = questionDAO;
-    }
+    private QuestionDAO questionDAO;
 
     //Create a new question
     public Question createQuestion(int quizId, String content, String options, String correct){

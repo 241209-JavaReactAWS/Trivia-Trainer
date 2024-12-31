@@ -37,7 +37,7 @@ public class CourseController {
         return courseService.getCourseById(courseId).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
-    @PutMapping("/{courseIdd}")
+    @PutMapping("/{courseId}")
     public ResponseEntity<Course> updateCourse(@PathVariable int courseId, @RequestBody Course course) {
         return ResponseEntity.ok(courseService.updateCourse(course));
     }

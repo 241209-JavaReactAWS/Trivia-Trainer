@@ -1,5 +1,7 @@
 package com.revature.RevTrivia.Models;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,6 +23,9 @@ public class Student {
     @ManyToMany
     @JoinColumn(name = "attempt_id")
     private QuizAttempt quizAttempt;
+
+    @OneToMany(mappedBy = "student")  
+    private List<Enrollment> enrollments;
 
     @Column(unique = true)
     private String email;

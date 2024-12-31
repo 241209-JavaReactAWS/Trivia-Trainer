@@ -8,15 +8,10 @@ import java.util.List;
 import java.util.Optional;
 
 public class EnrollmentService {
-
-    private final EnrollmentDAO enrollmentDAO;
-
-    // Constructor
+    
     @Autowired
-    public EnrollmentService(EnrollmentDAO enrollmentDAO) {
-        this.enrollmentDAO = enrollmentDAO;
-    }
-
+    private EnrollmentDAO enrollmentDAO;
+    
     // Create a new enrollment
     public Enrollment createNewEnrollment(Enrollment enrollment) {
         return enrollmentDAO.save(enrollment);

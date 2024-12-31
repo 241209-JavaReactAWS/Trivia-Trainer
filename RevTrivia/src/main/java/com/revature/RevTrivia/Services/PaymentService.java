@@ -6,18 +6,12 @@ import com.revature.RevTrivia.Models.Payment;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 public class PaymentService {
 
-    private final PaymentDAO paymentDAO;
-
-//    // No ID constructor
-//    public PaymentService() {
-//    }
-
-    // Constructor
-    public PaymentService(PaymentDAO paymentDAO) {
-        this.paymentDAO = paymentDAO;
-    }
+    @Autowired
+    private PaymentDAO paymentDAO;
 
     // Create a new payment
     public Payment createNewPayment(Payment pay) {
@@ -31,12 +25,12 @@ public class PaymentService {
 
     // Get all payments from a specific student
     public List<Payment> getAllPaymentsForStudent(int studentId) {
-        return paymentDAO.getPaymentByStudentId(studentId);
+        return paymentDAO.findByStudent_StudentId(studentId);
     }
 
     // Get all payments for a specific course
     public List<Payment> getAllPaymentsForCourse(int courseId) {
-        return paymentDAO.getPaymentByCourseId(courseId);
+        return paymentDAO.findByCourse_CourseId(courseId);
     }
 
     // Update the payment amount

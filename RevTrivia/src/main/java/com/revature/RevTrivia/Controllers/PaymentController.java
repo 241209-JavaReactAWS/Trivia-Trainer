@@ -10,18 +10,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("payment")
+@RequestMapping("/payment")
 @CrossOrigin(origins = {"http://localhost:5173", "http://localhost:5174"}, allowCredentials = "true")
 public class PaymentController {
-
-    private final PaymentService paymentService;
-
-    @Autowired PaymentController(PaymentService paymentService) {
-        this.paymentService = paymentService;
-    }
+    @Autowired
+    private PaymentService paymentService;
 
     // CREATE
-    @PostMapping("pay")
+    @PostMapping
     public ResponseEntity<Payment> createNewPayment(@RequestBody Payment payment) {
         Payment potentialPayment = paymentService.createNewPayment(payment);
         if (potentialPayment != null) {
@@ -51,7 +47,7 @@ public class PaymentController {
 
     // UPDATE
     // Change the amount of a payment (just putting something for update)
-    @PatchMapping("payment")
+    @PatchMapping
     public ResponseEntity<Payment> updateEnrollmentReview(@RequestBody Payment payment) {
         Payment updatedPayment = paymentService.updatePayment(payment);
         if (updatedPayment == null) {
@@ -62,7 +58,7 @@ public class PaymentController {
 
     // DELETE
     // Remove payment by payment id
-    @DeleteMapping("{paymentId}")
+    @DeleteMapping("/{paymentId}")
     public void deletePayment(@PathVariable int paymentId) {
         paymentService.deletePayment(paymentId);
     }
