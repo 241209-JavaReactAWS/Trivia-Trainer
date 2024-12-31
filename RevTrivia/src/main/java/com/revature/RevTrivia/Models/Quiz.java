@@ -6,6 +6,9 @@ package com.revature.RevTrivia.Models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+import java.util.Set;
+
 
 @Entity
 @Table(name = "quiz")
@@ -20,6 +23,9 @@ public class Quiz {
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
+    @OneToMany(mappedBy = "quiz")
+    private Set<QuizAttempt> quizAttempt;
+
     @Column(nullable = false)
     private String title;
 
@@ -28,6 +34,9 @@ public class Quiz {
 
     @Column(name = "attempt_limit", nullable = false)
     private int attemptLimit;
+
+    @OneToMany(mappedBy = "quiz")
+    private List<Question> questions;
 
     public Quiz(Course course, String title, int timer, int attemptLimit) {
         this.course = course;
@@ -71,9 +80,4 @@ public class Quiz {
     public void setAttemptLimit(int attemptLimit) {
         this.attemptLimit = attemptLimit;
     }
-
-    
-
-
-    
 }

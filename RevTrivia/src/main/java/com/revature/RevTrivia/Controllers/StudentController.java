@@ -11,19 +11,15 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("students")
+@RequestMapping("/students")
 public class StudentController {
-    private final StudentService studentService;
 
     @Autowired
-    public StudentController(StudentService studentService)
-    {
-        this.studentService = studentService;
-    }
+    private StudentService studentService;
 
-    @PostMapping("register")
-    public ResponseEntity<Student> registerStudentHandler(@RequestBody Student newStudent){
-        Student createdStudent = studentService.registerStudent(newStudent);
+    @PostMapping
+    public ResponseEntity<Student> registerStudentHandler(@RequestBody Student studentToBeRegistered){
+        Student createdStudent = studentService.registerStudent(studentToBeRegistered);
         return new ResponseEntity<>(createdStudent, HttpStatus.CREATED);
     }
 
@@ -32,7 +28,7 @@ public class StudentController {
         return studentService.getAllStudents();
     }
 
-    @DeleteMapping("delete/{studentId}")
+    @DeleteMapping("/{studentId}")
     public ResponseEntity<Student> deleteStudentHandler(@PathVariable int studentId){
         Optional<Student> deletedStudent = studentService.deleteStudentByID(studentId);
         if(deletedStudent.isPresent())

@@ -11,11 +11,11 @@ public class Payment {
     private int payment_id;
 
     @ManyToOne
-    @JoinColumn(name = "student_id", referencedColumnName = "student_id")
+    @JoinColumn(name = "student_id")
     private Student student;
 
     @ManyToOne
-    @JoinColumn(name = "course_id", referencedColumnName = "course_id")
+    @JoinColumn(name = "course_id")
     private Course course;
 
     private double amount;

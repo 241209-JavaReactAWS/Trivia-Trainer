@@ -1,13 +1,11 @@
 package com.revature.RevTrivia.Models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+import java.util.Set;
+
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -15,8 +13,7 @@ import lombok.Setter;
 public class Educator {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "educator_id")
-    private int educator_id;
+    private int educatorId;
 
     @Column(unique = true)
     private String email;
@@ -29,6 +26,11 @@ public class Educator {
     @Column(name = "professional_details")
     private String details;
 
+    private String password;
+
     private Role role;
+
+    @OneToMany(mappedBy = "educator")
+    private Set<Course> courses;
 
 }
