@@ -6,11 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @Table(name = "questions")
 public class Question {
     @Id
@@ -18,9 +18,9 @@ public class Question {
     @Column(name = "question_id")
     private int questionId;
 
-    @Column(name = "quiz_id", nullable = false)
+    @JoinColumn(name = "quiz_id", nullable = false)
     @ManyToOne
-    private int quizId;
+    private Quiz quiz;
 
     //Stores the question being asked
     @Column(nullable = false)
@@ -34,10 +34,36 @@ public class Question {
     @Column(nullable = false)
     private String correct;
 
-    public Question(int quizId, String content, String options, String correct) {
-        this.quizId = quizId;
+
+    public Quiz getQuiz() {
+        return quiz;
+    }
+
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getOptions() {
+        return options;
+    }
+
+    public void setOptions(String options) {
         this.options = options;
+    }
+
+    public String getCorrect() {
+        return correct;
+    }
+
+    public void setCorrect(String correct) {
         this.correct = correct;
     }
 }

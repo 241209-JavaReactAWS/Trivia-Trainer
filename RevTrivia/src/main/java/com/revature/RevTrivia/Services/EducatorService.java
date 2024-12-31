@@ -3,10 +3,12 @@ package com.revature.RevTrivia.Services;
 import com.revature.RevTrivia.DAO.EducatorDAO;
 import com.revature.RevTrivia.Models.Educator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class EducatorService {
     @Autowired
     private EducatorDAO educatorDAO;
