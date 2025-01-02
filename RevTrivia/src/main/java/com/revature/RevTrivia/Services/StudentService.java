@@ -21,7 +21,7 @@ public class StudentService {
     {
         Student newStudent = new Student();
         newStudent.setEmail(studentToBeRegistered.getEmail());
-        newStudent.setName(studentToBeRegistered.getName());
+        newStudent.setFirstName(studentToBeRegistered.getFirstName());
         newStudent.setRole(Role.STUDENT);
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
