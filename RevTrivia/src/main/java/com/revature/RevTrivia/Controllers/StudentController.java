@@ -11,13 +11,13 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/students")
+@RequestMapping("students")
 public class StudentController {
 
     @Autowired
     private StudentService studentService;
 
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<Student> registerStudentHandler(@RequestBody Student studentToBeRegistered){
         Student createdStudent = studentService.registerStudent(studentToBeRegistered);
         return new ResponseEntity<>(createdStudent, HttpStatus.CREATED);
