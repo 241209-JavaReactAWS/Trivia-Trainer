@@ -13,7 +13,7 @@ function Search() {
       <h1>Search Test</h1>
 
       <div>
-        <label htmlFor="nameInput">Search for Course</label>{" "}
+        <label htmlFor="nameInput">Search by name</label>{" "}
         <input
           id="nameInput"
           type="radio"

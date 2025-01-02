@@ -6,8 +6,9 @@ function Nav() {
     <div className="menu">
       <Link to="/">Login Testing</Link>
       <Link to="/home">Home</Link>
-      <Link to="/test1">Payment Test</Link>
       <Link to="/search">Search Test</Link>
+      <Link to="/enroll">Enrollment Test</Link>
+      <Link to="/payment">Payment Test</Link>
 
       {/* <Link to="/test1">Payment Test</Link>
       <Link to="/test2">Enrollment Test</Link>
