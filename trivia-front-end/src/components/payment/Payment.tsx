@@ -9,6 +9,10 @@ function Test1() {
 
   let makePay = () => {
     console.log("Making Payment");
+    console.log(`Student ID: ${studentId}`);
+    console.log(`Payment ID: ${paymentId}`);
+    console.log(`Course ID: ${courseId}`);
+    console.log(`Amount: ${amount}`);
   }
 
   return (
