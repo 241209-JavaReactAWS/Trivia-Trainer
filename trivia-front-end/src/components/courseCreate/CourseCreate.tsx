@@ -1,4 +1,5 @@
 import { ChangeEvent, SyntheticEvent, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 
 function CourseCreate() {
 
@@ -6,6 +7,8 @@ function CourseCreate() {
   const [courseDesc, setCourseDesc] = useState<string>("");
   const [courseFee, setCourseFee] = useState<number>(0);
   // MAKE SURE TO GET EDUCATOR ID FROM LOGIN USECONTEXT ONCE AUTHENTICATE IS GOOD TO GO
+
+  const navigate = useNavigate();
 
   let createCourse = () => {
 
@@ -34,6 +37,10 @@ function CourseCreate() {
     // TODO: Axios request goes here once the course is made 
   }
 
+  let createQuiz = () => {
+    navigate("/QuizCreate");
+  }
+
   return (
     <div>
       <h1>Course Creator</h1>
@@ -49,8 +56,10 @@ function CourseCreate() {
           }}
         />
       </label>
+
       <br></br>
       <br></br>
+
       <label>
         {/*Whenever thte text inside the username or password fields change, it will update the state variable*/}
         Description:{" "}
@@ -67,6 +76,7 @@ function CourseCreate() {
 
       <br></br>
       <br></br>
+
       <label>
         {/*Whenever thte text inside the username or password fields change, it will update the state variable*/}
         Price:{" "}
@@ -83,7 +93,16 @@ function CourseCreate() {
 
       <br></br>
       <br></br>
+
       <button onClick={createCourse}>Create Course</button>
+
+      <br></br>
+      <br></br>
+
+      <br></br>
+      <br></br>
+
+      <button onClick={createQuiz}>Create Quiz Button (for testing purposes) </button>
 
     </div>
   )
