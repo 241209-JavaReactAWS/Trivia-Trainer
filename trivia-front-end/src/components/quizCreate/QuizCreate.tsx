@@ -15,7 +15,7 @@ function QuizCreate() {
       updatedQuestions[index].incorrectAnswers = value.split(",")
     } 
     else {
-      updatedQuestions[index][field] = value;
+      //updatedQuestions[index][field] = value;
     }
   }
 

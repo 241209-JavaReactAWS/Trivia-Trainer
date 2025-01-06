@@ -2,14 +2,14 @@ import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Nav from "./components/nav/Nav";
 import Login from "./components/login/Login";
-import Home from "./components/home/StudentHome";
-import Test1 from "./components/paymentTest/Test1";
 import Search from "./components/search/Search";
 import Enrollment from "./components/enrollment/Enrollment";
 import GeneralHome from "./components/generalHome/GeneralHome";
 import StudentHome from "./components/home/StudentHome";
 import CourseCreate from "./components/courseCreate/CourseCreate";
 import QuizCreate from "./components/quizCreate/QuizCreate";
+import Test1 from "./components/payment/MakePayment";
+import PaymentHistory from "./components/payment/PaymentHistory";
 
 function App() {
   return (
@@ -26,6 +26,9 @@ function App() {
           <Route path="/enroll" element={<Enrollment></Enrollment>}></Route>
           <Route path="/courseCreate" element={<CourseCreate></CourseCreate>}></Route>
           <Route path="/quizCreate" element={<QuizCreate></QuizCreate>}></Route>
+          <Route path="/" element={<Login></Login>}></Route>
+          <Route path="/test1" element={<Test1></Test1>}></Route>
+          <Route path="/paymentHistory" element={<PaymentHistory></PaymentHistory>}></Route>
 
           {/* <Route path="/test1" element={<Test1></Test1>}></Route>
           <Route path="/test2" element={<Test2></Test2>}></Route>
