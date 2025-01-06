@@ -1,7 +1,7 @@
 export interface Payment{
-    paymentId: number,
+    paymentId?: number,
     studentId: number,
     courseId: number,
     date: string,
-    status: boolean
+    status: number
 }
