@@ -2,8 +2,12 @@ import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Nav from "./components/nav/Nav";
 import Login from "./components/login/Login";
-import Home from "./components/home/Home";
+import Home from "./components/home/StudentHome";
 import Test1 from "./components/paymentTest/Test1";
+import Search from "./components/search/Search";
+import Enrollment from "./components/enrollment/Enrollment";
+import GeneralHome from "./components/generalHome/GeneralHome";
+import StudentHome from "./components/home/StudentHome";
 
 function App() {
   return (
@@ -12,9 +16,12 @@ function App() {
         <Nav></Nav>
 
         <Routes>
-          <Route path="/" element={<Login></Login>}></Route>
-          <Route path="/home" element={<Home></Home>}></Route>
-          <Route path="/test1" element={<Test1></Test1>}></Route>
+          <Route path="/" element={<GeneralHome></GeneralHome>}></Route>
+          <Route path="/login" element={<Login></Login>}></Route>
+          <Route path="/studentHome" element={<StudentHome></StudentHome>}></Route>
+          <Route path="/payment" element={<Test1></Test1>}></Route>
+          <Route path="/search" element={<Search></Search>}></Route>
+          <Route path="/enroll" element={<Enrollment></Enrollment>}></Route>
 
           {/* <Route path="/test1" element={<Test1></Test1>}></Route>
           <Route path="/test2" element={<Test2></Test2>}></Route>
