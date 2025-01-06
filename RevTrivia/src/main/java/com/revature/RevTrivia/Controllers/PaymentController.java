@@ -1,5 +1,6 @@
 package com.revature.RevTrivia.Controllers;
 
+import com.revature.RevTrivia.Models.DTOs.PaymentDTO;
 import com.revature.RevTrivia.Models.Payment;
 import com.revature.RevTrivia.Services.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,12 @@ public class PaymentController {
 
     // CREATE
     @PostMapping
-    public ResponseEntity<Payment> createNewPayment(@RequestBody Payment payment) {
-        Payment potentialPayment = paymentService.createNewPayment(payment);
+    public ResponseEntity<Payment> createNewPayment(@RequestBody PaymentDTO paymentDTO) {
+        Payment potentialPayment = paymentService.createNewPayment(paymentDTO);
         if (potentialPayment != null) {
             return new ResponseEntity<>(potentialPayment, HttpStatus.CREATED);
         }
+        System.out.println("potentialPayment is null");
         return ResponseEntity.badRequest().build();
     }
 

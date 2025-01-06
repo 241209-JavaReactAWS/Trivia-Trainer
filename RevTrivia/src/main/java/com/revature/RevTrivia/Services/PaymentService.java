@@ -1,22 +1,42 @@
 package com.revature.RevTrivia.Services;
 
+import com.revature.RevTrivia.DAO.CourseDAO;
 import com.revature.RevTrivia.DAO.PaymentDAO;
+import com.revature.RevTrivia.DAO.StudentDAO;
+import com.revature.RevTrivia.Models.Course;
+import com.revature.RevTrivia.Models.DTOs.PaymentDTO;
 import com.revature.RevTrivia.Models.Payment;
+import com.revature.RevTrivia.Models.Student;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class PaymentService {
 
     @Autowired
     private PaymentDAO paymentDAO;
+    @Autowired
+    private CourseDAO courseDAO;
+    @Autowired
+    private StudentDAO studentDAO;
 
     // Create a new payment
-    public Payment createNewPayment(Payment pay) {
+    public Payment createNewPayment(PaymentDTO paymentDTO) {
+        Payment pay = new Payment();
+        //Set Amount
+        pay.setAmount(paymentDTO.getAmount());
+
+        //Add courseLookup
+        Optional<Course> course = courseDAO.findById(paymentDTO.getCourseId());
+        course.ifPresent(pay::setCourse);
+
+        //Add studentLookup
+        Optional<Student> student = studentDAO.findById(paymentDTO.getStudentId());
+        student.ifPresent(pay::setStudent);
+
         return paymentDAO.save(pay);
     }
 
