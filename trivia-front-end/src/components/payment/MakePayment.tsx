@@ -1,7 +1,7 @@
 import axios from "axios";
 import { SyntheticEvent, useState } from "react";
-import { Payment } from "../interfaces/Payment";
 import { Link } from "react-router-dom";
+import { PaymentDTO } from "../interfaces/PaymentDTO";
 
 function Test1() {
   //const [paymentId, setPaymentId] = useState<number>(0);
@@ -17,13 +17,13 @@ function Test1() {
     //console.log(`Payment ID: ${paymentId}`);
     console.log(`Course ID: ${courseId}`);
     console.log(`Amount: ${amount}`);
-    let newPayment : Payment = {
+    let newPaymentDTO : PaymentDTO = {
       studentId: studentId,
       courseId: courseId,
-      date: "1/1/25",
-      status: 0
+      amount: amount
     }
-    axios.post("http://localhost:8080/payment", newPayment)
+    console.log(newPaymentDTO)
+    axios.post("http://localhost:8080/payment", newPaymentDTO)
       .then((res) => {
         console.log(res.data)
       }).catch((err) => {

@@ -14,6 +14,7 @@ function PaymentHistory() {
     axios.get<Payment[]>("http://localhost:8080/payment")
       .then((res) => {
         setPayments(res.data)
+        console.log(res.data)
       })
   }, [])
 
@@ -33,10 +34,10 @@ function PaymentHistory() {
           {
             payments.map((payment) => {
               return (
-                <tr key={payment.paymentId}>
-                  <td>{payment.studentId}</td>
+                <tr key={payment.payment_id}>
+                  <td>{payment.student}</td>
                   <td>0</td>
-                  <td>{payment.courseId}</td>
+                  <td>{payment.course}</td>
                 </tr>
               )
             })
