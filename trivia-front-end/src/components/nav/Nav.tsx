@@ -4,9 +4,13 @@ import "./Nav.css"
 function Nav() {
   return (
     <div className="menu">
-      <Link to="/">Login Testing</Link>
-      <Link to="/home">Home</Link>
-      <Link to="/test1">Payment Test</Link>
+      <Link to="/">General Home Page</Link>
+      <Link to="/search">Search Test</Link>
+      <Link to="/login">Login / Register Test</Link>
+      <Link to="/studentHome">Student Home</Link>
+      <Link to="/enroll">Enrollment Test</Link>
+      <Link to="/payment">Payment Test</Link>
+      <Link to="/courseCreate">Course Creation Test</Link>
 
       {/* <Link to="/test1">Payment Test</Link>
       <Link to="/test2">Enrollment Test</Link>
