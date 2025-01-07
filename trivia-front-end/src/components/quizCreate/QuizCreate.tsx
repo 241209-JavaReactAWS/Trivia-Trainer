@@ -1,6 +1,7 @@
 import { SyntheticEvent, useState } from "react";
 import "./QuizCreate.css"
 import { Navigate, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function QuizCreate() {
 
@@ -70,12 +71,12 @@ function QuizCreate() {
     }));
     quizData.questions = questionObjects;
 
-    //   {
-    //     "courseId": 1,
-    //     "title": "test quiz",
-    //     "timer": 30,
-    //     "attemptLimit": 3,
-    //     "questions": [
+    //   {                                          Object Layout with info from useState
+    //     "courseId": 1,                           Get from Prop or userContext (for initial texting, just put 1)
+    //     "title": "test quiz",                    Get from useState
+    //     "timer": 30,                             Get from useState
+    //     "attemptLimit": 3,                       Get from useState
+    //     "questions": [                           Get from useState
     //         {
     //             "content": "What is 1 + 1",
     //             "options": "1,3,5,2",
@@ -85,18 +86,24 @@ function QuizCreate() {
     //   }
 
     // TODO: Axios request to create the quiz 
-    // Only include the course id, description
-    // Send the courseId 
-
-    // TODO: Axios requests to create the questions and append them to the Questions table with
-    // the quiz id
-    // Questions: Array of questions 
-    // Build a DTO object 
-
-    console.log("Quiz Created! ", quizData)
-    console.log("Questions Made! ", questionObjects)
-    alert("Quiz Created! Check the console for the quiz data")
-    // navigate("/courseCreate")
+    axios.post("http://localhost:8080/quizzes",
+      {
+        "courseId": 1, // CHANGE LATER 
+        "title": quizName,
+        "timer": timer,
+        "attemptLimit": attemptLimit,
+        "questions": questions
+      },
+      { withCredentials: true }
+    ).then((res) => {
+      console.log(res.data)
+      console.log("Quiz Created! ", quizData)
+      console.log("Questions Made! ", questionObjects)
+      alert("Quiz Created! Check the console for the quiz data")
+      // navigate("/courseCreate")
+    }).catch((err) => {
+      console.log(err)
+    })
   }
 
   return (
