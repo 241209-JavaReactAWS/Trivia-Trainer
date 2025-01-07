@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom"
 
 function StudentHome() {
 
@@ -7,6 +8,16 @@ function StudentHome() {
   // - Then, show all the courses in a table, and stylize it later. 
   //   - Make sure to include the quiz scores as well. 
 
+  const navigate = useNavigate();
+
+  let goToEnroll = () => {
+    navigate("/enroll")
+  }
+
+  let goToPayment = () => {
+    navigate("/payment")
+  }
+
   return (
     <div>
       <h1>Welcome, (REPLACE) name!</h1>
@@ -15,6 +26,10 @@ function StudentHome() {
       {/* Show all enrolled courses here (See useEffect todo) */}
       <br></br>
       <br></br>
+      <button onClick={goToEnroll}>Enrollment Test</button>
+      <br></br>
+      <br></br>
+      <button onClick={goToPayment}>Payment Test</button>
       <br></br>
       <br></br>
 
