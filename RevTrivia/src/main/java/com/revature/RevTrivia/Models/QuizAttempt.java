@@ -1,5 +1,6 @@
 package com.revature.RevTrivia.Models;
 
+import com.revature.RevTrivia.Security.entity.Student;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

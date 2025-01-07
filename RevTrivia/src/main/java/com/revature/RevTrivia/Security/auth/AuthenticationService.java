@@ -3,12 +3,8 @@ package com.revature.RevTrivia.Security.auth;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.RevTrivia.DAO.EducatorDAO;
 import com.revature.RevTrivia.DAO.StudentDAO;
-import com.revature.RevTrivia.Models.Educator;
-import com.revature.RevTrivia.Models.Student;
+import com.revature.RevTrivia.Security.entity.*;
 import com.revature.RevTrivia.Security.jwt.JwtService;
-import com.revature.RevTrivia.Security.entity.Role;
-import com.revature.RevTrivia.Security.entity.User;
-import com.revature.RevTrivia.Security.entity.UserRepository;
 import com.revature.RevTrivia.Security.token.Token;
 import com.revature.RevTrivia.Security.token.TokenRepository;
 import com.revature.RevTrivia.Security.token.TokenType;
@@ -22,7 +18,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -51,6 +46,16 @@ public class AuthenticationService {
                 .role(role)
                 .build();
         User savedUser = userRepository.save(user);
+
+        if (role.equals(Role.EDUCATOR)) {
+            Educator newEducator = new Educator();
+            newEducator.setUser(savedUser);
+            educatorDAO.save(newEducator);
+        } else {
+            Student newStudent = new Student();
+            newStudent.setUser(savedUser);
+            studentDAO.save(newStudent);
+        }
         HashMap<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("roles", user.getRole());
         String jwt = jwtService.generateJwt(extraClaims, savedUser);

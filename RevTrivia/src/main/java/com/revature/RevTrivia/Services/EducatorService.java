@@ -1,7 +1,7 @@
 package com.revature.RevTrivia.Services;
 
 import com.revature.RevTrivia.DAO.EducatorDAO;
-import com.revature.RevTrivia.Models.Educator;
+import com.revature.RevTrivia.Security.entity.Educator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

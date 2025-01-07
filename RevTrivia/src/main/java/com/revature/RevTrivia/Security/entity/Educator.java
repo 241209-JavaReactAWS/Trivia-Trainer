@@ -1,5 +1,6 @@
-package com.revature.RevTrivia.Models;
+package com.revature.RevTrivia.Security.entity;
 
+import com.revature.RevTrivia.Models.Course;
 import com.revature.RevTrivia.Security.entity.Role;
 import com.revature.RevTrivia.Security.entity.User;
 import jakarta.persistence.*;
@@ -16,20 +17,12 @@ public class Educator {
     @GeneratedValue
     private int educatorId;
 
-    @Column(unique = true)
-    private String email;
-
-    private String name;
-
-    @Column(unique = true)
-    private  String username;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(name = "professional_details")
     private String details;
-
-    private String password;
-
-    private Role role;
 
     @OneToMany(mappedBy = "educator")
     private Set<Course> courses;

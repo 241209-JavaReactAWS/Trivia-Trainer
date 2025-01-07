@@ -1,6 +1,7 @@
 package com.revature.RevTrivia.Controllers;
 
-import com.revature.RevTrivia.Models.Student;
+import com.revature.RevTrivia.Security.auth.AuthenticationController;
+import com.revature.RevTrivia.Security.entity.Student;
 import com.revature.RevTrivia.Services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,11 +18,7 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
-    @PostMapping("/register")
-    public ResponseEntity<Student> registerStudentHandler(@RequestBody Student studentToBeRegistered){
-        Student createdStudent = studentService.registerStudent(studentToBeRegistered);
-        return new ResponseEntity<>(createdStudent, HttpStatus.CREATED);
-    }
+    private AuthenticationController authenticationController;
 
     @GetMapping
     public List<Student> getAllStudentsHandler(){
