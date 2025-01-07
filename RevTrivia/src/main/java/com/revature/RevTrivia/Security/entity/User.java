@@ -1,5 +1,6 @@
 package com.revature.RevTrivia.Security.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.revature.RevTrivia.Security.token.Token;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -34,15 +35,18 @@ public class User implements UserDetails {
     private String lastName;
     @Column(nullable = false, unique = true)
     private String email;
+    @JsonIgnore
     private String password;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Token> tokens;
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return role.getUserAuthorities();
     }
