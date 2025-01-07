@@ -3,6 +3,8 @@ package com.revature.RevTrivia.Security.auth;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.RevTrivia.DAO.EducatorDAO;
 import com.revature.RevTrivia.DAO.StudentDAO;
+import com.revature.RevTrivia.Models.Educator;
+import com.revature.RevTrivia.Models.Student;
 import com.revature.RevTrivia.Security.entity.*;
 import com.revature.RevTrivia.Security.jwt.JwtService;
 import com.revature.RevTrivia.Security.token.Token;

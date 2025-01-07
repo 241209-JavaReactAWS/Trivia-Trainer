@@ -1,6 +1,6 @@
 package com.revature.RevTrivia.Controllers;
 
-import com.revature.RevTrivia.Security.entity.Educator;
+import com.revature.RevTrivia.Models.Educator;
 import com.revature.RevTrivia.Services.EducatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

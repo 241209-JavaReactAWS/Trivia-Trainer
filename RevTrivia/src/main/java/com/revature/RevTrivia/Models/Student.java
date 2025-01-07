@@ -1,4 +1,4 @@
-package com.revature.RevTrivia.Security.entity;
+package com.revature.RevTrivia.Models;
 
 import java.util.List;
 import java.util.Set;

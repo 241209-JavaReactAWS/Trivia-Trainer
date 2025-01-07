@@ -4,7 +4,6 @@
  */
 package com.revature.RevTrivia.Models;
 
-import com.revature.RevTrivia.Security.entity.Educator;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 

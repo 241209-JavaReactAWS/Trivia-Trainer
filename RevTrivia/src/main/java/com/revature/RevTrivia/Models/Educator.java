@@ -1,4 +1,4 @@
-package com.revature.RevTrivia.Security.entity;
+package com.revature.RevTrivia.Models;
 
 import com.revature.RevTrivia.Models.Course;
 import com.revature.RevTrivia.Security.entity.Role;
