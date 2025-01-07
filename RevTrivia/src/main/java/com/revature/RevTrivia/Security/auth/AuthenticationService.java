@@ -1,6 +1,10 @@
 package com.revature.RevTrivia.Security.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.RevTrivia.DAO.EducatorDAO;
+import com.revature.RevTrivia.DAO.StudentDAO;
+import com.revature.RevTrivia.Models.Educator;
+import com.revature.RevTrivia.Models.Student;
 import com.revature.RevTrivia.Security.jwt.JwtService;
 import com.revature.RevTrivia.Security.entity.Role;
 import com.revature.RevTrivia.Security.entity.User;
@@ -27,7 +31,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AuthenticationService {
     private final UserRepository userRepository;
+    private final StudentDAO studentDAO;
+    private final EducatorDAO educatorDAO;
     private final TokenRepository tokenRepository;
+
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
@@ -35,19 +42,17 @@ public class AuthenticationService {
     public AuthenticationResponse register(RegisterRequest request, Role role) {
         Optional<User> userExists = userRepository.findByUsername(request.getUsername());
         if (userExists.isPresent()) return null;
-        List<Role> roles = new ArrayList<>();
-        roles.add(role);
-        var user = User.builder()
+        User user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .email(request.getEmail())
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .roles(roles)
+                .role(role)
                 .build();
         User savedUser = userRepository.save(user);
         HashMap<String, Object> extraClaims = new HashMap<>();
-        extraClaims.put("roles", user.getRoles());
+        extraClaims.put("roles", user.getRole());
         String jwt = jwtService.generateJwt(extraClaims, savedUser);
         String refreshToken = jwtService.generateRefreshToken(savedUser);
         saveUserToken(savedUser, jwt);
@@ -67,7 +72,7 @@ public class AuthenticationService {
         );
         var user = userRepository.findByUsername(request.getUsername()).orElseThrow();
         HashMap<String, Object> extraClaims = new HashMap<>();
-        extraClaims.put("roles", user.getRoles());
+        extraClaims.put("roles", user.getRole());
         var jwt = jwtService.generateJwt(extraClaims, user);
         String refreshToken = jwtService.generateRefreshToken(user);
         revokeAllOfUsersAccessTokens(user);

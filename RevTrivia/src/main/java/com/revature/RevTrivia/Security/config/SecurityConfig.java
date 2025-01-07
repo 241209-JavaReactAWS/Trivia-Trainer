@@ -20,6 +20,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
+import static com.revature.RevTrivia.Security.entity.Role.EDUCATOR;
+import static com.revature.RevTrivia.Security.entity.Role.STUDENT;
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -50,11 +53,12 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(
                         auth -> auth
-                                .requestMatchers("/educator/**").hasRole("EDUCATOR")
-                                .requestMatchers("/student/**").hasRole("STUDENT")
-                                .requestMatchers("/protected/**").authenticated()
+                                .requestMatchers("/auth/**").permitAll()
+                                .requestMatchers("/educator/**").hasAnyRole(EDUCATOR.name())
+                                .requestMatchers("/student/**").hasAnyRole(STUDENT.name())
+                                .requestMatchers("/public/**").permitAll()
                                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                                .anyRequest().permitAll()
+                                .anyRequest().authenticated()
                 );
         http
                 .sessionManagement()

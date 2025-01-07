@@ -1,6 +1,7 @@
 package com.revature.RevTrivia.Models;
 
 import com.revature.RevTrivia.Security.entity.Role;
+import com.revature.RevTrivia.Security.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,10 +11,9 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "Educator")
 public class Educator {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private int educatorId;
 
     @Column(unique = true)

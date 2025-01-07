@@ -19,4 +19,10 @@ public class DemoController {
     public ResponseEntity<String> helloStudent() {
         return ResponseEntity.ok("Hello from secured student endpoint");
     }
+
+    @RequestMapping("/educator/demo")
+    @GetMapping
+    public ResponseEntity<String> helloEducator() {
+        return ResponseEntity.ok("Hello from secured educator endpoint");
+    }
 }

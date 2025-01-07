@@ -4,7 +4,7 @@ spring:
         security:
             jwt:
                 secret-key: yElziV/vC0Jc3Qos8+m/P+bB3e6zF5DLmUTxLyvaPBXfVh/BbYqiQCD0Y31Rzijl
-                expiration: 30000 # 30 sec
+                expiration: 86400000 # 30 sec
                 refresh-token:
                     expiration: 604800000 # 7 days
     # PostgreSQL DB

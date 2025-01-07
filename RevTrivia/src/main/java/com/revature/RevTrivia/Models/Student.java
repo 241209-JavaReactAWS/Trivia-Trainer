@@ -4,14 +4,15 @@ import java.util.List;
 import java.util.Set;
 
 import com.revature.RevTrivia.Security.entity.Role;
+import com.revature.RevTrivia.Security.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
