@@ -1,32 +1,53 @@
+import axios from "axios";
 import { SyntheticEvent, useState } from "react";
+import { Link } from "react-router-dom";
+import { PaymentDTO } from "../interfaces/PaymentDTO";
 
 function Test1() {
-  const [paymentId, setPaymentId] = useState<number>(0);
+  //const [paymentId, setPaymentId] = useState<number>(0);
   const [studentId, setStudentId] = useState<number>(0);
   const [courseId, setCourseId] = useState<number>(0);
   const [amount, setAmount] = useState<number>(0);
   // const [date, setDate] = useState<string>("");
 
+  //Make this a post mapping
   let makePay = () => {
     console.log("Making Payment");
+    console.log(`Student ID: ${studentId}`);
+    //console.log(`Payment ID: ${paymentId}`);
+    console.log(`Course ID: ${courseId}`);
+    console.log(`Amount: ${amount}`);
+    let newPaymentDTO : PaymentDTO = {
+      studentId: studentId,
+      courseId: courseId,
+      amount: amount
+    }
+    console.log(newPaymentDTO)
+    axios.post("http://localhost:8080/payment", newPaymentDTO)
+      .then((res) => {
+        console.log(res.data)
+      }).catch((err) => {
+        console.log(err)
+      })
   }
 
   return (
     <>
-      <h1>Payment Test</h1>
-      <label>
-        Payment Id:{" "}
-        <input
-          type="number"
-          id="paymentIdField"
-          value={paymentId}
-          onChange={(e: SyntheticEvent) => {
-            setPaymentId(
-              (e.target as HTMLInputElement).value as unknown as number
-            );
-          }}
-        />
-      </label>
+{/* {    <h1>Payment Test</h1>
+    <label>
+      Payment Id:{" "}
+      <input
+        type="number"
+        id="paymentIdField"
+        value={paymentId}
+        onChange={(e: SyntheticEvent) => {
+          setPaymentId(
+            (e.target as HTMLInputElement).value as unknown as number
+          );
+        }}
+      />} 
+            </label>*/}
+
       <br></br>
       <br></br>
       <label>
@@ -83,6 +104,9 @@ function Test1() {
       Should connect to a function which creates the Payment object, 
       sends it to the backend, and print it out on the console 
       */}
+      <br></br>
+      <br></br>
+      <Link to="/paymentHistory">Payment History</Link>
     </>
   );
 }

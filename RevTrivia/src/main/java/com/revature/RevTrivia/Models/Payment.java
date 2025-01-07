@@ -25,12 +25,7 @@ public class Payment {
 
     private PayStatus status;
 
-    public Payment(Student student, Course course, double amount, LocalDate payment_date, PayStatus status) {
-        this.student = student;
-        this.course = course;
-        this.amount = amount;
-        this.payment_date = payment_date;
-        this.status = status;
+    public Payment() {
     }
 
     public int getPayment_id() {
