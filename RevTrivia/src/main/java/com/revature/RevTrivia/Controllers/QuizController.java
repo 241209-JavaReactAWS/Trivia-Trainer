@@ -4,6 +4,7 @@
  */
 package com.revature.RevTrivia.Controllers;
 
+import com.revature.RevTrivia.Models.DTOs.QuizCreationDTO;
 import com.revature.RevTrivia.Models.Quiz;
 import com.revature.RevTrivia.Services.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,8 @@ public class QuizController {
     private QuizService quizService;
 
     @PostMapping
-    public ResponseEntity<Quiz> createQuiz(@RequestBody Quiz quiz) {
-        return ResponseEntity.ok(quizService.createQuiz(quiz));
+    public ResponseEntity<Quiz> createQuiz(@RequestBody QuizCreationDTO quizCreationDTO) {
+        return ResponseEntity.ok(quizService.createQuiz(quizCreationDTO));
     }
 
     @GetMapping
