@@ -7,6 +7,9 @@ package com.revature.RevTrivia.Services;
 import java.util.List;
 import java.util.Optional;
 
+import com.revature.RevTrivia.DAO.EducatorDAO;
+import com.revature.RevTrivia.Models.DTOs.CourseCreationDTO;
+import com.revature.RevTrivia.Models.Educator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +22,17 @@ public class CourseService {
     @Autowired
     private CourseDAO courseRepository;
 
-    public Course createCourse(Course course){
-        return courseRepository.save(course);
+    @Autowired
+    private EducatorDAO educatorDAO;
+
+    public Course createCourse(CourseCreationDTO courseCreationDTO){
+        Course newCourse = new Course();
+        newCourse.setDescription(courseCreationDTO.getDescription());
+        newCourse.setFee(courseCreationDTO.getFee());
+        newCourse.setName(courseCreationDTO.getName());
+        Educator creator = educatorDAO.findById(courseCreationDTO.getEducatorId()).orElseThrow();
+        newCourse.setEducator(creator);
+        return courseRepository.save(newCourse);
     }
 
     public List<Course> getAllCourses(){
