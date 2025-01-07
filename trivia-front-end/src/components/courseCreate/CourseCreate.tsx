@@ -1,9 +1,11 @@
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Course } from "../interfaces/Course";
+import axios from "axios";
 
 function CourseCreate() {
   const [allCourses, setAllCourses] = useState<Course[]>([])
+
   // const [courseName, setCourseName] = useState<string>("");
   // const [courseDesc, setCourseDesc] = useState<string>("");
   // const [courseFee, setCourseFee] = useState<number>(0);
@@ -15,6 +17,16 @@ function CourseCreate() {
   let addNewCourseToList = (newCourse: Course) => {
     setAllCourses((prevCourses) => [...prevCourses, newCourse]);
   };
+
+  /** Tester Function: Sending a get request to the database getting all courses. */
+  let getCourses = () => {
+    axios.get("http://localhost:8080/courses"
+    ).then((res) => {
+        console.log("Here are the current courses in the database: ", res.data);
+    }).catch((err) => {
+        console.log(err);
+    })
+  }
 
   let createCourse = () => {
 
@@ -50,6 +62,7 @@ function CourseCreate() {
   return (
     <div>
       <h1>Create a new Course</h1>
+      <button id="getcourses" onClick={getCourses}>Get Course List</button>
       <label>
         {/*Whenever thte text inside the username or password fields change, it will update the state variable*/}
         Name:{" "}
