@@ -1,23 +1,38 @@
-package com.revature.RevTrivia.Security;
+package com.revature.RevTrivia.Security.config;
 
+import com.revature.RevTrivia.Security.jwt.JwtAuthenticationFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
+import static com.revature.RevTrivia.Security.entity.Role.EDUCATOR;
+import static com.revature.RevTrivia.Security.entity.Role.STUDENT;
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final JwtAuthenticationFilter jwtAuthFilter;
+    private final AuthenticationProvider authenticationProvider;
+
+    private final LogoutHandler logoutHandler;
 
     @Bean
     public CorsConfigurationSource cors() {
@@ -38,15 +53,24 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(
                         auth -> auth
-                                // pet endpoints
-                                .requestMatchers("/protected/**").authenticated()
+                                .requestMatchers("/auth/**").permitAll()
+                                .requestMatchers("/educator/**").hasAnyRole(EDUCATOR.name())
+                                .requestMatchers("/student/**").hasAnyRole(STUDENT.name())
+                                .requestMatchers("/public/**").permitAll()
                                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                                .anyRequest().permitAll()
+                                .anyRequest().authenticated()
                 );
         http
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
+        http
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .logout()
+                .logoutUrl("/auth/logout")
+                .addLogoutHandler(logoutHandler)
+                .logoutSuccessHandler(((request, response, authentication) -> SecurityContextHolder.clearContext()))
+        ;
         return http.build();
     }
 }
