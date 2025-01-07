@@ -5,6 +5,7 @@
 package com.revature.RevTrivia.Controllers;
 
 import com.revature.RevTrivia.Models.Course;
+import com.revature.RevTrivia.Models.DTOs.CourseCreationDTO;
 import com.revature.RevTrivia.Services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +24,8 @@ public class CourseController {
     private CourseService courseService;
 
     @PostMapping
-    public ResponseEntity<Course> createCourse(@RequestBody Course course) {
-        return ResponseEntity.ok(courseService.createCourse(course));
+    public ResponseEntity<Course> createCourse(@RequestBody CourseCreationDTO courseCreationDTO) {
+        return ResponseEntity.ok(courseService.createCourse(courseCreationDTO));
     }
 
     @GetMapping

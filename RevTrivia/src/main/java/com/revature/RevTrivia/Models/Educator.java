@@ -1,5 +1,6 @@
 package com.revature.RevTrivia.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.revature.RevTrivia.Models.Course;
 import com.revature.RevTrivia.Security.entity.Role;
 import com.revature.RevTrivia.Security.entity.User;
@@ -15,7 +16,7 @@ import java.util.Set;
 public class Educator {
     @Id
     @GeneratedValue
-    private int educatorId;
+    private Integer educatorId;
 
     @OneToOne
     @JoinColumn(name = "user_id")
@@ -24,6 +25,7 @@ public class Educator {
     @Column(name = "professional_details")
     private String details;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "educator")
     private Set<Course> courses;
 
