@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 interface QuizData {
     quiz_id: number,
@@ -6,7 +7,7 @@ interface QuizData {
     quizTitle: string,
     attemptLimit: number,
     currentAttempt: number,
-    timer: ReturnType<typeof setTimeout>,
+    timer: number,
     questions: QuestionData[],
 }
 
@@ -35,30 +36,41 @@ interface Quiz {
     quizzes: QuizData
 }
 
-function quiz({quizzes}: Quiz) {
-    const [quiz, setQuiz] = useState({courseName: '', quizTitle: '', currentAttempt: 0, attemptLimit: 0, timer: 0});
-    const [timer, setTimer] = useState(null);
-    
-    return (
-        <div>
-        <h1>{quiz.courseName}</h1>
-        <h2>{quiz.quizTitle}</h2>
-        <h3> Attempt {quiz.currentAttempt} of {quiz.attemptLimit}</h3>
-        <h3> Time Left: {quiz.timer}</h3>
-        <ol>
-        {quizzes.questions.map((question) => (
-            <li key={question.question_id}>
-                {question.question_id}. {question.content}
-                <ul>
-                    {question.options.map((options, index) => (<li key={index}>{options}</li>))}
-                </ul>
-            </li>
-        ))}
-        </ol>
-        <button>Submit Quiz</button>
-        </div>
+function Quiz() {
+    const [quizData, setQuizData] = useState<QuizData | null>(null);
 
-    )
+    useEffect(() => {
+        const fetchQuizData = async () => {
+            const { data } = await axios.get('http://localhost:8080/quizzes')
+            setQuizData(data);
+        };
+        fetchQuizData();
+        
+    }, []);
+
+    if (!quizData) {
+        return <div>Loading...</div>
+    }
+
+    return (
+    <div>
+        <h1>{quizData.courseName}</h1>
+        <h2>{quizData.quizTitle}</h2>
+        <h2>Attempt number {quizData.currentAttempt} of {quizData.attemptLimit}</h2>
+        <h2> {quizData.timer} minutes left </h2>
+        <ol>
+            {quizData.questions.map((question) => (
+                <li>{question.content}
+                    <ul>{question.options.map((option) => (
+                        <li>{option}</li>
+                    ))}
+                    </ul>
+                </li>
+            ))}
+        </ol>
+    </div>
+    );
 }
 
-export default quiz
+export default Quiz;
+
