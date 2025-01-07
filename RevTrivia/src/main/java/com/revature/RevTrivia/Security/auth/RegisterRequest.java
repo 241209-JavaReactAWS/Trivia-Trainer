@@ -1,4 +1,4 @@
-package com.revature.RevTrivia.Security;
+package com.revature.RevTrivia.Security.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

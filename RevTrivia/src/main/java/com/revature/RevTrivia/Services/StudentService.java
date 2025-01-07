@@ -1,8 +1,8 @@
 package com.revature.RevTrivia.Services;
 
 import com.revature.RevTrivia.DAO.StudentDAO;
-import com.revature.RevTrivia.Models.Role;
 import com.revature.RevTrivia.Models.Student;
+import com.revature.RevTrivia.Security.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.revature.RevTrivia.Security.config;
+package com.revature.RevTrivia.Security.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

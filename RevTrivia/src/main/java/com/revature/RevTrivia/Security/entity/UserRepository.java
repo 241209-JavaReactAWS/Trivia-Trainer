@@ -1,6 +1,5 @@
-package com.revature.RevTrivia.Security;
+package com.revature.RevTrivia.Security.entity;
 
-import com.revature.RevTrivia.Security.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

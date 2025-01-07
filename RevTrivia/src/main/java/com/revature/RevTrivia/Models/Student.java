@@ -3,6 +3,7 @@ package com.revature.RevTrivia.Models;
 import java.util.List;
 import java.util.Set;
 
+import com.revature.RevTrivia.Security.entity.Role;
 import jakarta.persistence.*;
 import lombok.*;
 

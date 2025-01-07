@@ -1,6 +1,6 @@
-package com.revature.RevTrivia.Security.model;
+package com.revature.RevTrivia.Security.entity;
 
-import com.revature.RevTrivia.Models.Role;
+import com.revature.RevTrivia.Security.token.Token;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -25,18 +26,28 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
+    @Column(nullable = false, unique = true)
     private String username;
     private String firstName;
     private String lastName;
+    @Column(nullable = false, unique = true)
     private String email;
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private List<Role> roles;
+
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.name()));
+        }
+        return authorities;
     }
 
     @Override
