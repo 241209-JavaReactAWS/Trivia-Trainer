@@ -58,16 +58,17 @@ function Quiz() {
         <h2>{quizData.quizTitle}</h2>
         <h2>Attempt number {quizData.currentAttempt} of {quizData.attemptLimit}</h2>
         <h2> {quizData.timer} minutes left </h2>
-        <ol>
+        <ol type="1">
             {quizData.questions.map((question) => (
                 <li>{question.content}
-                    <ul>{question.options.map((option) => (
+                    <ol type="A">{question.options.map((option) => (
                         <li>{option}</li>
                     ))}
-                    </ul>
+                    </ol>
                 </li>
             ))}
         </ol>
+        <button>Submit Quiz</button>
     </div>
     );
 }
