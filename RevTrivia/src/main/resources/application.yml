@@ -18,4 +18,4 @@ spring:
         database-platform: org.hibernate.dialect.PostgreSQLDialect
         # create-drop means the database is fresh on each restart
         hibernate:
-            ddl-auto: create-drop
+            ddl-auto: update
