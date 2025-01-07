@@ -10,7 +10,8 @@ import CourseCreate from "./components/courseCreate/CourseCreate";
 import QuizCreate from "./components/quizCreate/QuizCreate";
 import Test1 from "./components/payment/MakePayment";
 import PaymentHistory from "./components/payment/PaymentHistory";
-
+import Course from "./components/Course/Course";
+import Quiz from "./components/quiz/quiz";
 function App() {
   return (
     <>
@@ -29,6 +30,8 @@ function App() {
           <Route path="/" element={<Login></Login>}></Route>
           <Route path="/test1" element={<Test1></Test1>}></Route>
           <Route path="/paymentHistory" element={<PaymentHistory></PaymentHistory>}></Route>
+          <Route path="/quiz" element={<Quiz></Quiz>}></Route>
+          <Route path="/course" element={<Course></Course>}></Route>
 
           {/* <Route path="/test1" element={<Test1></Test1>}></Route>
           <Route path="/test2" element={<Test2></Test2>}></Route>

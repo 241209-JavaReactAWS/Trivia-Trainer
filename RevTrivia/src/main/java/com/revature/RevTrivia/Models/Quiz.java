@@ -5,13 +5,16 @@
 package com.revature.RevTrivia.Models;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.Set;
 
 
 @Entity
-@Table(name = "quiz")
+@NoArgsConstructor
+@Data
 public class Quiz {
 
     @Id
@@ -30,7 +33,7 @@ public class Quiz {
     private String title;
 
     @Column(nullable = false)
-    private int timer;
+    private Integer timer;
 
     @Column(name = "attempt_limit", nullable = false)
     private int attemptLimit;

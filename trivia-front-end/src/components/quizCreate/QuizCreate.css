@@ -1,12 +1,15 @@
 .sideBySide {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem; 
   margin: 1rem;
-  padding: 2rem 2rem;
-  text-align: center;
+  padding: 2rem;
+  justify-content: center;
 }
 
-.side {
-  display: inline-block;
-  padding: 1rem 1rem;
-  margin: 1rem;
-  vertical-align: top;
+.question-block {
+  border: 1px solid #000000;
+  border-radius: 8px;
+  padding: 1rem;
+  width: 300px; 
 }

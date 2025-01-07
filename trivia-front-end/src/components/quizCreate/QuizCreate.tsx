@@ -1,35 +1,103 @@
 import { SyntheticEvent, useState } from "react";
 import "./QuizCreate.css"
+import { Navigate, useNavigate } from "react-router-dom";
 
 function QuizCreate() {
 
-  const [quizName, setQuizName] = useState("");
+  const [quizName, setQuizName] = useState("")
+  const [timer, setTimer] = useState(0)
+  const [attemptLimit, setAttemptLimit] = useState(0)
   const [questions, setQuestions] = useState(
     [{
       content: "", correct: "", incorrectAnswers: ["", "", ""]
     }])
+  // const navigate = useNavigate();
 
-  const questionChange = (index: number, field: string, value: string) => {
+
+  const questionChange = (index: number, field: "content" | "correct" | "incorrectAnswers", value: string) => {
     const updatedQuestions = [...questions]
     if (field === "incorrectAnswers") {
       updatedQuestions[index].incorrectAnswers = value.split(",")
-    } 
-    else {
-      //updatedQuestions[index][field] = value;
     }
+    else if (field === "content") {
+      updatedQuestions[index].content = value;
+    }
+    else if (field === "correct") {
+      updatedQuestions[index].correct = value;
+    }
+    setQuestions(updatedQuestions);
   }
 
   const addQuestion = () => {
     setQuestions([
-      ...questions, {content: "", correct: "", incorrectAnswers: ["", "", ""]}
+      ...questions, { content: "", correct: "", incorrectAnswers: ["", "", ""] }
     ])
   }
 
-  let createQuiz = () => {
+  const removeQuestion = (index: number) => {
+    const updatedQuestions = questions.filter((_, i) => i !== index);
+    setQuestions(updatedQuestions);
+  };
 
-    console.log("Quiz Created!")
+  let createQuiz = () => {
+    if (!quizName.trim()) {
+      alert("Please enter a quiz name")
+      return
+    }
+    if (timer < 0 || attemptLimit < 0) {
+      alert("Please enter a valid time limit and attempt limit")
+      return
+    }
+    if (questions.some(question => !question.content.trim() || !question.correct.trim() || question.incorrectAnswers.some(answer => !answer.trim()))) {
+      alert("Please fill out all question fields")
+      return
+    }
+
+    // Create the quiz object 
+    // TODO: Set the course id from a prop and add it here. 
+    const quizData = {
+      name: quizName,
+      timer: timer,
+      attemptLimit: attemptLimit,
+      questions: questions
+    }
+
+    // Create the list of question objects using the questions useState variable
+    const questionObjects = questions.map((question) => ({
+      content: question.content,
+      correct: question.correct,
+      incorrectAnswers: question.incorrectAnswers,
+    }));
+    quizData.questions = questionObjects;
+
+    //   {
+    //     "courseId": 1,
+    //     "title": "test quiz",
+    //     "timer": 30,
+    //     "attemptLimit": 3,
+    //     "questions": [
+    //         {
+    //             "content": "What is 1 + 1",
+    //             "options": "1,3,5,2",
+    //             "correct": "D"
+    //         }
+    //     ]
+    //   }
+
+    // TODO: Axios request to create the quiz 
+    // Only include the course id, description
+    // Send the courseId 
+
+    // TODO: Axios requests to create the questions and append them to the Questions table with
+    // the quiz id
+    // Questions: Array of questions 
+    // Build a DTO object 
+
+    console.log("Quiz Created! ", quizData)
+    console.log("Questions Made! ", questionObjects)
+    alert("Quiz Created! Check the console for the quiz data")
+    // navigate("/courseCreate")
   }
-  const [timer, setTimer] = useState(0);
 
   return (
     <div>
@@ -51,13 +119,27 @@ function QuizCreate() {
       <br></br>
       <label>
         {/*Whenever thte text inside the username or password fields change, it will update the state variable*/}
-        Time Limit:{" "}
+        Time Limit (in minutes):{" "}
         <input
           type="number"
           id="timerField"
           value={timer}
           onChange={(e: SyntheticEvent) => {
             setTimer((e.target as HTMLInputElement).value as unknown as number);
+          }}
+        />
+      </label>
+      <br></br>
+      <br></br>
+      <label>
+        {/*Whenever thte text inside the username or password fields change, it will update the state variable*/}
+        Attempt Limit:{" "}
+        <input
+          type="number"
+          id="attemptLimitField"
+          value={attemptLimit}
+          onChange={(e: SyntheticEvent) => {
+            setAttemptLimit((e.target as HTMLInputElement).value as unknown as number);
           }}
         />
       </label>
@@ -77,6 +159,9 @@ function QuizCreate() {
               />
             </label>
 
+            <br></br>
+            <br></br>
+
             <label>
               Correct Answer:
               <input
@@ -88,6 +173,9 @@ function QuizCreate() {
               />
             </label>
 
+            <br></br>
+            <br></br>
+
             <label>
               Incorrect Answers (comma-separated):
               <input
@@ -98,7 +186,17 @@ function QuizCreate() {
                 }
               />
             </label>
+
+            <br></br>
+            <br></br>
+
+            <button onClick={() => removeQuestion(index)}>Remove Question</button>
+
+            <br></br>
+            <br></br>
+
           </div>
+
         ))}
 
         <button onClick={addQuestion}>Add Another Question</button>
