@@ -10,6 +10,7 @@ public class DemoController {
     @RequestMapping("/protected/demo")
     @GetMapping
     public ResponseEntity<String> hello() {
+        Boolean test = true;
         return ResponseEntity.ok("Hello from secured endpoint");
     }
 
