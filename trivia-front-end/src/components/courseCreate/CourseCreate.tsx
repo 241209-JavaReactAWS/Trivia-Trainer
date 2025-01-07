@@ -12,7 +12,7 @@ function CourseCreate() {
   const navigate = useNavigate();
 
   /* Create a new Course */
-  const addNewCourseToList = (newCourse: Course) => {
+  let addNewCourseToList = (newCourse: Course) => {
     setAllCourses((prevCourses) => [...prevCourses, newCourse]);
   };
 
@@ -101,6 +101,7 @@ function CourseCreate() {
       <br></br>
 
       <button onClick={createCourse}>Create Course</button>
+      {/* <button onClick={addNewCourseToList}>Create Course</button> */}
 
       <br></br>
       <br></br>
