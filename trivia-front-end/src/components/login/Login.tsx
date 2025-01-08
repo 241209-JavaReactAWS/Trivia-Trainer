@@ -1,6 +1,10 @@
 import { SyntheticEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css"
+import axios from "axios";
+import { decodeAccessTokenInStorage } from "../../utils/JwtDecoder";
+
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 function Login() {
   const [username, setUsername] = useState<string>("");
@@ -9,17 +13,45 @@ function Login() {
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
+  const [signupUsername, setSignupUsername] = useState<string>("")
+  const [signupPassword, setSignupPassword] = useState<string>("")
+  const [signupRole, setSignupRole] = useState<string>("")
+
 
   const navigate = useNavigate();
 
   let login = () => {
-    console.log("Logging in");
-    navigate("/studentHome");
+    axios.post(`${backendUrl}/auth/authenticate`, {
+      username,
+      password
+    })
+    .then((response) => {
+      localStorage.setItem("accessToken", response.data.accessToken);
+      localStorage.setItem("refreshToken", response.data.refreshToken);
+      const rolee = localStorage.getItem("roles");
+      console.log(rolee)
+      decodeAccessTokenInStorage()
+    })
+    .catch((error) => {
+      console.error("Login error:", error);
+    });
   };
 
   let register = () => {
-    console.log("Registering new user");
-    navigate("/home");
+    axios.post(`${backendUrl}/auth/register/${signupRole}`, {
+      username: signupUsername,
+      password: signupPassword,
+      email,
+      firstName,
+      lastName
+    })
+    .then((response) => {
+      localStorage.setItem("accessToken", response.data.accessToken);
+      localStorage.setItem("refreshToken", response.data.refreshToken);
+    })
+    .catch((error) => {
+      console.error("Register error:", error);
+    });
   };
 
   return (
@@ -97,6 +129,19 @@ function Login() {
             <br /> <br />
 
             <label>
+              Username:{" "}
+              <input
+                type="text"
+                id="signupUsernameField"
+                value={signupUsername}
+                onChange={(e: SyntheticEvent) => {
+                  setSignupUsername((e.target as HTMLInputElement).value);
+                }}
+              />
+            </label>
+            <br /> <br />
+
+            <label>
               Email:{" "}
               <input
                 type="text"
@@ -114,14 +159,42 @@ function Login() {
               <input
                 type="text"
                 id="passwordField"
-                value={password}
+                value={signupPassword}
                 onChange={(e: SyntheticEvent) => {
-                  setPassword((e.target as HTMLInputElement).value);
+                  setSignupPassword((e.target as HTMLInputElement).value);
                 }}
               />
             </label>
             <br></br>
             <br></br>
+
+            <label>
+          <input
+            type="radio"
+            name="role"
+            value="student"
+            checked={signupRole === "student"}
+            onChange={(e: SyntheticEvent) => {
+              setSignupRole((e.target as HTMLInputElement).value);
+            }}
+          />
+          Competitor
+        </label>
+        <br />
+        <label>
+          <input
+            type="radio"
+            name="role"
+            value="educator"
+            checked={signupRole === "educator"}
+            onChange={(e: SyntheticEvent) => {
+              setSignupRole((e.target as HTMLInputElement).value);
+            }}
+          />
+          Proctor
+        </label>
+        <br />
+        <br />
             <button onClick={register}>Create account</button>
           </div>
         </div>
