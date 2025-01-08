@@ -1,9 +1,11 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Enrollment } from "../interfaces/Enrollment";
 
-function Enrollment() {
+function EnrollmentPage() {
 
+    const [enrollments, setEnrollments] = useState<Enrollment[]>([])
     const navigate = useNavigate();
 
     //Note: Remove from this page during integration with Sanjana's course search
@@ -15,7 +17,7 @@ function Enrollment() {
             console.log(err);
         })
       })
-
+      
     let enroll = () => {
         navigate("/payment")
     }
@@ -49,18 +51,34 @@ function Enrollment() {
     */
     return (
         <div>
-            <h1> {/* This is where the course name will go */}
-                (REPLACE) Test Trivia Course
-            </h1>
-
-            <h2> {/* This is where the course description will go */}
-                (REPLACE) A free course meant to introduce people to the world of trivia!
-            </h2>
-
-            <h2> {/* This is where the course cost will go */}
-                Cost: (REPLACE) $100
-            </h2>
-
+            {/*Remove this part when connecting to Sanjana's code*/}
+            <h1>Enrollment Table</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student ID</th>
+                        <th>Course ID</th>
+                        <th>Course Name</th>
+                        <th>Enrollment Status</th>
+                        <th>Pay</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {
+                    enrollments.map((enrollment) => {
+                    return (
+                        <tr key={enrollment.enrollmentId}>
+                            <td>{enrollment.student.studentId}</td>
+                            <td>{enrollment.course.courseId}</td>
+                            <td>{enrollment.course.name}</td>
+                            <td>{enrollment.enrollStatus}</td>
+                            <td><button>Pay</button></td>
+                        </tr>
+                        )
+                    })
+                }
+                </tbody>
+            </table>
             <button onClick={enroll}> {/* Will enroll in the course; Will be greyed out if already enrolled */}
                 Enroll 
             </button>
@@ -72,4 +90,4 @@ function Enrollment() {
     )
 }
 
-export default Enrollment
+export default EnrollmentPage

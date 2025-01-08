@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Nav from "./components/nav/Nav";
 import Login from "./components/login/Login";
 import Search from "./components/search/Search";
-import Enrollment from "./components/enrollment/Enrollment";
+import EnrollmentPage from "./components/enrollment/EnrollmentPage";
 import GeneralHome from "./components/generalHome/GeneralHome";
 import StudentHome from "./components/home/StudentHome";
 import CourseCreate from "./components/courseCreate/CourseCreate";
@@ -25,7 +25,7 @@ function App() {
           <Route path="/studentHome" element={<StudentHome></StudentHome>}></Route>
           <Route path="/payment" element={<Test1></Test1>}></Route>
           <Route path="/search" element={<Search></Search>}></Route>
-          <Route path="/enroll" element={<Enrollment></Enrollment>}></Route>
+          <Route path="/enroll" element={<EnrollmentPage></EnrollmentPage>}></Route>
           <Route path="/courseCreate" element={<CourseCreate></CourseCreate>}></Route>
           <Route path="/quizCreate" element={<QuizCreate></QuizCreate>}></Route>
           <Route path="/" element={<Login></Login>}></Route>
