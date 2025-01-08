@@ -12,6 +12,7 @@ import Test1 from "./components/payment/MakePayment";
 import PaymentHistory from "./components/payment/PaymentHistory";
 import Course from "./components/Course/Course";
 import Quiz from "./components/quiz/quiz";
+import CourseInfo from "./components/courseInfo/CourseInfo";
 function App() {
   return (
     <>
@@ -27,11 +28,11 @@ function App() {
           <Route path="/enroll" element={<Enrollment></Enrollment>}></Route>
           <Route path="/courseCreate" element={<CourseCreate></CourseCreate>}></Route>
           <Route path="/quizCreate" element={<QuizCreate></QuizCreate>}></Route>
-          <Route path="/" element={<Login></Login>}></Route>
           <Route path="/test1" element={<Test1></Test1>}></Route>
           <Route path="/paymentHistory" element={<PaymentHistory></PaymentHistory>}></Route>
-          <Route path="/quiz" element={<Quiz></Quiz>}></Route>
+          {/* <Route path="/quiz" element={<Quiz></Quiz>}></Route> */}
           <Route path="/course" element={<Course></Course>}></Route>
+          <Route path="/courseInfo" element={<CourseInfo></CourseInfo>}></Route>
 
           {/* <Route path="/test1" element={<Test1></Test1>}></Route>
           <Route path="/test2" element={<Test2></Test2>}></Route>

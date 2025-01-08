@@ -18,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/quizzes")//Needs to be reviewed and approved.
+@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:5174"}, allowCredentials = "true")
 public class QuizController {
 
     @Autowired
