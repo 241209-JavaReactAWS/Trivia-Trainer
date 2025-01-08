@@ -43,8 +43,14 @@ public class CourseService {
         return courseRepository.findById(courseId);
     }
 
-    public Course updateCourse(Course course){
-        return courseRepository.save(course);
+    public Course updateCourse(int courseId, CourseCreationDTO courseCreationDTO){
+        return courseRepository.findById(courseId).map(editedCourse -> {
+            editedCourse.setName(courseCreationDTO.getName());
+            editedCourse.setDescription(courseCreationDTO.getDescription());
+            editedCourse.setFee(courseCreationDTO.getFee());
+            editedCourse.setEducator(editedCourse.getEducator());
+            return courseRepository.save(editedCourse);
+        }).orElseThrow(() -> new IllegalArgumentException("Course not found, please try again."));
     }
 
     public void deleteCourse(int courseId){

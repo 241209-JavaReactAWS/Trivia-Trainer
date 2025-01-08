@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.revature.RevTrivia.DAO.CourseDAO;
+import com.revature.RevTrivia.DAO.QuestionDAO;
 import com.revature.RevTrivia.Models.Course;
 import com.revature.RevTrivia.Models.DTOs.QuestionCreationDTO;
 import com.revature.RevTrivia.Models.DTOs.QuizCreationDTO;
@@ -24,6 +25,9 @@ public class QuizService {
 
     @Autowired
     private QuizDAO quizDAO;
+
+    @Autowired
+    private QuestionDAO questionDAO;
 
     @Autowired
     private CourseDAO courseDAO;
@@ -44,6 +48,7 @@ public class QuizService {
             newQuestion.setContent(question.getContent());
             newQuestion.setQuiz(savedQuiz);
             questions.add(newQuestion);
+            questionDAO.save(newQuestion);
         }
         savedQuiz.setQuestions(questions);
         return quizDAO.save(savedQuiz);
