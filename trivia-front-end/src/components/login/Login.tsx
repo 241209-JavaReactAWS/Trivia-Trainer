@@ -26,10 +26,9 @@ function Login() {
       password
     })
     .then((response) => {
+      localStorage.clear()
       localStorage.setItem("accessToken", response.data.accessToken);
       localStorage.setItem("refreshToken", response.data.refreshToken);
-      const rolee = localStorage.getItem("roles");
-      console.log(rolee)
       decodeAccessTokenInStorage()
     })
     .catch((error) => {
@@ -46,8 +45,10 @@ function Login() {
       lastName
     })
     .then((response) => {
+      localStorage.clear()
       localStorage.setItem("accessToken", response.data.accessToken);
       localStorage.setItem("refreshToken", response.data.refreshToken);
+      decodeAccessTokenInStorage()
     })
     .catch((error) => {
       console.error("Register error:", error);
