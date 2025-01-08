@@ -1,3 +1,8 @@
+import { Enrollment } from "./Enrollment"
+import { QuizAttempt } from "./QuizAttempt"
+
 export interface Student{
-    studentId: number
+    studentId: number,
+    quizAttempts: QuizAttempt[],
+    enrollments: Enrollment[]
 }

@@ -26,7 +26,7 @@ function Enrollment() {
                 Enroll 
             </button>
             <div></div>
-            <button onClick={enroll}> {/* Will enroll in the course; Will be greayed out if not enrolled */}
+            <button onClick={enroll}> {/* Will drop enrollment from the course; Will be greayed out if not enrolled */}
                 Leave Course 
             </button>
         </div>
