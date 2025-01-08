@@ -53,11 +53,10 @@ function CourseCreate() {
   const delCourse = (courseId: number) => {
     axios.delete(`http://localhost:8080/courses/${courseId}`)
     .then(response => {
-      axios.get<Course>(`http://localhost:8080/courses/${courseId}`)
-      console.log("Course deleted:", response.data);
+      console.log("Course deleted successfully --> ", response.data);
     })
     .catch(error => {
-      console.error("Error deleting course:", error);
+      console.error("Error deleting course --> ", error);
     });
   };
 
@@ -121,15 +120,21 @@ function CourseCreate() {
       <br/>
       {/* Show fields to modify */}
       {showAddCoursePopup && (
-        <NewCourse
-            onClose={() => {
-                setShowAddCoursePopup(false);
-                setCourseToEdit(null);
-            }}
-            onCourseAdded={addNewCourseToList}
-            courseToEdit={courseToEdit}
-        />
-    )}
+  <NewCourse
+    onClose={() => {
+      setShowAddCoursePopup(false);
+      setCourseToEdit(null);
+    }}
+    onCourseUpdated={(updatedCourse) => {
+      setAllCourses((prevCourses) =>
+        prevCourses.map((course) =>
+          course.courseId === updatedCourse.courseId ? updatedCourse : course
+        )
+      );
+    }}
+    courseToEdit={courseToEdit}
+  />
+)}
       <br/>
       <br/>
       <label>

@@ -4,15 +4,15 @@ import { Course } from "../interfaces/Course";
 
 interface NewCourseProps {
   onClose: () => void;
-  onCourseAdded: (course: Course) => void;
-  courseToEdit: Course | null
+  onCourseUpdated: (updatedCourse: Course) => void;
+  courseToEdit: Course | null;
 }
 
-function NewCourse({ onClose, onCourseAdded, courseToEdit }: NewCourseProps) {
+function NewCourse({ onClose, onCourseUpdated, courseToEdit }: NewCourseProps) {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
-    fee: 0.0,
+    fee: 0.0, // Default type is compatible with double
   });
 
   useEffect(() => {
@@ -20,46 +20,45 @@ function NewCourse({ onClose, onCourseAdded, courseToEdit }: NewCourseProps) {
       setFormData({
         name: courseToEdit.name,
         description: courseToEdit.description,
-        fee: courseToEdit.fee
+        fee: courseToEdit.fee,
       });
     }
   }, [courseToEdit]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData({
+      ...formData,
+      [name]: name === "fee" ? parseFloat(value) : value, // Treat as double (parseFloat works for double values in JavaScript)
+    });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-
-    const submitAction = courseToEdit
-    ? axios.patch<Course>(`http://localhost:8080/courses/${courseToEdit.courseId}`, formData)
-    : axios.post<Course>("http://localhost:8080/courses", formData);
-
-    submitAction
-    .then((response) => {
-      console.log(courseToEdit ? "Course edited:" : "New course added:", response.data);
-      onCourseAdded(response.data);
-      onClose();
-    })
-    .catch((error) => {
-      console.error("Error submitting Course:", error);
-      alert("Failed to submit the Course.");
-    });
-};
+    axios
+      .patch<Course>(`http://localhost:8080/courses/${courseToEdit.courseId}`, formData)
+      .then((response) => {
+        console.log("Course updated successfully:", response.data);
+        onCourseUpdated(response.data); // Pass the updated course back to the parent
+        onClose(); // Close the popup
+      })
+      .catch((error) => {
+        console.error("Error updating course:", error);
+        alert("Failed to update the course. Please try again.");
+      });
+  };
 
   return (
     <div className="popup-overlay">
       <div className="popup">
-        <h2>{courseToEdit ? "Edit Course" : "Add a New Course"}</h2>
+        <h2>Edit Course</h2>
         <form onSubmit={handleSubmit}>
           <label>
             Course Name:
             <input
               type="text"
-              name="courseName"
+              name="name"
               value={formData.name}
               onChange={handleChange}
               required
@@ -69,7 +68,7 @@ function NewCourse({ onClose, onCourseAdded, courseToEdit }: NewCourseProps) {
             Description:
             <input
               type="text"
-              name="desc"
+              name="description"
               value={formData.description}
               onChange={handleChange}
               required
@@ -78,13 +77,15 @@ function NewCourse({ onClose, onCourseAdded, courseToEdit }: NewCourseProps) {
           <label>
             Fee:
             <input
-              type="text"
-              name="courseFee"
+              type="number"
+              name="fee"
+              step="0.01" // Allows input of decimal values
               value={formData.fee}
               onChange={handleChange}
+              required
             />
           </label>
-          <button type="submit">{courseToEdit ? "Update Course" : "Add Course"}</button>
+          <button type="submit">Edit Course</button>
           <button type="button" onClick={onClose}>
             Cancel
           </button>
