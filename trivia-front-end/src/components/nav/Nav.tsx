@@ -1,10 +1,23 @@
 import { Link, useNavigate } from "react-router-dom"
 import "./Nav.css"
 import { Button } from "@mui/material"
+import axios from "axios";
+
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 function Nav() {
   const navigate = useNavigate();
   const logout = () => {
+    const token = localStorage.getItem('accessToken');
+    axios.post(
+      `${backendUrl}/auth/logout`,
+      {},
+      {
+        headers: {
+          'Authorization': `Bearer ${token}`, 
+        },
+      }
+    )
     localStorage.clear()
     navigate("/")
   }
