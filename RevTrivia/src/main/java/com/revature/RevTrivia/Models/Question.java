@@ -1,5 +1,6 @@
 package com.revature.RevTrivia.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,6 +21,7 @@ public class Question {
 
     @JoinColumn(name = "quiz_id", nullable = false)
     @ManyToOne
+    @JsonIgnore
     private Quiz quiz;
 
     //Stores the question being asked

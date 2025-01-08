@@ -4,6 +4,7 @@
  */
 package com.revature.RevTrivia.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,7 @@ public class Quiz {
     private Course course;
 
     @OneToMany(mappedBy = "quiz")
+    @JsonIgnore
     private Set<QuizAttempt> quizAttempt;
 
     @Column(nullable = false)

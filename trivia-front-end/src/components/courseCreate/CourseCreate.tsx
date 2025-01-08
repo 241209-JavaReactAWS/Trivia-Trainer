@@ -1,46 +1,61 @@
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Course } from "../interfaces/Course";
+import axios from "axios";
 
 function CourseCreate() {
   const [allCourses, setAllCourses] = useState<Course[]>([])
-  // const [courseName, setCourseName] = useState<string>("");
-  // const [courseDesc, setCourseDesc] = useState<string>("");
-  // const [courseFee, setCourseFee] = useState<number>(0);
+
+  const [courseName, setCourseName] = useState<string>("");
+  const [courseDesc, setCourseDesc] = useState<string>("");
+  const [courseFee, setCourseFee] = useState<number>(0);
   // MAKE SURE TO GET EDUCATOR ID FROM LOGIN USECONTEXT ONCE AUTHENTICATE IS GOOD TO GO
+  const [educatorId, setEducatorId] = useState<number>(0);
 
   const navigate = useNavigate();
 
-  /* Create a new Course */
-  const addNewCourseToList = (newCourse: Course) => {
-    setAllCourses((prevCourses) => [...prevCourses, newCourse]);
-  };
+  /** Tester Function: Sending a get request to the database getting all courses. */
+  let getCourses = () => {
+    axios.get("http://localhost:8080/courses"
+    ).then((res) => {
+        console.log("Here are the current courses in the database: ", res.data);
+    }).catch((err) => {
+        console.log(err);
+    })
+  }
 
   let createCourse = () => {
-
-    // if (courseName == "") {
-    //   alert("Please enter a course name")
-    //   return
-    // } 
-    // else if (courseDesc == "") {
-    //   alert("Please enter a course description")
-    //   return
-    // }
-    // else if (courseFee == 0) {
-    //   alert("Please enter the course price")
-    //   return;
-    // }
-    
-    // console.log(courseName)
-    // console.log(courseDesc)
-    // console.log(courseFee)
-    console.log("Creating Course")
+    if (!courseName || !courseDesc || educatorId <= 0 || courseFee <= 0) {
+      alert("Some fields may be missing, please try again.");
+      return;
+    }
+    console.log("Creating Course-->")
 
     // TODO: Get the educator id from the useContext 
 
-    // TODO: Get the educator from the educator id 
+    /* Storing given course object into a variable to be sent through Axios to the backend. */
+    const newCourse: Course & { educatorId: number } = {
+      name: courseName,
+      description: courseDesc,
+      educatorId: educatorId,
+      fee: courseFee
+    };
 
-    // TODO: Axios request goes here once the course is made 
+    axios
+      .post("http://localhost:8080/courses", newCourse)
+      .then((res) => {
+        console.log("New course created successfully --> ", res.data);
+        setAllCourses((prevCourses) => [...prevCourses, res.data]);
+        alert("Course created successfully!");
+        setCourseName("");
+        setCourseDesc("");
+        setEducatorId(0);
+        setCourseFee(0);
+      })
+      .catch((err) => {
+        console.log("Encountered error whilst creating course --> ", err);
+        alert("Failed to create the course, please try again.");
+      });
   }
 
   let createQuiz = () => {
@@ -49,18 +64,21 @@ function CourseCreate() {
 
   return (
     <div>
-      <h1>Create a new Course</h1>
+      <h1>Create New Course</h1>
+      <button id="getcourses" onClick={getCourses}>Get Course List</button>
+      <br/>
+      <br/>
       <label>
         {/*Whenever thte text inside the username or password fields change, it will update the state variable*/}
-        Name:{" "}
-        {/*<input
+        Name - {" "}
+        <input
           type="text"
           id="courseNameField"
           value={courseName}
-          onChange={(e: SyntheticEvent) => {
-            setCourseName((e.target as HTMLInputElement).value);
-          }}
-        />*/}
+          onChange={(e: SyntheticEvent) =>
+            setCourseName((e.target as HTMLInputElement).value)
+          }
+        />
       </label>
 
       <br></br>
@@ -68,39 +86,58 @@ function CourseCreate() {
 
       <label>
         {/*Whenever thte text inside the username or password fields change, it will update the state variable*/}
-        Description:{" "}
+        Description - {" "}
         <br></br>
-        {/*<textarea
+        <textarea
           id="courseDescField"
           value={courseDesc}
           onChange={(e: ChangeEvent) => {
             setCourseDesc((e.target as HTMLTextAreaElement).value);
           }}
           style={{ width: "500px", height: "100px" }}
-        />*/}
+        />
       </label>
 
       <br></br>
       <br></br>
 
+        {/* To be erased after successfully getting educator id from usecontext, here for testing purposes */}
       <label>
         {/*Whenever thte text inside the username or password fields change, it will update the state variable*/}
-        Price:{" "}
+        Educator ID - {" "}
         <br></br>
-        {/*<input
+        <input
+          type="number"
+          id="educatorIdField"
+          value={educatorId}
+          onChange={(e: SyntheticEvent) => {
+            setEducatorId((e.target as HTMLInputElement).value as unknown as number);
+          }}
+        />
+      </label>
+
+      <br></br>
+      <br></br>
+      
+      <label>
+        {/*Whenever thte text inside the username or password fields change, it will update the state variable*/}
+        Price - {" "}
+        <br></br>
+        <input
           type="number"
           id="courseFeeField"
           value={courseFee}
           onChange={(e: SyntheticEvent) => {
             setCourseFee((e.target as HTMLInputElement).value as unknown as number);
           }}
-        />*/}
+        />
       </label>
 
       <br></br>
       <br></br>
 
       <button onClick={createCourse}>Create Course</button>
+      {/* <button onClick={addNewCourseToList}>Create Course</button> */}
 
       <br></br>
       <br></br>
