@@ -27,7 +27,6 @@ function App() {
           <Route path="/enroll" element={<Enrollment></Enrollment>}></Route>
           <Route path="/courseCreate" element={<CourseCreate></CourseCreate>}></Route>
           <Route path="/quizCreate" element={<QuizCreate></QuizCreate>}></Route>
-          <Route path="/" element={<Login></Login>}></Route>
           <Route path="/test1" element={<Test1></Test1>}></Route>
           <Route path="/paymentHistory" element={<PaymentHistory></PaymentHistory>}></Route>
           <Route path="/quiz" element={<Quiz></Quiz>}></Route>
