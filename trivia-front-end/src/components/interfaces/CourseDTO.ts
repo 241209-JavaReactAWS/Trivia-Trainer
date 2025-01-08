@@ -1,7 +1,6 @@
 /* Object to represent the backend model class Course */ 
 
-export interface Course {
-    courseId: number,
+export interface CourseDTO {
     name: string,
     description: string,
     educatorId: number,
