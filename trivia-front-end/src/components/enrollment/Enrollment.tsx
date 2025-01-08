@@ -1,8 +1,20 @@
+import axios from "axios";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Enrollment() {
 
     const navigate = useNavigate();
+
+    //Note: Remove from this page during integration with Sanjana's course search
+    useEffect( () => {
+        axios.get("http://localhost:8080/courses"
+        ).then((res) => {
+            console.log("Here are the current courses in the database: ", res.data);
+        }).catch((err) => {
+            console.log(err);
+        })
+      })
 
     let enroll = () => {
         navigate("/payment")
@@ -29,7 +41,7 @@ function Enrollment() {
             
             TODO Later:
                 1. If a Student opens a course they are not enrolled in, they should be somehow prompted to enroll in it
-                
+
             Enrollment and Payment need to be hooked up. The enrollment cost will create the price for a given payment, and Enrollment Status will
             only be set to Active after payment. 
 
