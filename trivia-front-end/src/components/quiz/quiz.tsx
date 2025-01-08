@@ -7,7 +7,6 @@ interface QuizData {
     quizTitle: string,
     attemptLimit: number,
     currentAttempt: number,
-    timer: number,
     questions: QuestionData[],
 }
 
@@ -38,15 +37,28 @@ interface Quiz {
 
 function Quiz() {
     const [quizData, setQuizData] = useState<QuizData | null>(null);
+    const [answers, setAnswers] = useState<Record<number, string>>({});
 
     useEffect(() => {
         const fetchQuizData = async () => {
-            const { data } = await axios.get('http://localhost:8080/quizzes')
+            const { data } = await axios.get('http://localhost:8080/quizzes/${quiz_id}')
             setQuizData(data);
         };
         fetchQuizData();
         
     }, []);
+
+
+    const submitQuiz = async () => {
+        if (!quizData) return;
+        try {
+            const response = await axios.post(`http://localhost:8080/attempts`, {quizData});
+            console.log(response.data);
+        } catch (err) {
+            console.error(err);
+            alert("Something went wrong submitting your quiz.");
+        }
+    };
 
     if (!quizData) {
         return <div>Loading...</div>
@@ -57,21 +69,33 @@ function Quiz() {
         <h1>{quizData.courseName}</h1>
         <h2>{quizData.quizTitle}</h2>
         <h2>Attempt number {quizData.currentAttempt} of {quizData.attemptLimit}</h2>
-        <h2> {quizData.timer} minutes left </h2>
+        
         <ol type="1">
             {quizData.questions.map((question) => (
-                <li>{question.content}
-                    <ol type="A">{question.options.map((option) => (
-                        <li>{option}</li>
+                <li key={question.question_id}>{question.content}
+                    <ol type="A">{question.options.map((option, idx) => (
+                        <li key={option}>
+                            <input
+                                type="radio"
+                                name={`question_${question.question_id}`}
+                                value={option}
+                                onChange={() => {
+                                    setAnswers(prev => ({
+                                        ..prev,
+                                        [question.question_id]: option
+                                    }));
+                                }}
+                            />
+                            {option}
+                        </li>
                     ))}
                     </ol>
                 </li>
             ))}
         </ol>
-        <button>Submit Quiz</button>
+        <button onClick ={submitQuiz}>Submit Quiz</button>
     </div>
     );
 }
 
 export default Quiz;
-
