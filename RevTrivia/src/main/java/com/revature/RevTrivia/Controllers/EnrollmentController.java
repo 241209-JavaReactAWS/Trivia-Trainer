@@ -1,5 +1,6 @@
 package com.revature.RevTrivia.Controllers;
 
+import com.revature.RevTrivia.Models.DTOs.EnrollmentDTO;
 import com.revature.RevTrivia.Models.Enrollment;
 import com.revature.RevTrivia.Services.EnrollmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,8 @@ public class EnrollmentController {
     // CREATE
     // Create a new enrollment
     @PostMapping
-    public ResponseEntity<Enrollment> createNewPayment(@RequestBody Enrollment enrollment) {
-        Enrollment potentialEnrollment = enrollmentService.createNewEnrollment(enrollment);
+    public ResponseEntity<Enrollment> createNewEnrollment(@RequestBody EnrollmentDTO enrollmentDTO) {
+        Enrollment potentialEnrollment = enrollmentService.createNewEnrollment(enrollmentDTO);
         if (potentialEnrollment != null) {
             return new ResponseEntity<>(potentialEnrollment, HttpStatus.CREATED);
         }

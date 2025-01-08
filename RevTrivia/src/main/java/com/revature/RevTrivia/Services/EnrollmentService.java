@@ -1,6 +1,9 @@
 package com.revature.RevTrivia.Services;
 
+import com.revature.RevTrivia.DAO.CourseDAO;
 import com.revature.RevTrivia.DAO.EnrollmentDAO;
+import com.revature.RevTrivia.DAO.StudentDAO;
+import com.revature.RevTrivia.Models.DTOs.EnrollmentDTO;
 import com.revature.RevTrivia.Models.Enrollment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,9 +16,14 @@ public class EnrollmentService {
     
     @Autowired
     private EnrollmentDAO enrollmentDAO;
+    @Autowired
+    private CourseDAO courseDAO;
+    @Autowired
+    private StudentDAO studentDAO;
     
     // Create a new enrollment
-    public Enrollment createNewEnrollment(Enrollment enrollment) {
+    public Enrollment createNewEnrollment(EnrollmentDTO enrollmentDTO) {
+        Enrollment enrollment = new Enrollment();
         return enrollmentDAO.save(enrollment);
     }
 
