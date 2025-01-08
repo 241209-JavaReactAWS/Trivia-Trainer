@@ -6,6 +6,7 @@ import { Course } from "../interfaces/Course";
 
 function QuizCreate() {
 
+  // State variables 
   const [quizName, setQuizName] = useState("")
   const [timer, setTimer] = useState(0)
   const [attemptLimit, setAttemptLimit] = useState(0)
@@ -13,11 +14,14 @@ function QuizCreate() {
     [{
       content: "", correct: "", incorrectAnswers: ["", "", ""]
     }])
+
+  // Usable things from react-router-dom
   const location = useLocation();
   const navigate = useNavigate();
 
   const course: Course = location.state?.course;
 
+  // Change the question information based on the input values
   const questionChange = (index: number, field: "content" | "correct" | "incorrectAnswers", value: string) => {
     const updatedQuestions = [...questions]
     if (field === "incorrectAnswers") {
@@ -32,26 +36,32 @@ function QuizCreate() {
     setQuestions(updatedQuestions);
   }
 
+  // Function responsible for adding a question to the quiz
   const addQuestion = () => {
     setQuestions([
       ...questions, { content: "", correct: "", incorrectAnswers: ["", "", ""] }
     ])
   }
 
+  // Function responsible for removing the last question from the quiz
   const removeQuestion = (index: number) => {
     const updatedQuestions = questions.filter((_, i) => i !== index);
     setQuestions(updatedQuestions);
   };
 
+  // Function responsible for creating the quiz 
   let createQuiz = () => {
+    // Check if the quiz has a name
     if (!quizName.trim()) {
       alert("Please enter a quiz name")
       return
     }
+    // Check if the time and attemptLimit values are valid 
     if (timer <= 0 || attemptLimit <= 0) {
       alert("Please enter a valid time limit and attempt limit")
       return
     }
+    // Check if all question fields requested are populated 
     if (questions.some(question => !question.content.trim() || !question.correct.trim() || question.incorrectAnswers.some(answer => !answer.trim()))) {
       alert("Please fill out all question fields")
       return
@@ -64,7 +74,7 @@ function QuizCreate() {
       correct: question.correct,
     }));
 
-    // TODO: Axios request to create the quiz 
+    // Send the POST request to the server to create the quiz
     axios.post("http://localhost:8080/quizzes", {
       "courseId": course.courseId,
       "title": quizName,
@@ -72,13 +82,10 @@ function QuizCreate() {
       "attemptLimit": attemptLimit,
       "questions": questionObjects
     }
-      // { withCredentials: true }
     ).then((res) => {
       console.log(res.data)
-      // console.log("Quiz Created! ", quizData)
-      // console.log("Questions Made! ", questionObjects)
       alert("Quiz Created! Check the console for the quiz data")
-      // navigate("/courseCreate")
+      navigate("/courseCreate")
     }).catch((err) => {
       console.log(err)
     })
@@ -88,10 +95,8 @@ function QuizCreate() {
     <div>
       <h1>Create a Quiz </h1>
 
-      {/* <h1>{course.courseId}</h1> */}
-
+      {/* Get the name of the quiz */}
       <label>
-        {/*Whenever thte text inside the username or password fields change, it will update the state variable*/}
         Quiz Name:{" "}
         <input
           type="text"
@@ -104,8 +109,8 @@ function QuizCreate() {
       </label>
       <br></br>
       <br></br>
+      {/* Get the time limit for the quiz  */}
       <label>
-        {/*Whenever thte text inside the username or password fields change, it will update the state variable*/}
         Time Limit (in minutes):{" "}
         <input
           type="number"
@@ -118,8 +123,8 @@ function QuizCreate() {
       </label>
       <br></br>
       <br></br>
+      {/* Get the attempt limit for the quiz from the user */}
       <label>
-        {/*Whenever thte text inside the username or password fields change, it will update the state variable*/}
         Attempt Limit:{" "}
         <input
           type="number"
@@ -131,7 +136,7 @@ function QuizCreate() {
         />
       </label>
 
-
+      {/* Responsible for making question fields for the educator to fill out */}
       <div className="sideBySide">
         {questions.map((question, index) => (
           <div key={index} className="question-block">
@@ -148,7 +153,7 @@ function QuizCreate() {
 
             <br></br>
             <br></br>
-
+            {/* Input correct answers here */}
             <label>
               Correct Answer:
               <input
@@ -162,7 +167,7 @@ function QuizCreate() {
 
             <br></br>
             <br></br>
-
+            {/* Input incorrect answers here */}
             <label>
               Incorrect Answers (comma-separated):
               <input
@@ -176,7 +181,7 @@ function QuizCreate() {
 
             <br></br>
             <br></br>
-
+            {/* Remove the recently-made question */}
             <button onClick={() => removeQuestion(index)}>Remove Question</button>
 
             <br></br>
@@ -185,11 +190,12 @@ function QuizCreate() {
           </div>
 
         ))}
-
+        {/* Button to add the quiz */}
         <button onClick={addQuestion}>Add Another Question</button>
       </div>
-
+      {/* Button to create the quiz */}
       <button onClick={createQuiz}>Create Quiz</button>
+      {/* Button to go back to the course info page */}
       <button onClick={() => navigate("/courseInfo", { state: { course } })}>
         Go Back
       </button>
