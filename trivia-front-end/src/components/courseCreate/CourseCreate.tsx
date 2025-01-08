@@ -6,15 +6,15 @@ import { CourseDTO } from "../interfaces/CourseDTO";
 import NewCourse from "./NewCourse";
 
 function CourseCreate() {
+
+  // State variables 
   const [allCourses, setAllCourses] = useState<Course[]>([])
   /* Popup for editing an existing course */
   const [showAddCoursePopup, setShowAddCoursePopup] = useState(false);
   const [courseToEdit, setCourseToEdit] = useState<Course | null>(null);
-
   const [courseName, setCourseName] = useState<string>("");
   const [courseDesc, setCourseDesc] = useState<string>("");
   const [courseFee, setCourseFee] = useState<number>(0);
-  // MAKE SURE TO GET EDUCATOR ID FROM LOGIN USECONTEXT ONCE AUTHENTICATE IS GOOD TO GO
   const [educatorId, setEducatorId] = useState<number>(0);
 
   const navigate = useNavigate();
@@ -66,8 +66,6 @@ function CourseCreate() {
       return;
     }
     console.log("Creating Course-->")
-
-    // TODO: Get the educator id from the useContext 
 
     /* Storing given course object into a variable to be sent through Axios to the backend. */
     const newCourse: CourseDTO & { educatorId: number } = {
@@ -210,7 +208,6 @@ function CourseCreate() {
 
       <br></br>
       <br></br>
-
       <br></br>
       <br></br>
 

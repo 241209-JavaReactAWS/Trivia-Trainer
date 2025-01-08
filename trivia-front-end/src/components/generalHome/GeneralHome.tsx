@@ -83,6 +83,7 @@ function GeneralHome() {
                         <p>{course.description}</p>
                         <p>{course.educatorId}</p>
                         <p>${course.fee}</p>
+                        <button>Enroll</button>
                     </li>
                 ))}
                 </div>
