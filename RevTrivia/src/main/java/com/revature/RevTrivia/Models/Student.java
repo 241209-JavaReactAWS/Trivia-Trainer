@@ -1,15 +1,13 @@
 package com.revature.RevTrivia.Models;
 
-import java.util.List;
-import java.util.Set;
-
-import com.revature.RevTrivia.Models.Enrollment;
-import com.revature.RevTrivia.Models.QuizAttempt;
-import com.revature.RevTrivia.Security.entity.Role;
 import com.revature.RevTrivia.Security.entity.User;
 import jakarta.persistence.*;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -25,7 +23,7 @@ public class Student {
     private User user;
 
     @OneToMany(mappedBy = "student")
-    private Set<QuizAttempt> quizAttempt;
+    private Set<QuizAttempt> quizAttempts;
 
     @OneToMany(mappedBy = "student")  
     private List<Enrollment> enrollments;
