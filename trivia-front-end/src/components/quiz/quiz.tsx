@@ -43,19 +43,19 @@ function Quiz() {
 
     useEffect(() => {
         const fetchQuizData = async () => {
-          try {
+        try {
             // fetch just one quiz by its ID
             const { data } = await axios.get(`http://localhost:8080/quizzes/${quizId}`);
             setQuizData(data);
-          } catch (err) {
+        } catch (err) {
             console.error(err);
-          }
+        }
         };
     
         if (quizId) {
-          fetchQuizData();
+            fetchQuizData();
         }
-      }, [quizId]);
+    }, [quizId]);
 
 
     const submitQuiz = async () => {
