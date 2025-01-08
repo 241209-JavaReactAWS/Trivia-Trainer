@@ -35,9 +35,9 @@ function PaymentHistory() {
             payments.map((payment) => {
               return (
                 <tr key={payment.payment_id}>
-                  <td>{payment.student}</td>
+                  <td>{payment.student.studentId}</td>
                   <td>0</td>
-                  <td>{payment.course}</td>
+                  <td>{payment.course.courseId}</td>
                 </tr>
               )
             })
