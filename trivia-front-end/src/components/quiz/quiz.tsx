@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
+import {useParams} from 'react-router-dom';
+import axios from 'axios';
 
 interface QuizData {
     quiz_id: number,
@@ -6,7 +8,6 @@ interface QuizData {
     quizTitle: string,
     attemptLimit: number,
     currentAttempt: number,
-    timer: ReturnType<typeof setTimeout>,
     questions: QuestionData[],
 }
 
@@ -35,30 +36,75 @@ interface Quiz {
     quizzes: QuizData
 }
 
-function quiz({quizzes}: Quiz) {
-    const [quiz, setQuiz] = useState({courseName: '', quizTitle: '', currentAttempt: 0, attemptLimit: 0, timer: 0});
-    const [timer, setTimer] = useState(null);
-    
-    return (
-        <div>
-        <h1>{quiz.courseName}</h1>
-        <h2>{quiz.quizTitle}</h2>
-        <h3> Attempt {quiz.currentAttempt} of {quiz.attemptLimit}</h3>
-        <h3> Time Left: {quiz.timer}</h3>
-        <ol>
-        {quizzes.questions.map((question) => (
-            <li key={question.question_id}>
-                {question.question_id}. {question.content}
-                <ul>
-                    {question.options.map((options, index) => (<li key={index}>{options}</li>))}
-                </ul>
-            </li>
-        ))}
-        </ol>
-        <button>Submit Quiz</button>
-        </div>
+function Quiz() {
+    const [quizData, setQuizData] = useState<QuizData | null>(null);
+    const [answers, setAnswers] = useState<Record<number, string>>({});
+    const { quizId } = useParams();
 
-    )
+    useEffect(() => {
+        const fetchQuizData = async () => {
+          try {
+            // fetch just one quiz by its ID
+            const { data } = await axios.get(`http://localhost:8080/quizzes/${quizId}`);
+            setQuizData(data);
+          } catch (err) {
+            console.error(err);
+          }
+        };
+    
+        if (quizId) {
+          fetchQuizData();
+        }
+      }, [quizId]);
+
+
+    const submitQuiz = async () => {
+        if (!quizData) return;
+        try {
+            const response = await axios.post(`http://localhost:8080/attempts`, {quizData});
+            console.log(response.data);
+        } catch (err) {
+            console.error(err);
+            alert("Something went wrong submitting your quiz.");
+        }
+    };
+
+    if (!quizData) {
+        return <div>Loading...</div>
+    }
+
+    return (
+    <div>
+        <h1>{quizData.courseName}</h1>
+        <h2>{quizData.quizTitle}</h2>
+        <h2>Attempt number {quizData.currentAttempt} of {quizData.attemptLimit}</h2>
+        
+        <ol type="1">
+            {quizData.questions.map((question) => (
+                <li key={question.question_id}>{question.content}
+                    <ol type="A">{question.options.map((option, idx) => (
+                        <li key={option}>
+                            <input
+                                type="radio"
+                                name={`question_${question.question_id}`}
+                                value={option}
+                                onChange={() => {
+                                    setAnswers(prev => ({
+                                        ..prev,
+                                        [question.question_id]: option
+                                    }));
+                                }}
+                            />
+                            {option}
+                        </li>
+                    ))}
+                    </ol>
+                </li>
+            ))}
+        </ol>
+        <button onClick ={submitQuiz}>Submit Quiz</button>
+    </div>
+    );
 }
 
-export default quiz
+export default Quiz;

@@ -48,18 +48,30 @@ public class AuthenticationService {
                 .role(role)
                 .build();
         User savedUser = userRepository.save(user);
-
+        HashMap<String, Object> extraClaims = new HashMap<>();
         if (role.equals(Role.EDUCATOR)) {
             Educator newEducator = new Educator();
             newEducator.setUser(savedUser);
-            educatorDAO.save(newEducator);
+            Educator saved = educatorDAO.save(newEducator);
+            // put educator info in token
+            extraClaims.put("educator_id", saved.getEducatorId());
+            extraClaims.put("details", saved.getDetails());
         } else {
             Student newStudent = new Student();
             newStudent.setUser(savedUser);
-            studentDAO.save(newStudent);
+            Student saved = studentDAO.save(newStudent);
+            // put student info in token
+            extraClaims.put("student_id", saved.getStudentId());
         }
-        HashMap<String, Object> extraClaims = new HashMap<>();
+
+        // put user info in token
         extraClaims.put("roles", user.getRole());
+        extraClaims.put("user_id", user.getId());
+        extraClaims.put("username", user.getUsername());
+        extraClaims.put("email", user.getEmail());
+        extraClaims.put("first_name", user.getFirstName());
+        extraClaims.put("last_name", user.getLastName());
+
         String jwt = jwtService.generateJwt(extraClaims, savedUser);
         String refreshToken = jwtService.generateRefreshToken(savedUser);
         saveUserToken(savedUser, jwt);
@@ -79,7 +91,25 @@ public class AuthenticationService {
         );
         var user = userRepository.findByUsername(request.getUsername()).orElseThrow();
         HashMap<String, Object> extraClaims = new HashMap<>();
+        if (user.getRole().equals(Role.EDUCATOR)) {
+            Educator educator = educatorDAO.findByUser(user).orElseThrow();
+            // put educator info in token
+            extraClaims.put("educator_id", educator.getEducatorId());
+            extraClaims.put("details", educator.getDetails());
+        } else {
+            Student student = studentDAO.findByUser(user).orElseThrow();
+            // put student info in token
+            extraClaims.put("student_id", student.getStudentId());
+        }
+
+        // put user info in token
         extraClaims.put("roles", user.getRole());
+        extraClaims.put("user_id", user.getId());
+        extraClaims.put("username", user.getUsername());
+        extraClaims.put("email", user.getEmail());
+        extraClaims.put("first_name", user.getFirstName());
+        extraClaims.put("last_name", user.getLastName());
+
         var jwt = jwtService.generateJwt(extraClaims, user);
         String refreshToken = jwtService.generateRefreshToken(user);
         revokeAllOfUsersAccessTokens(user);
