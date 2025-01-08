@@ -1,7 +1,13 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import "./Nav.css"
+import { Button } from "@mui/material"
 
 function Nav() {
+  const navigate = useNavigate();
+  const logout = () => {
+    localStorage.clear()
+    navigate("/")
+  }
   return (
     <div className="menu">
       <Link to="/">General Home Page</Link>
@@ -11,7 +17,7 @@ function Nav() {
       {/* <Link to="/enroll">Enrollment Test</Link>
       <Link to="/payment">Payment Test</Link> */}
       <Link to="/courseCreate">Course Creation Test</Link>
-
+      <Button onClick={logout}>Log out</Button>
       {/* <Link to="/test1">Payment Test</Link>
       <Link to="/test2">Enrollment Test</Link>
       <Link to="/test3">Course Test</Link>
