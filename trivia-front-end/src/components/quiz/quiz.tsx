@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useParams } from 'react';
 import axios from 'axios';
 
 interface QuizData {
@@ -38,15 +38,23 @@ interface Quiz {
 function Quiz() {
     const [quizData, setQuizData] = useState<QuizData | null>(null);
     const [answers, setAnswers] = useState<Record<number, string>>({});
+    const { quizId } = useParams(); 
 
     useEffect(() => {
         const fetchQuizData = async () => {
-            const { data } = await axios.get('http://localhost:8080/quizzes/${quiz_id}')
+          try {
+            // fetch just one quiz by its ID
+            const { data } = await axios.get(`http://localhost:8080/quizzes/${quizId}`);
             setQuizData(data);
+          } catch (err) {
+            console.error(err);
+          }
         };
-        fetchQuizData();
-        
-    }, []);
+    
+        if (quizId) {
+          fetchQuizData();
+        }
+      }, [quizId]);
 
 
     const submitQuiz = async () => {
