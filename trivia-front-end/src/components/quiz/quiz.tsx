@@ -126,6 +126,7 @@ const submitQuiz = async () => {
         <h2>{quizData.quizTitle}</h2>
         <h2>Attempt number {quizData.currentAttempt} of {quizData.attemptLimit}</h2>
         
+        {/*questions*/}
         <ol type="1">
             {quizData.questions.map((question) => (
                 <li key={question.question_id}>{question.content}
