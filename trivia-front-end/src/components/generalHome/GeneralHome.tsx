@@ -1,11 +1,48 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Course } from "../interfaces/Course";
+import axios from "axios";
 
 function GeneralHome() {
 
+    /* Search parameter to filter courses */
+    const [querStr, setQuerStr] = useState<string>('');
+    const [allCourses, setAllCourses] = useState<Course[]>([])
+    const [showResCourses, setShowResCourses] = useState<boolean>(false);
+    
     const navigate = useNavigate();
     let goToSearch = () => {
         navigate("/search")
     }
+
+    useEffect(() => {
+        axios.get<Course[]>("http://localhost:8080/courses")
+          .then((res) => {
+            setAllCourses(res.data)
+            console.log("Populated enrolled courses successfully")
+          })
+          .catch((error) => {
+            console.error("Could not fetch the course list --> ", error);
+          });
+      }, [])
+
+    /* Filter courses based on quer parameter and display to any visitor to the website */
+    const handleSearch = (quer: string): void => {
+        setQuerStr(quer)
+        if (quer === '') {
+            setAllCourses(allCourses);
+        } else {
+          const ignCaseQuer = quer.toLowerCase();
+          const resCourses = allCourses.filter(
+            (course) =>
+              course.name.toLowerCase().includes(ignCaseQuer) ||
+              course.description.toLowerCase().includes(ignCaseQuer)
+          );
+          setAllCourses(resCourses);
+          console.log(resCourses);
+          setShowResCourses(true);
+        }
+      };
 
     // On the GeneralHome Page, the nav bar should only show this page, the search page, 
     // and the login button 
@@ -28,9 +65,27 @@ function GeneralHome() {
             <br></br>
             <br></br>
 
-            <h2>Some Courses:</h2>
+            <h2>Course Search:</h2>
             {/* Show table of some courses made and show their name, tags, and price*/}
-
+            <input
+            placeholder="Search Courses"
+            value={querStr}
+            onChange={(e) => setQuerStr(e.target.value)}
+            />
+            <button onClick={() => handleSearch(querStr)}>Look up Course</button>
+            {showResCourses && (
+                <div>
+                {allCourses.map((course) => (
+                    <li key={course.courseId}>
+                        <h3>{course.name}</h3>
+                        <p>{course.description}</p>
+                        <p>{course.educatorId}</p>
+                        <p>${course.fee}</p>
+                    </li>
+                ))}
+                </div>
+            )}
+            
         </div>
     )
 }
