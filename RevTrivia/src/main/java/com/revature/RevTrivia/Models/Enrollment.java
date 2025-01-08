@@ -1,8 +1,7 @@
 package com.revature.RevTrivia.Models;
+
 import jakarta.persistence.*;
 import lombok.Data;
-
-import java.time.LocalDate;
 
 @Entity
 @Data
@@ -10,7 +9,8 @@ public class Enrollment {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int enrollment_id;
+    @Column(name = "enrollment_id")
+    private int enrollmentId;
 
     @ManyToOne
     @JoinColumn(name = "student_id")
@@ -20,7 +20,8 @@ public class Enrollment {
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
-    private LocalDate enrollment_date;
+    @Column(name = "enrollment_date")
+    private String enrollmentDate;
 
     private EnrollStatus status;
 
@@ -29,15 +30,11 @@ public class Enrollment {
     private int rating;
 
     //general constructor for enrollment
-    public Enrollment(Student student, Course course, LocalDate enrollment_date, EnrollStatus status) {
-        this.student = student;
-        this.course = course;
-        this.enrollment_date = enrollment_date;
-        this.status = status;
+    public Enrollment() {
     }
 
-    public int getEnrollment_id() {
-        return enrollment_id;
+    public int getEnrollmentId() {
+        return enrollmentId;
     }
 
     public Student getStudent() {
@@ -56,12 +53,12 @@ public class Enrollment {
         this.course = course;
     }
 
-    public LocalDate getEnrollment_date() {
-        return enrollment_date;
+    public String getEnrollmentDate() {
+        return enrollmentDate;
     }
 
-    public void setEnrollment_date(LocalDate enrollment_date) {
-        this.enrollment_date = enrollment_date;
+    public void setEnrollmentDate(String enrollmentDate) {
+        this.enrollmentDate = enrollmentDate;
     }
 
     public EnrollStatus getStatus() {

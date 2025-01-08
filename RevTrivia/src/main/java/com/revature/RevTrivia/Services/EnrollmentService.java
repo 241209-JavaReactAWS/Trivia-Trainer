@@ -26,7 +26,7 @@ public class EnrollmentService {
 
     // Update the review of the enrollment
     public Enrollment updateReview(Enrollment enrollment) {
-        Optional<Enrollment> foundEnrollment = enrollmentDAO.findById(enrollment.getEnrollment_id());
+        Optional<Enrollment> foundEnrollment = enrollmentDAO.findById(enrollment.getEnrollmentId());
         if (foundEnrollment.isPresent()) {
             Enrollment enroll = foundEnrollment.get();
             enroll.setReview(enrollment.getReview());
