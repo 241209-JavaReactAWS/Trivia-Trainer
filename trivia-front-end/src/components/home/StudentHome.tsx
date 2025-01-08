@@ -10,18 +10,22 @@ function StudentHome() {
 
   const navigate = useNavigate();
 
+  // Function responsible for redirection to the enroll page 
   let goToEnroll = () => {
     navigate("/enroll")
   }
 
+  // Function responsible for redirection to the payment page 
   let goToPayment = () => {
     navigate("/payment")
   }
 
+  // Function responsible for redirection to the course information page 
   let goToCourseInfo = (course: Course) => {
     navigate("/courseInfo", { state: { course: course } })
   }
 
+  // Get all enrolled courses whenever the page is loaded. 
   useEffect(() => {
     axios.get<Course[]>("http://localhost:8080/courses")
       .then((res) => {

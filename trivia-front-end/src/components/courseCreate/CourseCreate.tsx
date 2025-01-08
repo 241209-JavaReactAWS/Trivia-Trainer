@@ -4,12 +4,12 @@ import { Course } from "../interfaces/Course";
 import axios from "axios";
 
 function CourseCreate() {
-  const [allCourses, setAllCourses] = useState<Course[]>([])
 
+  // State variables 
+  const [allCourses, setAllCourses] = useState<Course[]>([])
   const [courseName, setCourseName] = useState<string>("");
   const [courseDesc, setCourseDesc] = useState<string>("");
   const [courseFee, setCourseFee] = useState<number>(0);
-  // MAKE SURE TO GET EDUCATOR ID FROM LOGIN USECONTEXT ONCE AUTHENTICATE IS GOOD TO GO
   const [educatorId, setEducatorId] = useState<number>(0);
 
   const navigate = useNavigate();
@@ -24,14 +24,13 @@ function CourseCreate() {
     })
   }
 
+  // Function responsible for 
   let createCourse = () => {
     if (!courseName || !courseDesc || educatorId <= 0 || courseFee <= 0) {
       alert("Some fields may be missing, please try again.");
       return;
     }
     console.log("Creating Course-->")
-
-    // TODO: Get the educator id from the useContext 
 
     /* Storing given course object into a variable to be sent through Axios to the backend. */
     const newCourse: Course & { educatorId: number } = {
@@ -141,7 +140,6 @@ function CourseCreate() {
 
       <br></br>
       <br></br>
-
       <br></br>
       <br></br>
 
