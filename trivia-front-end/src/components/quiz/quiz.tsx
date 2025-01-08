@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, useContext} from 'react';
 import {useParams} from 'react-router-dom';
 import axios from 'axios';
 
@@ -40,6 +40,7 @@ function Quiz() {
     const [quizData, setQuizData] = useState<QuizData | null>(null);
     const [answers, setAnswers] = useState<Record<number, string>>({});
     const { quizId } = useParams();
+    const { user } = useContext(AuthContext);
 
     useEffect(() => {
         const fetchQuizData = async () => {
@@ -61,7 +62,16 @@ function Quiz() {
     const submitQuiz = async () => {
         if (!quizData) return;
         try {
-            const response = await axios.post(`http://localhost:8080/attempts`, {quizData});
+            const response = await axios.post("http://localhost:8080/attempts", {
+                quiz: {
+                    quiz_id: quizData.quiz_id
+                },
+                student: {
+                    student_id: localStorage.getItem("student_id")
+                },
+                score: 0,
+                attemptDate: new Date().toISOString()
+                });
             console.log(response.data);
         } catch (err) {
             console.error(err);
