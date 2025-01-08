@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import axios from 'axios';
 
@@ -24,7 +24,7 @@ interface QuizAttemptData {
     quiz: QuizData,
     student: StudentData,
     score: number,
-    attemptData: string
+    attemptDate: string
 }
 
 interface StudentData {
@@ -39,8 +39,24 @@ interface Quiz {
 function Quiz() {
     const [quizData, setQuizData] = useState<QuizData | null>(null);
     const [answers, setAnswers] = useState<Record<number, string>>({});
+    const [attemptResult, setAttemptResult] = useState<QuizAttemptData | null>(null);
     const { quizId } = useParams();
-    const { user } = useContext(AuthContext);
+
+    function calculateScore(quiz: QuizData, userAnswers: Record<number, string>): number {
+        let correctCount = 0;
+
+        quiz.questions.forEach((question) => {
+            const userAnswer = userAnswers[question.question_id];
+
+            if (userAnswer === question.correct) {
+                correctCount++;
+            }
+        });
+
+        const scorePercentage = (correctCount / quiz.questions.length) * 100;
+        return scorePercentage;
+
+    }
 
     useEffect(() => {
         const fetchQuizData = async () => {
@@ -58,26 +74,47 @@ function Quiz() {
         }
     }, [quizId]);
 
+const submitQuiz = async () => {
+    if (!quizData) return;
 
-    const submitQuiz = async () => {
-        if (!quizData) return;
-        try {
-            const response = await axios.post("http://localhost:8080/attempts", {
-                quiz: {
-                    quiz_id: quizData.quiz_id
-                },
-                student: {
-                    student_id: localStorage.getItem("student_id")
-                },
-                score: 0,
-                attemptDate: new Date().toISOString()
-                });
-            console.log(response.data);
-        } catch (err) {
-            console.error(err);
-            alert("Something went wrong submitting your quiz.");
-        }
-    };
+    const computedScore = calculateScore(quizData, answers);
+    const studentIdString = localStorage.getItem("student_id");
+
+    if (!studentIdString) {
+        alert("No student ID found, please log in.");
+        return;
+    }
+
+    const studentId = parseInt(studentIdString);
+
+    try {
+        const response = await axios.post("http://localhost:8080/attempts", {
+            quiz: {
+                quiz_id: quizData.quiz_id
+            },
+            student: {
+                student_id: studentId
+            },
+            score: computedScore,
+            attemptDate: new Date().toISOString()
+        });
+
+        // Store the full attempt data in state
+        setAttemptResult(response.data);
+
+        alert("Quiz attempt submitted!");
+        
+        // Optionally, update the local quizData's currentAttempt
+        // so the UI button disables if they've hit their limit:
+        setQuizData(prev => prev ? {
+            ...prev,
+            currentAttempt: prev.currentAttempt + 1
+        } : null);
+    } catch (err) {
+        console.error(err);
+        alert("Something went wrong submitting your quiz.");
+    }
+};
 
     if (!quizData) {
         return <div>Loading...</div>
@@ -100,7 +137,7 @@ function Quiz() {
                                 value={option}
                                 onChange={() => {
                                     setAnswers(prev => ({
-                                        ..prev,
+                                        ...prev,
                                         [question.question_id]: option
                                     }));
                                 }}
@@ -112,7 +149,16 @@ function Quiz() {
                 </li>
             ))}
         </ol>
-        <button onClick ={submitQuiz}>Submit Quiz</button>
+        <button onClick ={submitQuiz} disabled={quizData.currentAttempt >= quizData.attemptLimit}>Submit Quiz</button>
+
+    {attemptResult && (
+    <div style={{ marginTop: "2rem" }}>
+        <h3>Quiz Attempt Summary</h3>
+        <p>Attempt ID: {attemptResult.attempt_id}</p>
+        <p>Score: {attemptResult.score}</p>
+        <p>Attempt Date: {attemptResult.attemptDate}</p>
+    </div>
+    )}
     </div>
     );
 }
