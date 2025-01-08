@@ -1,6 +1,8 @@
 import { SyntheticEvent, useState } from "react";
 import "./QuizCreate.css"
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { Course } from "../interfaces/Course";
 
 function QuizCreate() {
 
@@ -11,8 +13,10 @@ function QuizCreate() {
     [{
       content: "", correct: "", incorrectAnswers: ["", "", ""]
     }])
-  // const navigate = useNavigate();
+  const location = useLocation();
+  const navigate = useNavigate();
 
+  const course: Course = location.state?.course;
 
   const questionChange = (index: number, field: "content" | "correct" | "incorrectAnswers", value: string) => {
     const updatedQuestions = [...questions]
@@ -44,7 +48,7 @@ function QuizCreate() {
       alert("Please enter a quiz name")
       return
     }
-    if (timer < 0 || attemptLimit < 0) {
+    if (timer <= 0 || attemptLimit <= 0) {
       alert("Please enter a valid time limit and attempt limit")
       return
     }
@@ -53,55 +57,38 @@ function QuizCreate() {
       return
     }
 
-    // Create the quiz object 
-    // TODO: Set the course id from a prop and add it here. 
-    const quizData = {
-      name: quizName,
-      timer: timer,
-      attemptLimit: attemptLimit,
-      questions: questions
-    }
-
     // Create the list of question objects using the questions useState variable
     const questionObjects = questions.map((question) => ({
       content: question.content,
+      options: [...question.incorrectAnswers, question.correct].join(","),
       correct: question.correct,
-      incorrectAnswers: question.incorrectAnswers,
     }));
-    quizData.questions = questionObjects;
-
-    //   {
-    //     "courseId": 1,
-    //     "title": "test quiz",
-    //     "timer": 30,
-    //     "attemptLimit": 3,
-    //     "questions": [
-    //         {
-    //             "content": "What is 1 + 1",
-    //             "options": "1,3,5,2",
-    //             "correct": "D"
-    //         }
-    //     ]
-    //   }
 
     // TODO: Axios request to create the quiz 
-    // Only include the course id, description
-    // Send the courseId 
-
-    // TODO: Axios requests to create the questions and append them to the Questions table with
-    // the quiz id
-    // Questions: Array of questions 
-    // Build a DTO object 
-
-    console.log("Quiz Created! ", quizData)
-    console.log("Questions Made! ", questionObjects)
-    alert("Quiz Created! Check the console for the quiz data")
-    // navigate("/courseCreate")
+    axios.post("http://localhost:8080/quizzes", {
+      "courseId": course.courseId,
+      "title": quizName,
+      "timer": timer,
+      "attemptLimit": attemptLimit,
+      "questions": questionObjects
+    }
+      // { withCredentials: true }
+    ).then((res) => {
+      console.log(res.data)
+      // console.log("Quiz Created! ", quizData)
+      // console.log("Questions Made! ", questionObjects)
+      alert("Quiz Created! Check the console for the quiz data")
+      // navigate("/courseCreate")
+    }).catch((err) => {
+      console.log(err)
+    })
   }
 
   return (
     <div>
       <h1>Create a Quiz </h1>
+
+      {/* <h1>{course.courseId}</h1> */}
 
       <label>
         {/*Whenever thte text inside the username or password fields change, it will update the state variable*/}
@@ -203,6 +190,9 @@ function QuizCreate() {
       </div>
 
       <button onClick={createQuiz}>Create Quiz</button>
+      <button onClick={() => navigate("/courseInfo", { state: { course } })}>
+        Go Back
+      </button>
 
     </div>
   )
