@@ -44,13 +44,13 @@ function StudentHome() {
       <h2>Enrolled courses:</h2>
       {/* Show all enrolled courses here (See useEffect todo) */}
       {allCourses.map((course) => (
-            <li key={course.courseId}>
-              <h3>{course.name}</h3>
-              <p>{course.description}</p>
-              <p>{course.educatorId}</p>
-              <p>${course.fee}</p>
-              <button onClick={() => goToCourseInfo(course)}>View Course</button>
-            </li>
+        <li key={course.courseId}>
+          <h3>{course.name}</h3>
+          <p>{course.description}</p>
+          <p>{course.educatorId}</p>
+          <p>${course.fee}</p>
+          <button onClick={() => goToCourseInfo(course)}>View Course</button>
+        </li>
       ))}
       <br></br>
       <br></br>
