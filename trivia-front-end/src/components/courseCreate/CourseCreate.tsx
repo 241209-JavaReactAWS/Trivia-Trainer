@@ -1,10 +1,15 @@
-import { ChangeEvent, SyntheticEvent, useState } from "react";
+import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Course } from "../interfaces/Course";
 import axios from "axios";
+import { CourseDTO } from "../interfaces/CourseDTO";
+import NewCourse from "./NewCourse";
 
 function CourseCreate() {
   const [allCourses, setAllCourses] = useState<Course[]>([])
+  /* Popup for editing an existing course */
+  const [showAddCoursePopup, setShowAddCoursePopup] = useState(false);
+  const [courseToEdit, setCourseToEdit] = useState<Course | null>(null);
 
   const [courseName, setCourseName] = useState<string>("");
   const [courseDesc, setCourseDesc] = useState<string>("");
@@ -15,14 +20,46 @@ function CourseCreate() {
   const navigate = useNavigate();
 
   /** Tester Function: Sending a get request to the database getting all courses. */
-  let getCourses = () => {
-    axios.get("http://localhost:8080/courses"
-    ).then((res) => {
-        console.log("Here are the current courses in the database: ", res.data);
-    }).catch((err) => {
-        console.log(err);
+  // let getCourses = () => {
+  //   axios.get("http://localhost:8080/courses"
+  //   ).then((res) => {
+  //       console.log("Here are the current courses in the database: ", res.data);
+  //   }).catch((err) => {
+  //       console.log(err);
+  //   })
+  // }
+
+  useEffect(() => {
+    axios.get<Course[]>("http://localhost:8080/courses")
+      .then((res) => {
+        setAllCourses(res.data)
+        console.log("Populated enrolled courses successfully")
+      })
+      .catch((error) => {
+        console.error("Could not fetch the course list --> ", error);
+      });
+  }, [])
+  
+  /**Add new course */
+  const addNewCourseToList = (newCourse: Course) => {
+    setAllCourses((prevBooks) => [...prevBooks, newCourse]);
+  };
+
+  const editCourse = (course: Course) => {
+    setCourseToEdit(course);
+    setShowAddCoursePopup(true); 
+  };
+
+  const delCourse = (courseId: number) => {
+    axios.delete(`http://localhost:8080/courses/${courseId}`)
+    .then(response => {
+      axios.get<Course>(`http://localhost:8080/courses/${courseId}`)
+      console.log("Course deleted:", response.data);
     })
-  }
+    .catch(error => {
+      console.error("Error deleting course:", error);
+    });
+  };
 
   let createCourse = () => {
     if (!courseName || !courseDesc || educatorId <= 0 || courseFee <= 0) {
@@ -34,7 +71,7 @@ function CourseCreate() {
     // TODO: Get the educator id from the useContext 
 
     /* Storing given course object into a variable to be sent through Axios to the backend. */
-    const newCourse: Course & { educatorId: number } = {
+    const newCourse: CourseDTO & { educatorId: number } = {
       name: courseName,
       description: courseDesc,
       educatorId: educatorId,
@@ -62,10 +99,37 @@ function CourseCreate() {
     navigate("/QuizCreate");
   }
 
+  let getCourseId = (course: Course) => {
+    return course.courseId;
+  }
+
   return (
     <div>
       <h1>Create New Course</h1>
-      <button id="getcourses" onClick={getCourses}>Get Course List</button>
+      {/* <button id="getcourses" onClick={getCourses}>Get Course List</button> */}
+      {/* Show all enrolled courses here (See useEffect todo) */}
+      {allCourses.map((course) => (
+            <li key={course.courseId}>
+              <h3>{course.name}</h3>
+              <p>{course.description}</p>
+              <p>${course.fee}</p>
+              <button onClick={() => editCourse(course)}>Edit</button>
+              <button onClick={() => delCourse(course.courseId)}>Delete</button>
+            </li>
+      ))}
+      <br/>
+      <br/>
+      {/* Show fields to modify */}
+      {showAddCoursePopup && (
+        <NewCourse
+            onClose={() => {
+                setShowAddCoursePopup(false);
+                setCourseToEdit(null);
+            }}
+            onCourseAdded={addNewCourseToList}
+            courseToEdit={courseToEdit}
+        />
+    )}
       <br/>
       <br/>
       <label>
@@ -146,7 +210,6 @@ function CourseCreate() {
       <br></br>
 
       <button onClick={createQuiz}>Create Quiz Button (for testing purposes) </button>
-
     </div>
   )
 }
