@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useParams } from 'react';
+import React, { useState, useEffect} from 'react';
+import {useParams} from 'react-router-dom';
 import axios from 'axios';
 
 interface QuizData {
@@ -38,7 +39,7 @@ interface Quiz {
 function Quiz() {
     const [quizData, setQuizData] = useState<QuizData | null>(null);
     const [answers, setAnswers] = useState<Record<number, string>>({});
-    const { quizId } = useParams(); 
+    const { quizId } = useParams();
 
     useEffect(() => {
         const fetchQuizData = async () => {
