@@ -22,6 +22,10 @@ function StudentHome() {
     navigate("/payment")
   }
 
+  let goToCourseInfo = (course: Course) => {
+    navigate("/courseInfo", { state: { course: course } })
+  }
+
   useEffect(() => {
     axios.get<Course[]>("http://localhost:8080/courses")
       .then((res) => {
@@ -45,6 +49,7 @@ function StudentHome() {
               <p>{course.description}</p>
               <p>{course.educatorId}</p>
               <p>${course.fee}</p>
+              <button onClick={() => goToCourseInfo(course)}>View Course</button>
             </li>
       ))}
       <br></br>
