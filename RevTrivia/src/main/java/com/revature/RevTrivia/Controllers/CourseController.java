@@ -13,9 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
-
-
 @RestController
 @RequestMapping("/courses")//Needs to be reviewed and approved.
 public class CourseController {
@@ -38,9 +35,9 @@ public class CourseController {
         return courseService.getCourseById(courseId).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
-    @PutMapping("/{courseId}")
-    public ResponseEntity<Course> updateCourse(@PathVariable int courseId, @RequestBody Course course) {
-        return ResponseEntity.ok(courseService.updateCourse(course));
+    @PatchMapping("/{courseId}")
+    public ResponseEntity<Course> updateCourse(@PathVariable int courseId, @RequestBody CourseCreationDTO courseCreationDTO) {
+        return ResponseEntity.ok(courseService.updateCourse(courseId, courseCreationDTO));
     }
 
     @DeleteMapping("/{courseId}")
