@@ -29,7 +29,7 @@ function NewCourse({ onClose, onCourseUpdated, courseToEdit }: NewCourseProps) {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: name === "fee" ? parseFloat(value) : value, // Treat as double (parseFloat works for double values in JavaScript)
+      [name]: name === "fee" ? parseFloat(value) : value,
     });
   };
 
