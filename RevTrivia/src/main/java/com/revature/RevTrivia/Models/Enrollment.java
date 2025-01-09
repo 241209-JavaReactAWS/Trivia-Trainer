@@ -1,5 +1,6 @@
 package com.revature.RevTrivia.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -12,6 +13,7 @@ public class Enrollment {
     @Column(name = "enrollment_id")
     private int enrollmentId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "student_id")
     private Student student;

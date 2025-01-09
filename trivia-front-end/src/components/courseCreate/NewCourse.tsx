@@ -29,7 +29,7 @@ function NewCourse({ onClose, onCourseUpdated, courseToEdit }: NewCourseProps) {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: name === "fee" ? parseFloat(value) : value, // Treat as double (parseFloat works for double values in JavaScript)
+      [name]: name === "fee" ? parseFloat(value) : value,
     });
   };
 
@@ -37,7 +37,7 @@ function NewCourse({ onClose, onCourseUpdated, courseToEdit }: NewCourseProps) {
     e.preventDefault();
 
     axios
-      .patch<Course>(`http://localhost:8080/courses/${courseToEdit.courseId}`, formData)
+      .patch<Course>(`http://localhost:8080/courses/${courseToEdit?.courseId}`, formData)
       .then((response) => {
         console.log("Course updated successfully:", response.data);
         onCourseUpdated(response.data); // Pass the updated course back to the parent
