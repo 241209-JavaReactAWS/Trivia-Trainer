@@ -168,7 +168,7 @@ function Quiz() {
             {attemptResult && (
                 <div style={{ marginTop: "2rem" }}>
                     <h3>Quiz Attempt Summary</h3>
-                    <p>Attempt ID: {attemptResult.attempt_id}</p>
+                    {/*<p>Attempt ID: {attemptResult.attempt_id}</p>*/}
                     <p>Score: {attemptResult.score}</p>
                     <p>Attempt Date: {attemptResult.attemptDate}</p>
                 </div>
