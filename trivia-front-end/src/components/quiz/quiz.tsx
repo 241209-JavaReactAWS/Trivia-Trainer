@@ -93,16 +93,12 @@ function Quiz() {
             return;
         }
 
-        const studentId = parseInt(studentIdString);
+        const student_Id = parseInt(studentIdString);
 
         try {
             const response = await axios.post("http://localhost:8080/attempts", {
-                quiz: {
-                    quiz_id: quizData.quiz_id,
-                },
-                student: {
-                    student_id: studentId,
-                },
+                quizId: quizData.quiz_id,
+                studentId:student_Id,
                 score: computedScore,
                 attemptDate: new Date().toISOString(),
             });
