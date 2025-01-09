@@ -31,4 +31,20 @@ public class EducatorService {
         educatorDAO.deleteById(educatorId);
         return retStudent;
     }
+
+    public Optional<Educator> getEducatorById(int educatorId) {
+        return educatorDAO.findById(educatorId);
+    }
+
+    public Optional<Educator> updateEducatorDetails(int educatorId, String newDetails) {
+        Optional<Educator> retStudent = educatorDAO.findById(educatorId);
+        if (retStudent.isPresent()) {
+            Educator educator = retStudent.get();
+            educator.setDetails(newDetails);
+            educatorDAO.save(educator);
+        }
+        return retStudent;
+    }
+
+
 }
