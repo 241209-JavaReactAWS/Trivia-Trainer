@@ -13,6 +13,9 @@ import PaymentHistory from "./components/payment/PaymentHistory";
 import Course from "./components/Course/Course";
 import Quiz from "./components/quiz/quiz";
 import CourseInfo from "./components/courseInfo/CourseInfo";
+import Profile from "./components/profile/Profile";
+import ChangeDetails from "./components/profile/ChangeDetails";
+import EducatorProfile from "./components/profile/Profile";
 function App() {
   return (
     <>
@@ -33,6 +36,8 @@ function App() {
           <Route path="/quiz/:quizId" element={<Quiz />} />
           <Route path="/course" element={<Course></Course>}></Route>
           <Route path="/courseInfo" element={<CourseInfo></CourseInfo>}></Route>
+          <Route path="/profile" element={<Profile></Profile>}></Route>
+          <Route path="/changeDetails" element={<ChangeDetails></ChangeDetails>}></Route>
 
           {/* <Route path="/test1" element={<Test1></Test1>}></Route>
           <Route path="/test2" element={<Test2></Test2>}></Route>
