@@ -16,11 +16,13 @@ import CourseInfo from "./components/courseInfo/CourseInfo";
 import Profile from "./components/profile/Profile";
 import ChangeDetails from "./components/profile/ChangeDetails";
 import EducatorProfile from "./components/profile/Profile";
+import NavMUI from "./components/nav/NavMUI";
 function App() {
   return (
     <>
       <BrowserRouter>
         <Nav></Nav>
+        {/* <NavMUI /> */}
 
         <Routes>
           <Route path="/" element={<GeneralHome></GeneralHome>}></Route>
