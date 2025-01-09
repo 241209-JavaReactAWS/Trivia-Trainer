@@ -6,20 +6,34 @@ import { Enrollment } from "../interfaces/Enrollment";
 function EnrollmentPage() {
 
     const [enrollments, setEnrollments] = useState<Enrollment[]>([])
+    const [deletedCourse, setDeletedCourse] = useState<number>(0)
     const navigate = useNavigate();
 
     //Note: Remove from this page during integration with Sanjana's course search
     useEffect( () => {
-        axios.get("http://localhost:8080/courses"
+        axios.get("http://localhost:8080/enrollment"
         ).then((res) => {
-            console.log("Here are the current courses in the database: ", res.data);
+            console.log("Here are the current enrollments in the database: ", res.data);
+            setEnrollments(res.data)
         }).catch((err) => {
             console.log(err);
         })
-      })
+      }, [deletedCourse])
       
     let enroll = () => {
         navigate("/payment")
+    }
+
+    let leaveCourse = (enrollId: number) => {
+        console.log(enrollId)
+        axios.delete(`http://localhost:8080/enrollment/${enrollId}`).
+        then(() => {
+            setDeletedCourse(enrollId)
+            console.log(`Deleted enrollment ${enrollId}`)
+        }).
+        catch((err) => {
+            console.log(err);
+        })
     }
 
     /*
@@ -51,16 +65,16 @@ function EnrollmentPage() {
     */
     return (
         <div>
-            {/*Remove this part when connecting to Sanjana's code*/}
             <h1>Enrollment Table</h1>
             <table>
                 <thead>
                     <tr>
-                        <th>Student ID</th>
+                        {/* {<th>Student ID</th>} */}
                         <th>Course ID</th>
                         <th>Course Name</th>
                         <th>Enrollment Status</th>
-                        <th>Pay</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -68,24 +82,18 @@ function EnrollmentPage() {
                     enrollments.map((enrollment) => {
                     return (
                         <tr key={enrollment.enrollmentId}>
-                            <td>{enrollment.student.studentId}</td>
+                            {/* {<td>{enrollment.student.studentId}</td>} */}
                             <td>{enrollment.course.courseId}</td>
                             <td>{enrollment.course.name}</td>
                             <td>{enrollment.enrollStatus}</td>
                             <td><button>Pay</button></td>
+                            <td><button onClick={() => leaveCourse(enrollment.enrollmentId)}>Leave</button></td>
                         </tr>
                         )
                     })
                 }
                 </tbody>
             </table>
-            <button onClick={enroll}> {/* Will enroll in the course; Will be greyed out if already enrolled */}
-                Enroll 
-            </button>
-            <div></div>
-            <button onClick={enroll}> {/* Will drop enrollment from the course; Will be greayed out if not enrolled */}
-                Leave Course 
-            </button>
         </div>
     )
 }

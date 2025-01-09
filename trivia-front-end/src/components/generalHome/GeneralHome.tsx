@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Course } from "../interfaces/Course";
 import axios from "axios";
+import { EnrollmentDTO } from "../interfaces/EnrollmentDTO";
 
 function GeneralHome() {
 
@@ -11,6 +12,9 @@ function GeneralHome() {
     /* What will be displayed every time a search is requested */
     const [visibleCourses, setVisibleCourses] = useState<Course[]>([])
     const [showResCourses, setShowResCourses] = useState<boolean>(false);
+    
+    const [currentStudent, setCurrentStudent] = useState<number>(+localStorage.getItem("student_id"))
+
     
     const navigate = useNavigate();
     let goToSearch = () => {
@@ -49,6 +53,28 @@ function GeneralHome() {
     // On the GeneralHome Page, the nav bar should only show this page, the search page, 
     // and the login button 
 
+    // While navigating the search results, a Student can enroll in courses
+    const enrollInCourse = (clickedCourse: number): void => {
+      console.log(`Course ID: ${clickedCourse}`)
+      console.log(`Student ID: ${localStorage.getItem("student_id")}`)
+      //var currentStudent = +localStorage.getItem("student_id")
+      let newEnrollment: EnrollmentDTO = {
+          studentId: currentStudent,
+          courseId: clickedCourse,
+          enrollmentDate: "1/1/24",
+          enrollStatus: 0,
+          review: "empty review",
+          rating: 0
+      }
+      console.log(newEnrollment)
+      axios.post("http://localhost:8080/enrollment", newEnrollment)
+      .then((res) => {
+        console.log(res.data)
+      }).catch((err) => {
+        console.log(err)
+      })
+    }
+
     return (
         <div>
             <h1>RevTrivia</h1>
@@ -83,7 +109,11 @@ function GeneralHome() {
                         <p>{course.description}</p>
                         <p>{course.educatorId}</p>
                         <p>${course.fee}</p>
-                        <button>Enroll</button>
+                        {
+                          currentStudent != 0 ?
+                          <button onClick={() => enrollInCourse(course.courseId)}>Enroll</button>
+                          : <></>
+                        }
                     </li>
                 ))}
                 </div>
