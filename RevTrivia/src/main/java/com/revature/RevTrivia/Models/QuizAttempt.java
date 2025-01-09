@@ -26,7 +26,7 @@ public class QuizAttempt {
     @JoinColumn(name = "student_id", nullable = false)
     private Student student;
 
-    private double score;
+    private Double score;
 
     private String attemptDate;
 }
