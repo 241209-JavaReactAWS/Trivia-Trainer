@@ -1,9 +1,10 @@
-/* Object to represent the backend model class Course */ 
+/* Object to represent the backend model class Course */
+import { Educator } from "./Educator";
 
 export interface Course {
     courseId: number,
     name: string,
     description: string,
-    educatorId: number,
+    educator: Educator,
     fee: number
 }

@@ -9,6 +9,7 @@ function CourseCreate() {
 
   // State variables 
   const [allCourses, setAllCourses] = useState<Course[]>([])
+  const [edCourses, setEdCourses] = useState<Course[]>([])
   /* Popup for editing an existing course */
   const [showAddCoursePopup, setShowAddCoursePopup] = useState(false);
   const [courseToEdit, setCourseToEdit] = useState<Course | null>(null);
@@ -16,6 +17,7 @@ function CourseCreate() {
   const [courseDesc, setCourseDesc] = useState<string>("");
   const [courseFee, setCourseFee] = useState<number>(0);
   const [educatorId, setEducatorId] = useState<number>(0);
+  const [userRole, setUserRole] = useState<string>("");
 
   const navigate = useNavigate();
 
@@ -30,15 +32,32 @@ function CourseCreate() {
   // }
 
   useEffect(() => {
-    axios.get<Course[]>("http://localhost:8080/courses")
+    /*  Only display editable and deletable courses if the user is an educator, and if the educator is the creater of the courses. */
+    const role = localStorage.getItem("roles");
+    let edId = localStorage.getItem("educator_id");
+    if (role === "EDUCATOR" && edId !== null) {
+      axios.get<Course[]>("http://localhost:8080/courses")
       .then((res) => {
         setAllCourses(res.data)
-        console.log("Populated enrolled courses successfully")
+        // res.data.forEach(course => console.log("In allCourses - Course Id --> ", course.courseId));
+        res.data.forEach(course => console.log("In res data Courses - Course Name --> ", course.name));
+        // res.data.forEach(course => console.log("In allCourses - Course Description --> ", course.description));
+        // res.data.forEach(course => console.log("In allCourses - Course Fee --> ", course.fee));
+        res.data.forEach(course => console.log("In res data Courses - Course Educator Id --> ", course.educator.educatorId));
+        const correspondingCourses = res.data.filter((course) => course.educator.educatorId == parseInt(edId));
+        console.log("Corresponding courses --> ", correspondingCourses);
+        console.log("edID --> ", edId);
+        setEdCourses(correspondingCourses)
+        console.log("Populated educator corresponding courses successfully")
       })
       .catch((error) => {
-        console.error("Could not fetch the course list --> ", error);
-      });
-  }, [])
+        console.error("Could not fetch the ed corresponding course list --> ", error);
+      }); 
+    } else {
+      console.log("User is not an educator, or login unsuccessful.")
+    }
+  }, []
+  )
   
   /**Add new course */
   const addNewCourseToList = (newCourse: Course) => {
@@ -105,7 +124,7 @@ function CourseCreate() {
       <h1>Create New Course</h1>
       {/* <button id="getcourses" onClick={getCourses}>Get Course List</button> */}
       {/* Show all enrolled courses here (See useEffect todo) */}
-      {allCourses.map((course) => (
+      {edCourses.map((course) => (
             <li key={course.courseId}>
               <h3>{course.name}</h3>
               <p>{course.description}</p>
