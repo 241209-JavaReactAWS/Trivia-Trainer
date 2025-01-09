@@ -102,7 +102,6 @@ function Quiz() {
                 score: computedScore,
                 attemptDate: new Date().toISOString(),
             });
-            alert("1");
             setAttemptResult(response.data);
 
             alert("Quiz attempt submitted!");
