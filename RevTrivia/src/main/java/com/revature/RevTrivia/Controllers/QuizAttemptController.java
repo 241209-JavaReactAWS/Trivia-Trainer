@@ -1,5 +1,6 @@
 package com.revature.RevTrivia.Controllers;
 
+import com.revature.RevTrivia.Models.DTOs.QuizAttemptPostDTO;
 import com.revature.RevTrivia.Models.QuizAttempt;
 import com.revature.RevTrivia.Services.QuizAttemptService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,8 @@ public class QuizAttemptController {
     private QuizAttemptService quizAttemptService;
 
     @PostMapping
-    public ResponseEntity<QuizAttempt> createNewAttemptHandler(@RequestBody QuizAttempt quizAttempt){
-        QuizAttempt newAttempt = quizAttemptService.createNewAttmept(quizAttempt);
+    public ResponseEntity<QuizAttemptPostDTO> createNewAttemptHandler(@RequestBody QuizAttemptPostDTO quizAttemptCreationDTO){
+        QuizAttemptPostDTO newAttempt = quizAttemptService.createNewAttmept(quizAttemptCreationDTO);
         return new ResponseEntity<>(newAttempt, HttpStatus.CREATED);
     }
 
