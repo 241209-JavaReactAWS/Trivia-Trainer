@@ -120,7 +120,7 @@ function Quiz() {
                     : null
             );
         } catch (err) {
-            console.error(err.response || err);
+            console.error(err);
             alert("Something went wrong submitting your quiz!");
         }
     };
@@ -183,3 +183,4 @@ function Quiz() {
 }
 
 export default Quiz;
+
