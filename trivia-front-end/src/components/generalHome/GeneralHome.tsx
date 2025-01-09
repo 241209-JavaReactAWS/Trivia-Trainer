@@ -8,6 +8,8 @@ function GeneralHome() {
     /* Search parameter to filter courses */
     const [querStr, setQuerStr] = useState<string>('');
     const [allCourses, setAllCourses] = useState<Course[]>([])
+    /* What will be displayed every time a search is requested */
+    const [visibleCourses, setVisibleCourses] = useState<Course[]>([])
     const [showResCourses, setShowResCourses] = useState<boolean>(false);
     
     const navigate = useNavigate();
@@ -30,7 +32,7 @@ function GeneralHome() {
     const handleSearch = (quer: string): void => {
         setQuerStr(quer)
         if (quer === '') {
-            setAllCourses(allCourses);
+            setShowResCourses(false);
         } else {
           const ignCaseQuer = quer.toLowerCase();
           const resCourses = allCourses.filter(
@@ -38,7 +40,7 @@ function GeneralHome() {
               course.name.toLowerCase().includes(ignCaseQuer) ||
               course.description.toLowerCase().includes(ignCaseQuer)
           );
-          setAllCourses(resCourses);
+          setVisibleCourses(resCourses);
           console.log(resCourses);
           setShowResCourses(true);
         }
@@ -75,12 +77,13 @@ function GeneralHome() {
             <button onClick={() => handleSearch(querStr)}>Look up Course</button>
             {showResCourses && (
                 <div>
-                {allCourses.map((course) => (
+                {visibleCourses.map((course) => (
                     <li key={course.courseId}>
                         <h3>{course.name}</h3>
                         <p>{course.description}</p>
                         <p>{course.educatorId}</p>
                         <p>${course.fee}</p>
+                        <button>Enroll</button>
                     </li>
                 ))}
                 </div>
