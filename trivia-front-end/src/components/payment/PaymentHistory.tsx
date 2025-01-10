@@ -11,7 +11,7 @@ function PaymentHistory() {
 
   //Change this endpoint from Get All Payments to Get Payments by user ID
   useEffect(() => {
-    axios.get<Payment[]>(`${backendUrl}/payment`)
+    axios.get<Payment[]>(`${backendUrl}/payment/student/${localStorage.getItem("student_id")}`)
       .then((res) => {
         setPayments(res.data)
         console.log(res.data)
