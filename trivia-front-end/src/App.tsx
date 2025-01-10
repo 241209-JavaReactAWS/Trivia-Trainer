@@ -16,6 +16,7 @@ import CourseInfo from "./components/courseInfo/CourseInfo";
 import Profile from "./components/profile/Profile";
 import ChangeDetails from "./components/profile/ChangeDetails";
 import EducatorProfile from "./components/profile/Profile";
+import CourseCreateMUI from "./components/courseCreate/CourseCreateMUI";
 import NavMUI from "./components/nav/NavMUI";
 import GeneralHomeMUI from "./components/generalHome/GeneralHomeMUI";
 function App() {
@@ -33,7 +34,11 @@ function App() {
           <Route path="/payment" element={<Test1></Test1>}></Route>
           <Route path="/search" element={<Search></Search>}></Route>
           <Route path="/enroll" element={<EnrollmentPage></EnrollmentPage>}></Route>
-          <Route path="/courseCreate" element={<CourseCreate></CourseCreate>}></Route>
+
+          {/* <Route path="/courseCreate" element={<CourseCreate></CourseCreate>}></Route> */}
+          {/* Course Create MUI Test Link */}
+          <Route path="/courseCreateMUI" element={<CourseCreateMUI></CourseCreateMUI>}></Route>
+
           <Route path="/quizCreate" element={<QuizCreate></QuizCreate>}></Route>
           <Route path="/test1" element={<Test1></Test1>}></Route>
           <Route path="/paymentHistory" element={<PaymentHistory></PaymentHistory>}></Route>

@@ -18,7 +18,7 @@ function CourseInfo() {
       {/* Show information about the course  */}
       <h1>{course.name}</h1>
       <p>{course.description}</p>
-      <p>Educator ID: {course.courseId}</p>
+      <p>Educator ID: {course.educator.educatorId}</p>
       <p>Fee: ${course.fee}</p>
 
       {/* Button responsible for redirecting the educator to the quiz creation page */}
