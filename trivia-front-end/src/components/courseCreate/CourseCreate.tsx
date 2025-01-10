@@ -18,31 +18,21 @@ function CourseCreate() {
   const [courseFee, setCourseFee] = useState<number>(0);
   const [educatorId, setEducatorId] = useState<number>(0);
   const [userRole, setUserRole] = useState<string>("");
+  /* Setting role to conditionally render CRUD operations on courses */
+  const [roleEd, setRoleEd] = useState<boolean>(false);
 
   const navigate = useNavigate();
-
-  /** Tester Function: Sending a get request to the database getting all courses. */
-  // let getCourses = () => {
-  //   axios.get("http://localhost:8080/courses"
-  //   ).then((res) => {
-  //       console.log("Here are the current courses in the database: ", res.data);
-  //   }).catch((err) => {
-  //       console.log(err);
-  //   })
-  // }
 
   useEffect(() => {
     /*  Only display editable and deletable courses if the user is an educator, and if the educator is the creater of the courses. */
     const role = localStorage.getItem("roles");
     let edId = localStorage.getItem("educator_id");
     if (role === "EDUCATOR" && edId !== null) {
+      setRoleEd(true);
       axios.get<Course[]>("http://localhost:8080/courses")
       .then((res) => {
         setAllCourses(res.data)
-        // res.data.forEach(course => console.log("In allCourses - Course Id --> ", course.courseId));
         res.data.forEach(course => console.log("In res data Courses - Course Name --> ", course.name));
-        // res.data.forEach(course => console.log("In allCourses - Course Description --> ", course.description));
-        // res.data.forEach(course => console.log("In allCourses - Course Fee --> ", course.fee));
         res.data.forEach(course => console.log("In res data Courses - Course Educator Id --> ", course.educator.educatorId));
         const correspondingCourses = res.data.filter((course) => course.educator.educatorId == parseInt(edId));
         console.log("Corresponding courses --> ", correspondingCourses);
@@ -54,12 +44,13 @@ function CourseCreate() {
         console.error("Could not fetch the ed corresponding course list --> ", error);
       }); 
     } else {
+      setRoleEd(false);
       console.log("User is not an educator, or login unsuccessful.")
     }
   }, []
   )
   
-  /**Add new course */
+  /* Add new course */
   const addNewCourseToList = (newCourse: Course) => {
     setAllCourses((prevBooks) => [...prevBooks, newCourse]);
   };
@@ -151,7 +142,10 @@ function CourseCreate() {
     }}
     courseToEdit={courseToEdit}
   />
-)}
+  )}
+
+{roleEd && (
+    <div>
       <br/>
       <br/>
       <label>
@@ -231,7 +225,13 @@ function CourseCreate() {
       <br></br>
 
       <button onClick={createQuiz}>Create Quiz Button (for testing purposes) </button>
+    </div> 
+  )}
+  {!roleEd && (
+      <h2> This Page is only for Proctors </h2>
+  )}
     </div>
+    
   )
 }
 

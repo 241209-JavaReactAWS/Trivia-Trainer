@@ -39,10 +39,26 @@ function Quiz() {
 
     function calculateScore(quiz: QuizData, userAnswers: Record<number, string>): number {
         let correctCount = 0;
+        let ans = null;
 
         quiz.questions.forEach((question) => {
             const userAnswer = userAnswers[question.question_id];
-            if (userAnswer === question.correct) {
+            console.log(userAnswer);
+            console.log(question.correct);
+            console.log(question.options.lastIndexOf(userAnswer));
+
+            if (question.options.lastIndexOf(userAnswer) == 0) {
+                ans = "A";
+            } else if (question.options.lastIndexOf(userAnswer) == 1) {
+                ans = "B";
+            } else if (question.options.lastIndexOf(userAnswer) == 2) {
+                ans = "C";
+            } else {
+                ans = "D";
+            }
+
+            console.log(ans === question.correct);
+            if (ans === question.correct) {
                 correctCount++;
             }
         });
@@ -100,7 +116,7 @@ function Quiz() {
                 quizId: quizData.quiz_id,
                 studentId:student_Id,
                 score: computedScore,
-                attemptDate: new Date().toISOString(),
+                attemptDate: new Date().toUTCString(),
             });
             setAttemptResult(response.data);
 
@@ -178,4 +194,5 @@ function Quiz() {
 }
 
 export default Quiz;
+
 
