@@ -1,17 +1,19 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Enrollment } from "../interfaces/Enrollment";
+import { Course } from "../interfaces/Course";
+import { PaymentDTO } from "../interfaces/PaymentDTO";
 
 function EnrollmentPage() {
 
     const [enrollments, setEnrollments] = useState<Enrollment[]>([])
     const [deletedCourse, setDeletedCourse] = useState<number>(0)
-    const navigate = useNavigate();
+    const [refreshPage, setRefreshPage] = useState<boolean>(false)
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     //Note: Remove from this page during integration with Sanjana's course search
     useEffect( () => {
-        axios.get("http://localhost:8080/enrollment"
+        axios.get(`${backendUrl}/enrollment`
         ).then((res) => {
             console.log("Here are the current enrollments in the database: ", res.data);
             setEnrollments(res.data)
@@ -20,13 +22,41 @@ function EnrollmentPage() {
         })
       }, [deletedCourse])
       
-    let enroll = () => {
-        navigate("/payment")
+    let toggleRefresh = () => {
+        setRefreshPage(!refreshPage);
+    }
+    let payFee = (course: Course, enrollId: number) => {
+        console.log(course)
+        console.log("Making Payment");
+        console.log(`Student ID: ${localStorage.getItem("student_id")}`);
+        console.log(`Course ID: ${course.courseId}`);
+        console.log(`Amount: ${course.fee}`);
+        let studentStr = localStorage.getItem("student_id")
+        if(studentStr != null){
+        let newPaymentDTO : PaymentDTO = {
+          studentId: parseInt(studentStr),
+          courseId: course.courseId,
+          amount: course.fee
+        }
+        console.log(newPaymentDTO)
+        axios.post(`${backendUrl}/payment`, newPaymentDTO)
+          .then((res) => {
+            console.log(res.data)
+          }).catch((err) => {
+            console.log(err)
+          })
+        //Update payment status to paid
+        axios.patch(`${backendUrl}/enrollment/payFee/${enrollId}`)
+          .then((res) => {
+            console.log(res.data)
+          }).catch((err) => {
+            console.log(err)
+          })}
     }
 
     let leaveCourse = (enrollId: number) => {
         console.log(enrollId)
-        axios.delete(`http://localhost:8080/enrollment/${enrollId}`).
+        axios.delete(`${backendUrl}/enrollment/${enrollId}`).
         then(() => {
             setDeletedCourse(enrollId)
             console.log(`Deleted enrollment ${enrollId}`)
@@ -66,6 +96,7 @@ function EnrollmentPage() {
     return (
         <div>
             <h1>Enrollment Table</h1>
+            <button onClick={toggleRefresh}>Test</button>
             <table>
                 <thead>
                     <tr>
@@ -73,6 +104,7 @@ function EnrollmentPage() {
                         <th>Course ID</th>
                         <th>Course Name</th>
                         <th>Enrollment Status</th>
+                        <th>Entrance Fee</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -85,8 +117,9 @@ function EnrollmentPage() {
                             {/* {<td>{enrollment.student.studentId}</td>} */}
                             <td>{enrollment.course.courseId}</td>
                             <td>{enrollment.course.name}</td>
-                            <td>{enrollment.enrollStatus}</td>
-                            <td><button>Pay</button></td>
+                            <td>{enrollment.status}</td>
+                            <td>{enrollment.course.fee}</td>
+                            <td><button onClick={() => payFee(enrollment.course, enrollment.enrollmentId)}>Pay</button></td>
                             <td><button onClick={() => leaveCourse(enrollment.enrollmentId)}>Leave</button></td>
                         </tr>
                         )

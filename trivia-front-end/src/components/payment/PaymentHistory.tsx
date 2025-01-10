@@ -24,9 +24,10 @@ function PaymentHistory() {
       <table>
         <thead>
           <tr>
-            <th>Student ID</th>
             <th>Payment ID</th>
-            <th>Course ID</th>
+            <th>Student ID</th>
+            <th>Course</th>
+            <th>Amount</th>
             {/* Add Date and Status*/}
           </tr>
         </thead>
@@ -35,9 +36,10 @@ function PaymentHistory() {
             payments.map((payment) => {
               return (
                 <tr key={payment.payment_id}>
+                  <td>{payment.payment_id}</td>
                   <td>{payment.student.studentId}</td>
-                  <td>0</td>
-                  <td>{payment.course.courseId}</td>
+                  <td>{payment.course.name}</td>
+                  <td>{payment.amount}</td>
                 </tr>
               )
             })
