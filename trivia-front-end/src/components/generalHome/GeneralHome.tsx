@@ -109,7 +109,7 @@ function GeneralHome() {
                     <li key={course.courseId}>
                         <h3>{course.name}</h3>
                         <p>{course.description}</p>
-                        <p>{course.educatorId}</p>
+                        <p>{course.educator.educatorId}</p>
                         <p>${course.fee}</p>
                         {
                           currentStudent != 0 ?
