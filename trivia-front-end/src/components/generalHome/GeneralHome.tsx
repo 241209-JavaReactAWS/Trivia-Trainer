@@ -4,6 +4,8 @@ import { Course } from "../interfaces/Course";
 import axios from "axios";
 import { EnrollmentDTO } from "../interfaces/EnrollmentDTO";
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
 function GeneralHome() {
 
     /* Search parameter to filter courses */
@@ -22,7 +24,7 @@ function GeneralHome() {
     }
 
     useEffect(() => {
-        axios.get<Course[]>("http://localhost:8080/courses")
+        axios.get<Course[]>(`${backendUrl}/courses`)
           .then((res) => {
             setAllCourses(res.data)
             console.log("Populated enrolled courses successfully")
@@ -107,7 +109,7 @@ function GeneralHome() {
                     <li key={course.courseId}>
                         <h3>{course.name}</h3>
                         <p>{course.description}</p>
-                        <p>{course.educatorId}</p>
+                        <p>{course.educator.educatorId}</p>
                         <p>${course.fee}</p>
                         {
                           currentStudent != 0 ?
