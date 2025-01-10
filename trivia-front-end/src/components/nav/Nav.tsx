@@ -33,7 +33,7 @@ function Nav() {
       {/* <Link to="/courseCreate">Course Creation Test</Link> */}
 
       {/* Course Create MUI Tester */}
-      <Link to="/courseCreateMUI">Course Creation MUI Test</Link>
+      <Link to="/courseCreateMUI">Proctor Courses</Link>
       
       <Link to="/profile">Profile</Link>
       <Button onClick={logout}>Log out</Button>

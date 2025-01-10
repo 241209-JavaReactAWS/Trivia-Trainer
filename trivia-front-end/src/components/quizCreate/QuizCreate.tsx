@@ -87,7 +87,7 @@ function QuizCreate() {
     ).then((res) => {
       console.log(res.data)
       alert("Quiz Created! Check the console for the quiz data")
-      navigate("/courseCreate")
+      navigate("/courseCreateMUI")
     }).catch((err) => {
       console.log(err)
     })
@@ -198,7 +198,7 @@ function QuizCreate() {
       {/* Button to create the quiz */}
       <button onClick={createQuiz}>Create Quiz</button>
       {/* Button to go back to the course info page */}
-      <button onClick={() => navigate("/courseInfo", { state: { course } })}>
+      <button onClick={() => navigate("/courseInfoMUI", { state: { course } })}>
         Go Back
       </button>
 
