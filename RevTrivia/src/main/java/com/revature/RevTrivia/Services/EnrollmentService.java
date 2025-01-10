@@ -47,6 +47,11 @@ public class EnrollmentService {
         return enrollmentDAO.findAll();
     }
 
+    public List<Enrollment> getAllStudentEnrollments(int studentId) {
+        Optional<Student> student = studentDAO.findById(studentId);
+        return enrollmentDAO.findAllByStudent(student.get());
+    }
+
     // Update the review of the enrollment
     public Enrollment updateReview(Enrollment enrollment) {
         Optional<Enrollment> foundEnrollment = enrollmentDAO.findById(enrollment.getEnrollmentId());

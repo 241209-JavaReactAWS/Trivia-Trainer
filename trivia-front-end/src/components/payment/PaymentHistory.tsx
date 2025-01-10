@@ -6,12 +6,12 @@ import axios from "axios"
 function PaymentHistory() {
 
   const [payments, setPayments] = useState<Payment[]>([])
-
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   //Add a UseEffect to get the current user's payments
 
   //Change this endpoint from Get All Payments to Get Payments by user ID
   useEffect(() => {
-    axios.get<Payment[]>("http://localhost:8080/payment")
+    axios.get<Payment[]>(`${backendUrl}/payment`)
       .then((res) => {
         setPayments(res.data)
         console.log(res.data)

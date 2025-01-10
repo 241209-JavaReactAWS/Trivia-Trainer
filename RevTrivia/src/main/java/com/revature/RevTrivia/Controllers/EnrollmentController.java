@@ -36,6 +36,11 @@ public class EnrollmentController {
         return enrollmentService.getAllEnrollments();
     }
 
+    @GetMapping("/{studentId}")
+    public List<Enrollment> getAllEnrollments(@PathVariable int studentId) {
+        return enrollmentService.getAllStudentEnrollments(studentId);
+    }
+
     // UPDATE
     // Change the review of an Enrollment (just putting something for update)
     @PatchMapping("/review")

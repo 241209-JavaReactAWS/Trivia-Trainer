@@ -13,7 +13,7 @@ function EnrollmentPage() {
 
     //Note: Remove from this page during integration with Sanjana's course search
     useEffect( () => {
-        axios.get(`${backendUrl}/enrollment`
+        axios.get(`${backendUrl}/enrollment/${localStorage.getItem("student_id")}`
         ).then((res) => {
             console.log("Here are the current enrollments in the database: ", res.data);
             setEnrollments(res.data)
@@ -24,7 +24,9 @@ function EnrollmentPage() {
       
     let toggleRefresh = () => {
         setRefreshPage(!refreshPage);
+        console.log(refreshPage)
     }
+    
     let payFee = (course: Course, enrollId: number) => {
         console.log(course)
         console.log("Making Payment");
@@ -48,22 +50,43 @@ function EnrollmentPage() {
         //Update payment status to paid
         axios.patch(`${backendUrl}/enrollment/payFee/${enrollId}`)
           .then((res) => {
+            setDeletedCourse(enrollId)
+            console.log(`Paid for enrollment ${enrollId}`)
             console.log(res.data)
           }).catch((err) => {
             console.log(err)
           })}
     }
 
-    let leaveCourse = (enrollId: number) => {
-        console.log(enrollId)
-        axios.delete(`${backendUrl}/enrollment/${enrollId}`).
-        then(() => {
-            setDeletedCourse(enrollId)
-            console.log(`Deleted enrollment ${enrollId}`)
-        }).
-        catch((err) => {
-            console.log(err);
-        })
+    let leaveCourse = (enrollment: Enrollment) => {
+        console.log(enrollment.enrollmentId)
+        let studentStr = localStorage.getItem("student_id")
+        if(studentStr != null){
+            //Make a refund payment
+            let newPaymentDTO : PaymentDTO = {
+              studentId: parseInt(studentStr),
+              courseId: enrollment.course.courseId,
+              amount: -enrollment.course.fee
+            }
+            console.log(newPaymentDTO)
+            axios.post(`${backendUrl}/payment`, newPaymentDTO)
+              .then((res) => {
+                console.log(res.data)
+              }).catch((err) => {
+                console.log(err)
+              })
+
+            //Delete the enrollment
+            axios.delete(`${backendUrl}/enrollment/${enrollment.enrollmentId}`).
+            then(() => {
+                setDeletedCourse(enrollment.enrollmentId)
+                console.log(`Deleted enrollment ${enrollment.enrollmentId}`)
+            }).
+            catch((err) => {
+                console.log(err);
+            })
+        }
+
     }
 
     /*
@@ -120,7 +143,7 @@ function EnrollmentPage() {
                             <td>{enrollment.status}</td>
                             <td>{enrollment.course.fee}</td>
                             <td><button onClick={() => payFee(enrollment.course, enrollment.enrollmentId)}>Pay</button></td>
-                            <td><button onClick={() => leaveCourse(enrollment.enrollmentId)}>Leave</button></td>
+                            <td><button onClick={() => leaveCourse(enrollment)}>Leave</button></td>
                         </tr>
                         )
                     })
