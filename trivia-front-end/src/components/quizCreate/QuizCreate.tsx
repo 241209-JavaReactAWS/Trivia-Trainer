@@ -4,6 +4,8 @@ import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Course } from "../interfaces/Course";
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
 function QuizCreate() {
 
   // State variables 
@@ -75,7 +77,7 @@ function QuizCreate() {
     }));
 
     // Send the POST request to the server to create the quiz
-    axios.post("http://localhost:8080/quizzes", {
+    axios.post(`${backendUrl}/quizzes`, {
       "courseId": course.courseId,
       "title": quizName,
       "timer": timer,
