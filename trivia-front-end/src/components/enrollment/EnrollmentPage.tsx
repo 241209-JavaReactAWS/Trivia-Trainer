@@ -116,12 +116,10 @@ function EnrollmentPage() {
             <table>
                 <thead>
                     <tr>
-                        {/* {<th>Student ID</th>} */}
                         <th>Course ID</th>
                         <th>Course Name</th>
                         <th>Enrollment Status</th>
                         <th>Entrance Fee</th>
-                        <th></th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -131,13 +129,11 @@ function EnrollmentPage() {
                     enrollments.map((enrollment) => {
                     return (
                         <tr key={enrollment.enrollmentId}>
-                            {/* {<td>{enrollment.student.studentId}</td>} */}
                             <td>{enrollment.course.courseId}</td>
                             <td>{enrollment.course.name}</td>
                             <td>{enrollment.status}</td>
                             <td>{enrollment.course.fee}</td>
                             <td><button onClick={() => payFee(enrollment.course, enrollment.enrollmentId)}>Pay</button></td>
-                            <td><button>Review</button></td>
                             <td><button onClick={() => leaveCourse(enrollment)}>Leave</button></td>
                         </tr>
                         )
