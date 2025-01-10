@@ -130,6 +130,7 @@ function EnrollmentPage() {
                         <th>Entrance Fee</th>
                         <th></th>
                         <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -143,6 +144,7 @@ function EnrollmentPage() {
                             <td>{enrollment.status}</td>
                             <td>{enrollment.course.fee}</td>
                             <td><button onClick={() => payFee(enrollment.course, enrollment.enrollmentId)}>Pay</button></td>
+                            <td><button>Review</button></td>
                             <td><button onClick={() => leaveCourse(enrollment)}>Leave</button></td>
                         </tr>
                         )
