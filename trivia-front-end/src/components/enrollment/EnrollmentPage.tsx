@@ -8,8 +8,7 @@ function EnrollmentPage() {
 
     const [enrollments, setEnrollments] = useState<Enrollment[]>([])
     const [deletedCourse, setDeletedCourse] = useState<number>(0)
-    const [refreshPage, setRefreshPage] = useState<boolean>(false)
-    const backendUrl = import.meta.env.VITE_BACKEND_URL;
+        const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     //Note: Remove from this page during integration with Sanjana's course search
     useEffect( () => {
@@ -21,11 +20,6 @@ function EnrollmentPage() {
             console.log(err);
         })
       }, [deletedCourse])
-      
-    let toggleRefresh = () => {
-        setRefreshPage(!refreshPage);
-        console.log(refreshPage)
-    }
     
     let payFee = (course: Course, enrollId: number) => {
         console.log(course)
@@ -119,7 +113,6 @@ function EnrollmentPage() {
     return (
         <div>
             <h1>Enrollment Table</h1>
-            <button onClick={toggleRefresh}>Test</button>
             <table>
                 <thead>
                     <tr>
@@ -152,6 +145,8 @@ function EnrollmentPage() {
                 }
                 </tbody>
             </table>
+
+
         </div>
     )
 }
