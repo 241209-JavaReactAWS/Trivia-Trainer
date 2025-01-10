@@ -38,9 +38,18 @@ public class EnrollmentController {
 
     // UPDATE
     // Change the review of an Enrollment (just putting something for update)
-    @PatchMapping
+    @PatchMapping("/review")
     public ResponseEntity<Enrollment> updateEnrollmentReview(@RequestBody Enrollment enrollment) {
         Enrollment updatedEnrollment = enrollmentService.updateReview(enrollment);
+        if (updatedEnrollment == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        return new ResponseEntity<>(updatedEnrollment, HttpStatus.OK);
+    }
+
+    @PatchMapping("/payFee/{enrollmentId}")
+    public ResponseEntity<Enrollment> updatePaymentStatusHandler(@PathVariable int enrollmentId) {
+        Enrollment updatedEnrollment = enrollmentService.updatePaymentStatus(enrollmentId);
         if (updatedEnrollment == null) {
             return ResponseEntity.badRequest().build();
         }

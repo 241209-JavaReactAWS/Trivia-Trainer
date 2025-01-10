@@ -5,6 +5,7 @@ import com.revature.RevTrivia.DAO.EnrollmentDAO;
 import com.revature.RevTrivia.DAO.StudentDAO;
 import com.revature.RevTrivia.Models.Course;
 import com.revature.RevTrivia.Models.DTOs.EnrollmentDTO;
+import com.revature.RevTrivia.Models.EnrollStatus;
 import com.revature.RevTrivia.Models.Enrollment;
 import com.revature.RevTrivia.Models.Student;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,8 @@ public class EnrollmentService {
         return enrollmentDAO.save(enrollment);
     }
 
+
+
     // Get all enrollments
     public List<Enrollment> getAllEnrollments() {
         return enrollmentDAO.findAll();
@@ -50,7 +53,21 @@ public class EnrollmentService {
         if (foundEnrollment.isPresent()) {
             Enrollment enroll = foundEnrollment.get();
             enroll.setReview(enrollment.getReview());
-            return enroll;
+            return enrollmentDAO.save(enroll);
+        }
+        return null;
+    }
+
+    //Update the payment status of the Enrollment
+    public Enrollment updatePaymentStatus(int enrollmentId) {
+        Optional<Enrollment> foundEnrollment = enrollmentDAO.findById(enrollmentId);
+        if (foundEnrollment.isPresent()) {
+            Enrollment enroll = foundEnrollment.get();
+            if(enroll.getStatus() == EnrollStatus.ACTIVE)
+                enroll.setStatus(EnrollStatus.CANCELLED);
+            else
+                enroll.setStatus(EnrollStatus.ACTIVE);
+            return enrollmentDAO.save(enroll);
         }
         return null;
     }
