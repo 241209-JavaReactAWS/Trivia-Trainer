@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { 
+    Box, 
+    Button, 
+    Container, 
+    FormControlLabel, 
+    Paper, 
+    Radio, 
+    RadioGroup, 
+    Typography 
+  } from '@mui/material';
 
 interface QuizData {
     quiz_id: number;
@@ -30,6 +40,8 @@ interface StudentData {
     student_id: number;
     quizAttempt: QuizAttemptData[];
 }
+
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 function Quiz() {
     const [quizData, setQuizData] = useState<QuizData | null>(null);
@@ -70,7 +82,7 @@ function Quiz() {
     useEffect(() => {
         const fetchQuizData = async () => {
             try {
-                const { data } = await axios.get(`http://localhost:8080/quizzes/${quizId}`);
+                const { data } = await axios.get(`${backendUrl}/quizzes/${quizId}`);
 
                 // Transform data to match QuizData interface
                 const transformedData: QuizData = {
@@ -112,7 +124,7 @@ function Quiz() {
         const student_Id = parseInt(studentIdString);
 
         try {
-            const response = await axios.post("http://localhost:8080/attempts", {
+            const response = await axios.post(`${backendUrl}/attempts`, {
                 quizId: quizData.quiz_id,
                 studentId:student_Id,
                 score: computedScore,
@@ -141,14 +153,17 @@ function Quiz() {
     }
 
     return (
-        <div>
-            <h1>{quizData.courseName}</h1>
-            <h2>{quizData.quizTitle}</h2>
-            <h2>
+
+        <Container maxWidth="md" sx={{ mt: 4}}>
+            <Paper elevation={30} sx={{ p: 9}}>
+            <Typography variant ="h4" gutterBottom>{quizData.courseName}</Typography>
+            <Typography variant ="h5" gutterBottom>{quizData.quizTitle}</Typography>
+            <Typography variant ="subtitle1" gutterBottom>
                 Attempt number {quizData.currentAttempt} of {quizData.attemptLimit}
-            </h2>
+            </Typography>
 
             {/* Questions */}
+            
             <ol type="1">
                 {quizData.questions.map((question) => (
                     <li key={question.question_id}>
@@ -174,22 +189,24 @@ function Quiz() {
                     </li>
                 ))}
             </ol>
-            <button
+            
+            <Button variant="contained" color="primary"
                 onClick={submitQuiz}
                 disabled={quizData.currentAttempt >= quizData.attemptLimit}
             >
                 Submit Quiz
-            </button>
+            </Button>
 
             {attemptResult && (
-                <div style={{ marginTop: "2rem" }}>
-                    <h3>Quiz Attempt Summary</h3>
+                <Paper elevation={2} sx={{ p: 2, mt: 3}}>
+                    <Typography variant="h6">Quiz Attempt Summary</Typography>
                     {/*<p>Attempt ID: {attemptResult.attempt_id}</p>*/}
-                    <p>Score: {attemptResult.score}</p>
-                    <p>Attempt Date: {attemptResult.attemptDate}</p>
-                </div>
+                    <Typography variant="body1">Score: {attemptResult.score}</Typography>
+                    <Typography variant="body1">Attempt Date: {attemptResult.attemptDate}</Typography>
+                </Paper>
             )}
-        </div>
+            </Paper>
+        </Container>
     );
 }
 
