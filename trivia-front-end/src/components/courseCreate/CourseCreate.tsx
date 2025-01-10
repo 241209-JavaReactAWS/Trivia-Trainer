@@ -227,7 +227,9 @@ function CourseCreate() {
       <button onClick={createQuiz}>Create Quiz Button (for testing purposes) </button>
     </div> 
   )}
-      
+  {!roleEd && (
+      <h2> This Page is only for Proctors </h2>
+  )}
     </div>
     
   )
