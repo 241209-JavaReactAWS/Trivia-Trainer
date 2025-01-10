@@ -2,6 +2,8 @@ import axios from "axios";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
 function ChangeDetails() {
 
     const location = useLocation();
@@ -15,7 +17,7 @@ function ChangeDetails() {
         console.log("Making Changes");
 
         // Update the professional details        
-        axios.patch(`http://localhost:8080/educator/${eduId}/${newDetails}`, 
+        axios.patch(`${backendUrl}/educator/${eduId}/${newDetails}`, 
         ).then((res) => {
             console.log(res.data)
             // localStorage.setItem("professional-details", newDetails)

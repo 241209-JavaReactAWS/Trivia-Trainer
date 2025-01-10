@@ -19,16 +19,27 @@ import EducatorProfile from "./components/profile/Profile";
 import CourseCreateMUI from "./components/courseCreate/CourseCreateMUI";
 import NavMUI from "./components/nav/NavMUI";
 import GeneralHomeMUI from "./components/generalHome/GeneralHomeMUI";
+import { navigationCustomizations } from "./components/shared-theme/customizations/navigation";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
 function App() {
+
+  const theme = createTheme({
+    components: navigationCustomizations,  // Apply your custom navigation styles here
+  });
+
   return (
     <>
       <BrowserRouter>
-        <Nav></Nav>
-        {/* <NavMUI /> */}
+        
+        {/* <ThemeProvider theme={theme}> */}
+          {/* <Nav /> */}
+          <NavMUI />
+        {/* </ThemeProvider> */}
 
         <Routes>
-          <Route path="/" element={<GeneralHome></GeneralHome>}></Route>
-          {/* <Route path="/" element={<GeneralHomeMUI></GeneralHomeMUI>}></Route> */}
+          {/* <Route path="/" element={<GeneralHome></GeneralHome>}></Route> */}
+          <Route path="/" element={<GeneralHomeMUI></GeneralHomeMUI>}></Route>
           <Route path="/login" element={<Login></Login>}></Route>
           <Route path="/studentHome" element={<StudentHome></StudentHome>}></Route>
           <Route path="/payment" element={<Test1></Test1>}></Route>
