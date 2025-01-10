@@ -4,8 +4,10 @@ import { Course } from "../interfaces/Course";
 import axios from "axios";
 import { CourseDTO } from "../interfaces/CourseDTO";
 import NewCourse from "./NewCourse";
-import { Box, Button, Card, CardActions, CardContent, CardMedia, Modal, TextField, Typography } from "@mui/material";
+import { Box, Button, Card, CardActions, CardContent, CardMedia, CssBaseline, Modal, TextField, Typography } from "@mui/material";
 import React from "react";
+import AppTheme from "../shared-theme/AppTheme";
+import ColorModeSelect from "../shared-theme/ColorModeSelect";
 
 const style = {
   position: 'absolute',
@@ -19,7 +21,7 @@ const style = {
   p: 4,
 };
 
-function CourseCreateMUI() {
+function CourseCreateMUI(props: { disableCustomTheme?: boolean }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -46,6 +48,7 @@ function CourseCreateMUI() {
     let edId = localStorage.getItem("educator_id");
     if (role === "EDUCATOR" && edId !== null) {
       setRoleEd(true);
+      setEducatorId(parseInt(edId));
       axios.get<Course[]>("http://localhost:8080/courses")
         .then((res) => {
           setAllCourses(res.data)
@@ -127,107 +130,119 @@ function CourseCreateMUI() {
     return course.courseId;
   }
 
+
   return (
-    <div>
-      <h1>Welcome to the Proctor's Course List Page</h1>
+    <AppTheme {...props}>
+      <CssBaseline enableColorScheme />
+      <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
+      <div>
+        <h1>Welcome to the Proctor's Course List Page</h1>
 
-      {edCourses.map((course) => {
-        return (
-          <Card key={course.courseId} sx={{ maxWidth: 345 }}>
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                {course.name}
-              </Typography><Typography gutterBottom variant="h6" component="div">
-                {course.description}
-              </Typography>
-              <Typography gutterBottom variant="h6" component="div">
-                ${course.fee}
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button size="small" onClick={() => editCourse(course)}>Edit</Button>
-              <Button size="small" onClick={() => delCourse(course.courseId)}>Delete</Button>
-            </CardActions>
-          </Card>
-        )
-      })}
+        <div style={{
+          display: 'flex',
+          flexDirection: 'row',
+        }}
+        >
+          {edCourses.map((course) => {
+            return (
+              <Card key={course.courseId} sx={{ maxWidth: 345 }}>
+                <CardContent>
+                  <Typography gutterBottom variant="h3" component="div">
+                    {course.name}
+                  </Typography><Typography gutterBottom variant="body1" component="div">
+                    {course.description}
+                  </Typography>
+                  <Typography gutterBottom variant="body1" component="div">
+                    ${course.fee}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button size="large" onClick={() => editCourse(course)}>Edit</Button>
+                  <Button size="large" onClick={() => delCourse(course.courseId)}>Delete</Button>
+                  <Button size="large" onClick={() => navigate("/quizCreate", { state: { course } })}>Create Quiz</Button>
+                </CardActions>
+              </Card>
+            )
+          })}
+        </div>
 
-      <br />
-      <br />
-      {/* Show fields to modify */}
-      {showAddCoursePopup && (
-        <NewCourse
-          onClose={() => {
-            setShowAddCoursePopup(false);
-            setCourseToEdit(null);
-          }}
-          onCourseUpdated={(updatedCourse) => {
-            setAllCourses((prevCourses) =>
-              prevCourses.map((course) =>
-                course.courseId === updatedCourse.courseId ? updatedCourse : course
-              )
-            );
-          }}
-          courseToEdit={courseToEdit}
-        />
-      )}
+        <br />
+        <br />
+        {/* Show fields to modify */}
+        {showAddCoursePopup && (
+          <NewCourse
+            onClose={() => {
+              setShowAddCoursePopup(false);
+              setCourseToEdit(null);
+            }}
+            onCourseUpdated={(updatedCourse) => {
+              setAllCourses((prevCourses) =>
+                prevCourses.map((course) =>
+                  course.courseId === updatedCourse.courseId ? updatedCourse : course
+                )
+              );
+            }}
+            courseToEdit={courseToEdit}
+          />
+        )}
 
-      {roleEd && (
-        <div>
-          <br />
-          <br />
+        {roleEd && (
+          <div>
+            <br />
+            <br />
 
-          {/* Adding MUI components -- Button for creating new couurses for educators */}
-          <Button onClick={handleOpen}>Create New Course</Button>
-          <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={style}>
-              <Typography id="modal-modal-title" variant="h6" component="h2">
-                Create a New Course
-              </Typography>
-              {/* We need to add in some inputs for the values */}
-              <TextField label="Course Name" variant="outlined" margin="normal"
-                onChange={(e: SyntheticEvent) =>
-                  setCourseName((e.target as HTMLInputElement).value)
-                } />
+            {/* Adding MUI components -- Button for creating new couurses for educators */}
+            <Button onClick={handleOpen}>Create New Course</Button>
+            <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+                <Typography id="modal-modal-title" variant="h6" component="h2">
+                  Create a New Course
+                </Typography>
+                {/* We need to add in some inputs for the values */}
+                <TextField label="Course Name" variant="outlined" margin="normal"
+                  onChange={(e: SyntheticEvent) =>
+                    setCourseName((e.target as HTMLInputElement).value)
+                  } />
 
-              <TextField label="Course Description" variant="outlined" margin="normal"
-                onChange={(e: ChangeEvent) => {
-                  setCourseDesc((e.target as HTMLTextAreaElement).value);
-                }} />
+                <TextField label="Course Description" variant="outlined" margin="normal"
+                  onChange={(e: ChangeEvent) => {
+                    setCourseDesc((e.target as HTMLTextAreaElement).value);
+                  }} />
 
-              <TextField label="Course Educator ID" variant="outlined" margin="normal" type="number"
+                {/* Educator ID has been set upon page load so no need to ask user to re enter */}
+                {/* <TextField label="Course Educator ID" variant="outlined" margin="normal" type="number" 
                 onChange={(e: SyntheticEvent) => {
                   setEducatorId((e.target as HTMLInputElement).value as unknown as number);
-                }} />
+                }} /> */}
 
-              <TextField label="Course Fee" variant="outlined" margin="normal" type="number"
-                onChange={(e: SyntheticEvent) => {
-                  setCourseFee((e.target as HTMLInputElement).value as unknown as number);
-                }} />
-              <br />
-              <br />
-              <br />
-              <br />
-              <Button onClick={createCourse}>Create Course</Button>
-            </Box>
-          </Modal>
+                <TextField label="Course Fee" variant="outlined" margin="normal" type="number"
+                  onChange={(e: SyntheticEvent) => {
+                    setCourseFee((e.target as HTMLInputElement).value as unknown as number);
+                  }} />
+                <br />
+                <br />
+                <br />
+                <br />
+                <Button onClick={createCourse}>Create Course</Button>
+              </Box>
+            </Modal>
 
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <Button onClick={createQuiz}>Create Quiz Button (for testing purposes) </Button>
-        </div>
-      )}
-      {!roleEd && (
-        <h2> This Page is only for Proctors </h2>
-      )}
-    </div>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+          </div>
+        )}
+        {!roleEd && (
+          <h2> This Page is only for Proctors </h2>
+        )}
+      </div>
+    </AppTheme>
 
   )
 }
