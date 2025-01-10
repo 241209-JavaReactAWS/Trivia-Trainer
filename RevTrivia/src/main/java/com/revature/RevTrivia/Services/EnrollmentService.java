@@ -3,8 +3,10 @@ package com.revature.RevTrivia.Services;
 import com.revature.RevTrivia.DAO.CourseDAO;
 import com.revature.RevTrivia.DAO.EnrollmentDAO;
 import com.revature.RevTrivia.DAO.StudentDAO;
+import com.revature.RevTrivia.Models.Course;
 import com.revature.RevTrivia.Models.DTOs.EnrollmentDTO;
 import com.revature.RevTrivia.Models.Enrollment;
+import com.revature.RevTrivia.Models.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,16 @@ public class EnrollmentService {
     // Create a new enrollment
     public Enrollment createNewEnrollment(EnrollmentDTO enrollmentDTO) {
         Enrollment enrollment = new Enrollment();
+        //Set object fields
+        Optional<Course> course = courseDAO.findById(enrollmentDTO.getCourseId());
+        course.ifPresent(enrollment::setCourse);
+        Optional<Student> student = studentDAO.findById(enrollmentDTO.getStudentId());
+        student.ifPresent(enrollment::setStudent);
+        //Set non-object fields
+        enrollment.setEnrollmentDate(enrollmentDTO.getEnrollmentDate());
+        enrollment.setStatus(enrollmentDTO.getEnrollStatus());
+        enrollment.setReview(enrollmentDTO.getReview());
+        enrollment.setRating(enrollmentDTO.getRating());
         return enrollmentDAO.save(enrollment);
     }
 
