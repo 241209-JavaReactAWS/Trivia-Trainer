@@ -1,10 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import AppTheme from "../shared-theme/AppTheme";
+import ColorModeSelect from "../shared-theme/ColorModeSelect";
+import { CssBaseline } from "@mui/material";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-function Profile() {
+function Profile(props: { disableCustomTheme?: boolean }) {
 
     // Usable things from react-router-dom
     const navigate = useNavigate();
@@ -35,7 +38,9 @@ function Profile() {
     }, [eduId]);
 
     return (
-
+        <AppTheme {...props }>
+            <CssBaseline enableColorScheme />
+            <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
         <div>
             <h1>Welcome, {username}!</h1>
             <h2>Professional Details: {profDetails}</h2>
@@ -45,6 +50,7 @@ function Profile() {
             {/* <h1>{userId}</h1> */}
             <button onClick={() => navigate("/changeDetails", { state: { eduId } })}>Change Professional Details</button>
         </div>
+        </AppTheme >    
     )
 }
 
