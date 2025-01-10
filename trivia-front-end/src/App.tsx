@@ -16,14 +16,18 @@ import CourseInfo from "./components/courseInfo/CourseInfo";
 import Profile from "./components/profile/Profile";
 import ChangeDetails from "./components/profile/ChangeDetails";
 import EducatorProfile from "./components/profile/Profile";
+import NavMUI from "./components/nav/NavMUI";
+import GeneralHomeMUI from "./components/generalHome/GeneralHomeMUI";
 function App() {
   return (
     <>
       <BrowserRouter>
         <Nav></Nav>
+        {/* <NavMUI /> */}
 
         <Routes>
           <Route path="/" element={<GeneralHome></GeneralHome>}></Route>
+          {/* <Route path="/" element={<GeneralHomeMUI></GeneralHomeMUI>}></Route> */}
           <Route path="/login" element={<Login></Login>}></Route>
           <Route path="/studentHome" element={<StudentHome></StudentHome>}></Route>
           <Route path="/payment" element={<Test1></Test1>}></Route>

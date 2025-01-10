@@ -2,6 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
 function Profile() {
 
     // Usable things from react-router-dom
@@ -22,7 +24,7 @@ function Profile() {
             navigate("/login");
         }
         axios
-            .get(`http://localhost:8080/educator/${eduId}`)
+            .get(`${backendUrl}/educator/${eduId}`)
             .then((response) => {
                 setCurrentUser(response.data);
                 setProfDetails(response.data.details);
