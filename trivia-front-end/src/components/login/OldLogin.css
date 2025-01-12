@@ -1,0 +1,21 @@
+.sideBySide {
+  margin: 1rem;
+  padding: 2rem 2rem;
+  text-align: center;
+}
+
+.side {
+  display: inline-block;
+  padding: 1rem 1rem;
+  margin: 6rem;
+  vertical-align: top;
+}
+
+.vertical {
+  border-left: 6px solid green;
+  height: 500px;
+  position: absolute;
+  left: 50%;
+  margin-left: -3px;
+  top: 0;
+}
