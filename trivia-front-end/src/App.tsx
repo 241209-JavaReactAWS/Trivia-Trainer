@@ -18,27 +18,53 @@ import ChangeDetails from "./components/profile/ChangeDetails";
 import EducatorProfile from "./components/profile/Profile";
 import SignInSide from "./components/login/SignInSide";
 import SignUp from "./components/signUp/SignUp";
+import CourseCreateMUI from "./components/courseCreate/CourseCreateMUI";
+import NavMUI from "./components/nav/NavMUI";
+import GeneralHomeMUI from "./components/generalHome/GeneralHomeMUI";
+import CourseInfoMUI from "./components/courseInfo/CourseInfoMUI";
+import { navigationCustomizations } from "./components/shared-theme/customizations/navigation";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+
 function App() {
+
+  const theme = createTheme({
+    components: navigationCustomizations,  // Apply your custom navigation styles here
+  });
+
   return (
     <>
       <BrowserRouter>
-        <Nav></Nav>
+        
+        {/* <ThemeProvider theme={theme}> */}
+          {/* <Nav /> */}
+          <NavMUI />
+        {/* </ThemeProvider> */}
 
         <Routes>
-          <Route path="/" element={<GeneralHome></GeneralHome>}></Route>
           <Route path="/login" element={<SignInSide></SignInSide>}></Route>
           <Route path="/signup" element={<SignUp></SignUp>}></Route>
+          {/* <Route path="/" element={<GeneralHome></GeneralHome>}></Route> */}
+          <Route path="/" element={<GeneralHomeMUI></GeneralHomeMUI>}></Route>
+
           <Route path="/studentHome" element={<StudentHome></StudentHome>}></Route>
           <Route path="/payment" element={<Test1></Test1>}></Route>
           <Route path="/search" element={<Search></Search>}></Route>
           <Route path="/enroll" element={<EnrollmentPage></EnrollmentPage>}></Route>
-          <Route path="/courseCreate" element={<CourseCreate></CourseCreate>}></Route>
+
+          {/* <Route path="/courseCreate" element={<CourseCreate></CourseCreate>}></Route> */}
+          {/* Course Create MUI Test Link */}
+          <Route path="/courseCreateMUI" element={<CourseCreateMUI></CourseCreateMUI>}></Route>
+
           <Route path="/quizCreate" element={<QuizCreate></QuizCreate>}></Route>
           <Route path="/test1" element={<Test1></Test1>}></Route>
           <Route path="/paymentHistory" element={<PaymentHistory></PaymentHistory>}></Route>
           <Route path="/quiz/:quizId" element={<Quiz />} />
           <Route path="/course" element={<Course></Course>}></Route>
-          <Route path="/courseInfo" element={<CourseInfo></CourseInfo>}></Route>
+
+          {/* <Route path="/courseInfo" element={<CourseInfo></CourseInfo>}></Route> */}
+          <Route path="/courseInfoMUI" element={<CourseInfoMUI></CourseInfoMUI>}></Route>
+
           <Route path="/profile" element={<Profile></Profile>}></Route>
           <Route path="/changeDetails" element={<ChangeDetails></ChangeDetails>}></Route>
 

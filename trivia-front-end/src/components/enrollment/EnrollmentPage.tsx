@@ -1,17 +1,18 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Enrollment } from "../interfaces/Enrollment";
+import { Course } from "../interfaces/Course";
+import { PaymentDTO } from "../interfaces/PaymentDTO";
 
 function EnrollmentPage() {
 
     const [enrollments, setEnrollments] = useState<Enrollment[]>([])
     const [deletedCourse, setDeletedCourse] = useState<number>(0)
-    const navigate = useNavigate();
+        const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     //Note: Remove from this page during integration with Sanjana's course search
     useEffect( () => {
-        axios.get("http://localhost:8080/enrollment"
+        axios.get(`${backendUrl}/enrollment/${localStorage.getItem("student_id")}`
         ).then((res) => {
             console.log("Here are the current enrollments in the database: ", res.data);
             setEnrollments(res.data)
@@ -19,21 +20,67 @@ function EnrollmentPage() {
             console.log(err);
         })
       }, [deletedCourse])
-      
-    let enroll = () => {
-        navigate("/payment")
+    
+    let payFee = (course: Course, enrollId: number) => {
+        console.log(course)
+        console.log("Making Payment");
+        console.log(`Student ID: ${localStorage.getItem("student_id")}`);
+        console.log(`Course ID: ${course.courseId}`);
+        console.log(`Amount: ${course.fee}`);
+        let studentStr = localStorage.getItem("student_id")
+        if(studentStr != null){
+        let newPaymentDTO : PaymentDTO = {
+          studentId: parseInt(studentStr),
+          courseId: course.courseId,
+          amount: course.fee
+        }
+        console.log(newPaymentDTO)
+        axios.post(`${backendUrl}/payment`, newPaymentDTO)
+          .then((res) => {
+            console.log(res.data)
+          }).catch((err) => {
+            console.log(err)
+          })
+        //Update payment status to paid
+        axios.patch(`${backendUrl}/enrollment/payFee/${enrollId}`)
+          .then((res) => {
+            setDeletedCourse(enrollId)
+            console.log(`Paid for enrollment ${enrollId}`)
+            console.log(res.data)
+          }).catch((err) => {
+            console.log(err)
+          })}
     }
 
-    let leaveCourse = (enrollId: number) => {
-        console.log(enrollId)
-        axios.delete(`http://localhost:8080/enrollment/${enrollId}`).
-        then(() => {
-            setDeletedCourse(enrollId)
-            console.log(`Deleted enrollment ${enrollId}`)
-        }).
-        catch((err) => {
-            console.log(err);
-        })
+    let leaveCourse = (enrollment: Enrollment) => {
+        console.log(enrollment.enrollmentId)
+        let studentStr = localStorage.getItem("student_id")
+        if(studentStr != null){
+            //Make a refund payment
+            let newPaymentDTO : PaymentDTO = {
+              studentId: parseInt(studentStr),
+              courseId: enrollment.course.courseId,
+              amount: -enrollment.course.fee
+            }
+            console.log(newPaymentDTO)
+            axios.post(`${backendUrl}/payment`, newPaymentDTO)
+              .then((res) => {
+                console.log(res.data)
+              }).catch((err) => {
+                console.log(err)
+              })
+
+            //Delete the enrollment
+            axios.delete(`${backendUrl}/enrollment/${enrollment.enrollmentId}`).
+            then(() => {
+                setDeletedCourse(enrollment.enrollmentId)
+                console.log(`Deleted enrollment ${enrollment.enrollmentId}`)
+            }).
+            catch((err) => {
+                console.log(err);
+            })
+        }
+
     }
 
     /*
@@ -69,10 +116,10 @@ function EnrollmentPage() {
             <table>
                 <thead>
                     <tr>
-                        {/* {<th>Student ID</th>} */}
                         <th>Course ID</th>
                         <th>Course Name</th>
                         <th>Enrollment Status</th>
+                        <th>Entrance Fee</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -82,18 +129,20 @@ function EnrollmentPage() {
                     enrollments.map((enrollment) => {
                     return (
                         <tr key={enrollment.enrollmentId}>
-                            {/* {<td>{enrollment.student.studentId}</td>} */}
                             <td>{enrollment.course.courseId}</td>
                             <td>{enrollment.course.name}</td>
-                            <td>{enrollment.enrollStatus}</td>
-                            <td><button>Pay</button></td>
-                            <td><button onClick={() => leaveCourse(enrollment.enrollmentId)}>Leave</button></td>
+                            <td>{enrollment.status}</td>
+                            <td>{enrollment.course.fee}</td>
+                            <td><button onClick={() => payFee(enrollment.course, enrollment.enrollmentId)}>Pay</button></td>
+                            <td><button onClick={() => leaveCourse(enrollment)}>Leave</button></td>
                         </tr>
                         )
                     })
                 }
                 </tbody>
             </table>
+
+
         </div>
     )
 }

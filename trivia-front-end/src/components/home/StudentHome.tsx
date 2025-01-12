@@ -22,7 +22,7 @@ function StudentHome() {
 
   // Function responsible for redirection to the course information page 
   let goToCourseInfo = (course: Course) => {
-    navigate("/courseInfo", { state: { course: course } })
+    navigate("/courseInfoMUI", { state: { course: course } })
   }
 
   // Get all enrolled courses whenever the page is loaded. 
@@ -47,7 +47,7 @@ function StudentHome() {
         <li key={course.courseId}>
           <h3>{course.name}</h3>
           <p>{course.description}</p>
-          <p>{course.educatorId}</p>
+          <p>{course.educator.educatorId}</p>
           <p>${course.fee}</p>
           <button onClick={() => goToCourseInfo(course)}>View Course</button>
         </li>

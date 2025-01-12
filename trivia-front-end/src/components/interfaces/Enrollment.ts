@@ -6,7 +6,7 @@ export interface Enrollment {
     student: Student,
     course: Course,
     enrollmentDate: string,
-    enrollStatus: string,
+    status: number,
     review: string,
     rating: number
 }
