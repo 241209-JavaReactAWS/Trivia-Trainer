@@ -74,29 +74,6 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
                 <Button size="large" onClick={() => navigate("/studentHomeMUI")}>
                     Back to Student Home
                 </Button>
-                {/* MUI Card to display the selected Course */}
-                <Card key={course.courseId} sx={{ maxWidth: 345 }}>
-                    <CardContent>
-                        <Typography gutterBottom variant="h3" component="div">
-                            {course.name}
-                        </Typography><Typography gutterBottom variant="body1" component="div">
-                            {course.description}
-                        </Typography>
-                        <Typography gutterBottom variant="body2" component="div">
-                            Educator ID: {course.educator.educatorId}
-                        </Typography>
-                        <Typography gutterBottom variant="body1" component="div">
-                            ${course.fee}
-                        </Typography>
-                    </CardContent>
-                    {/* Button only for educators who had created the displayed course */}
-                    {roleEd && (
-                        <CardActions>
-                            <Button size="small" onClick={() => navigate("/quizCreate", { state: { course } })}>Create Quiz</Button>
-                        </CardActions>
-                    )}
-                    
-                </Card>
                  {/* Profile Button for Everyone (conditional render?) */}
                  <br/>
                  <br/>
