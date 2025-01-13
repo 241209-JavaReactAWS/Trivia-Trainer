@@ -78,7 +78,7 @@ function Profile(props: { disableCustomTheme?: boolean }) {
                 ))}
             </ul>
             { eduId && (
-                <button onClick={() => navigate("/courseCreateMUI")}>Proctor Home</button>
+                <button onClick={() => navigate("/proctorHome")}>Proctor Home</button>
             )}
 
             {!eduId && (
