@@ -92,12 +92,6 @@ export default function SignInCard() {
 
   return (
     <Card variant="outlined">
-      <Box 
-        component="img"
-        
-        alt="RevTrivia"
-        sx={{ width: 100, height: 'auto', display: { xs: 'flex', md: 'none' } }}>
-      </Box>
       <Typography
         component="h1"
         variant="h4"
