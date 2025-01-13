@@ -28,9 +28,9 @@ function StudentHomeMUI(props: { disableCustomTheme?: boolean }) {
         navigate("/enroll")
     }
 
-    // Function responsible for redirection to the payment page 
-    let goToPayment = () => {
-        navigate("/payment")
+    // Function responsible for redirection to the payment history page 
+    let goToPaymentHistory = () => {
+        navigate("/paymentHistoryMUI")
     }
 
     // Function responsible for redirection to the course information page 
@@ -93,12 +93,12 @@ function StudentHomeMUI(props: { disableCustomTheme?: boolean }) {
                                     <Typography gutterBottom variant="body1" component="div">
                                         {course.description}
                                     </Typography>
-                                    <Typography gutterBottom variant="body1" component="div">
+                                    {/* <Typography gutterBottom variant="body1" component="div">
                                         Educator ID - {course.educator.educatorId}
                                     </Typography>
                                     <Typography gutterBottom variant="body1" component="div">
                                         ${course.fee}
-                                    </Typography>
+                                    </Typography> */}
                                 </CardContent>
                                 <CardActions>
                                     <Button size="large" onClick={() => goToCourseInfo(course)}>View Course</Button>
@@ -109,12 +109,10 @@ function StudentHomeMUI(props: { disableCustomTheme?: boolean }) {
                 </div>
                 <br></br>
                 <br></br>
-                <Button onClick={goToEnroll}>Enrollment Test</Button>
+                <Button onClick={goToEnroll}>Manage Enrollments</Button>
                 <br></br>
                 <br></br>
-                <Button onClick={goToPayment}>Payment Test</Button>
-                <br></br>
-                <br></br>
+                <Button onClick={goToPaymentHistory}>Payment History</Button>
 
                 {/* <h2>Change information</h2> */}
             </div>

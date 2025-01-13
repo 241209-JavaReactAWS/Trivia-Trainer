@@ -40,8 +40,8 @@ function NavMUI(props: { disableCustomTheme?: boolean }) {
                         >
                         </IconButton>
                         <img src="src/components/shared-theme/RevTriviaLogo.png" style={{ 
-                            width: '70px', 
-                            height: '30px',  
+                            width: '140px', 
+                            height: '60px',  
                             position: "absolute",
                             left: "50%",
                             transform: "translateX(-50%)",}}
@@ -62,7 +62,7 @@ function NavMUI(props: { disableCustomTheme?: boolean }) {
                             <Button color="inherit" onClick={() => navigate('/')}>General Home</Button>
                             <Button color="inherit" onClick={() => navigate('/login')}>Login</Button>
                             {/*<Button color="inherit" onClick={() => navigate('/studentHomeMUI')}>Student Home</Button>*/}
-                            {/*<Button color="inherit" onClick={() => navigate('/courseCreateMUI')}>Proctor Home</Button>*/}
+                            {/*<Button color="inherit" onClick={() => navigate('/proctorHome')}>Proctor Home</Button>*/}
                             <Button color="inherit" onClick={() => navigate('/profile')}>Profile</Button>
                             <Button color="inherit" onClick={logout}>Log out</Button>
                         </Box>

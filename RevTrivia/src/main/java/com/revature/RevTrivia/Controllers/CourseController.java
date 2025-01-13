@@ -46,7 +46,16 @@ public class CourseController {
         return ResponseEntity.noContent().build();
     }
     
-    
+    @GetMapping("/proctor/{educatorId}")
+    public ResponseEntity<List<Course>> getCoursesByEducatorId(@PathVariable int educatorId) {
+        // return courseService.getCoursesByEducatorId(educatorId).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        List<Course> courses = courseService.getCoursesByEducatorId(educatorId);
+        if (courses != null) {
+            return ResponseEntity.ok(courses);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     
     

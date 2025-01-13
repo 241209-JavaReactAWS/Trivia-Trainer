@@ -5,10 +5,12 @@ import AppTheme from "../shared-theme/AppTheme";
 import ColorModeSelect from "../shared-theme/ColorModeSelect";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Educator } from "../interfaces/Educator";
 
 function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
     /* Setting role to conditionally render create quiz option */
     const [roleEd, setRoleEd] = useState<boolean>(false);
+    const [educator, setEducator] = useState<Educator>();
     const [quizzes, setQuizzes] = useState<any[]>([]);
 
     /// Usable things from react-router-dom
@@ -36,11 +38,42 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
     }, []
     )
 
+    useEffect(() => {
+        let edId = course.educator.educatorId;
+        axios.get<Educator>(`http://localhost:8080/educators/${edId}`)
+            .then((res) => {
+                setEducator(res.data)
+            })
+            .catch((error) => {
+                console.error("Could not fetch the educator object --> ", error)
+            });
+    }, []
+    )
+
     return (
         <AppTheme {...props}>
             <CssBaseline enableColorScheme />
             <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
             <div>
+                <Typography gutterBottom variant="h1" component="div">
+                    {course.name}
+                </Typography>
+                <hr /> <br />
+                <Typography gutterBottom variant="h2" component="div">
+                    {course.description}
+                </Typography>
+                <Typography gutterBottom variant="h2" component="div">
+                    Educator ID: {course.educator.educatorId}
+                </Typography>
+                {/* <Typography gutterBottom variant="h2" component="div">
+                    Educator: {educator?.user?.firstName}
+                </Typography> */}
+                <Typography gutterBottom variant="h2" component="div">
+                    Fees: ${course.fee}
+                </Typography>
+                <Button size="large" onClick={() => navigate("/studentHomeMUI")}>
+                    Back to Student Home
+                </Button>
                 {/* MUI Card to display the selected Course */}
                 <Card key={course.courseId} sx={{ maxWidth: 345 }}>
                     <CardContent>
