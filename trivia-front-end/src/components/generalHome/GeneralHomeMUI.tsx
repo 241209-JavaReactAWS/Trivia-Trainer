@@ -18,7 +18,7 @@ function GeneralHomeMUI(props: { disableCustomTheme?: boolean }) {
     const [visibleCourses, setVisibleCourses] = useState<Course[]>([])
     const [showResCourses, setShowResCourses] = useState<boolean>(false);
 
-    const [currentStudent, setCurrentStudent] = useState<number>(+localStorage.getItem("student_id"))
+    const [currentStudent, setCurrentStudent] = useState<number>(0)
 
     const navigate = useNavigate();
     const goToSearch = () => {
@@ -26,6 +26,11 @@ function GeneralHomeMUI(props: { disableCustomTheme?: boolean }) {
     };
 
     useEffect(() => {
+        const role = localStorage.getItem("roles");
+        let studId = localStorage.getItem("student_id");
+        if (role === "STUDENT" && studId !== null) {
+            setCurrentStudent(parseInt(studId));
+        }
         axios.get<Course[]>(`${backendUrl}/courses`)
             .then((res) => {
                 setAllCourses(res.data)
@@ -68,7 +73,7 @@ function GeneralHomeMUI(props: { disableCustomTheme?: boolean }) {
             rating: 0
         }
         console.log(newEnrollment)
-        axios.post("http://localhost:8080/enrollment", newEnrollment)
+        axios.post(`${backendUrl}/enrollment`, newEnrollment)
             .then((res) => {
                 console.log(res.data)
             }).catch((err) => {
@@ -125,7 +130,7 @@ function GeneralHomeMUI(props: { disableCustomTheme?: boolean }) {
                                         {course.description}
                                     </Typography>
                                     <Typography variant="body2" color="textSecondary">
-                                        Educator ID: {course.educatorId}
+                                        Educator ID: {course.educator.educatorId}
                                     </Typography>
                                     <Typography variant="body2" color="textPrimary">
                                         ${course.fee}

@@ -9,6 +9,8 @@ import React from "react";
 import AppTheme from "../shared-theme/AppTheme";
 import ColorModeSelect from "../shared-theme/ColorModeSelect";
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -49,7 +51,7 @@ function CourseCreateMUI(props: { disableCustomTheme?: boolean }) {
     if (role === "EDUCATOR" && edId !== null) {
       setRoleEd(true);
       setEducatorId(parseInt(edId));
-      axios.get<Course[]>("http://localhost:8080/courses")
+      axios.get<Course[]>(`${backendUrl}/courses`)
         .then((res) => {
           setAllCourses(res.data)
           res.data.forEach(course => console.log("In res data Courses - Course Name --> ", course.name));
@@ -81,7 +83,7 @@ function CourseCreateMUI(props: { disableCustomTheme?: boolean }) {
   };
 
   const delCourse = (courseId: number) => {
-    axios.delete(`http://localhost:8080/courses/${courseId}`)
+    axios.delete(`${backendUrl}/courses/${courseId}`)
       .then(response => {
         console.log("Course deleted successfully --> ", response.data);
       })
@@ -106,7 +108,7 @@ function CourseCreateMUI(props: { disableCustomTheme?: boolean }) {
     };
 
     axios
-      .post("http://localhost:8080/courses", newCourse)
+      .post(`${backendUrl}/courses`, newCourse)
       .then((res) => {
         console.log("New course created successfully --> ", res.data);
         setAllCourses((prevCourses) => [...prevCourses, res.data]);
