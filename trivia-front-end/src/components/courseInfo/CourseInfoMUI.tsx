@@ -36,7 +36,7 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
             console.log("Create Quiz option disabled for normal user.")
         }
 
-        
+
     }, []
     )
 
@@ -72,42 +72,24 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
                 <Typography gutterBottom variant="h2" component="div">
                     Fees: ${course.fee}
                 </Typography>
-                <Button size="large" onClick={() => navigate("/studentHomeMUI")}>
-                    Back to Student Home
-                </Button>
-
-
-                {/* <Card key={course.courseId} sx={{ maxWidth: 345 }}>
-                    <CardContent>
-                        <Typography gutterBottom variant="h3" component="div">
-                            {course.name}
-                        </Typography><Typography gutterBottom variant="body1" component="div">
-                            {course.description}
-                        </Typography>
-                        <Typography gutterBottom variant="body2" component="div">
-                            Educator ID: {course.educator.educatorId}
-                        </Typography>
-                        <Typography gutterBottom variant="body1" component="div">
-                            ${course.fee}
-                        </Typography>
-                    </CardContent>
-                    {roleEd && (
-                        <CardActions>
-                            <Button size="small" onClick={() => navigate("/quizCreate", { state: { course } })}>Create Quiz</Button>
-                        </CardActions>
-                    )}
-                </Card>
-                 <br/>
-                 <br/>
-                 <CardActions>
-                        <Button
-                            size="small"
-                            variant="contained"
-                            onClick={() => navigate("/profile")}
-                        >
-                            Go to Profile
-                        </Button>
-                    </CardActions> */}
+                {/* Show the back to student home button only if user is a student. */}
+                {!roleEd && (
+                    <Button size="large" onClick={() => navigate("/studentHomeMUI")}>
+                        Back to Student Home
+                    </Button>
+                )}
+                {/* Profile Button for Everyone (conditional render?) */}
+                <br />
+                <br />
+                <CardActions>
+                    <Button
+                        size="small"
+                        variant="contained"
+                        onClick={() => navigate("/profile")}
+                    >
+                        Go to Profile
+                    </Button>
+                </CardActions>
 
             </div>
         </AppTheme>

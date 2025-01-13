@@ -76,7 +76,7 @@ function Profile(props: { disableCustomTheme?: boolean }) {
                 {educatorCourses?.map((course: any) => (
                     <li key={course.id}>{course.name}</li>
                 ))}
-            </ul>n
+            </ul>
             { eduId && (
                 <button onClick={() => navigate("/proctorHome")}>Proctor Home</button>
             )}

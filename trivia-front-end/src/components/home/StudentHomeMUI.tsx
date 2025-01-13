@@ -25,7 +25,7 @@ function StudentHomeMUI(props: { disableCustomTheme?: boolean }) {
 
     // Function responsible for redirection to the enroll page 
     let goToEnroll = () => {
-        navigate("/enroll")
+        navigate("/enrollMUI")
     }
 
     // Function responsible for redirection to the payment history page 
