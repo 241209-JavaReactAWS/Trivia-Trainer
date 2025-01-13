@@ -11,6 +11,8 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
     /* Setting role to conditionally render create quiz option */
     const [roleEd, setRoleEd] = useState<boolean>(false);
     const [educator, setEducator] = useState<Educator>();
+    // const [firstName, setFirstName] = useState<string>("");
+    // const [lastName, setLastName] = useState<string>("");
     const [quizzes, setQuizzes] = useState<any[]>([]);
 
     /// Usable things from react-router-dom
@@ -40,15 +42,14 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
 
     useEffect(() => {
         let edId = course.educator.educatorId;
-        axios.get<Educator>(`http://localhost:8080/educators/${edId}`)
+        axios.get<Educator>(`http://localhost:8080/educator/${edId}`)
             .then((res) => {
-                setEducator(res.data)
+                setEducator(res.data);
             })
             .catch((error) => {
-                console.error("Could not fetch the educator object --> ", error)
+                console.error("Could not fetch the educator object --> ", error);
             });
-    }, []
-    )
+    }, []);
 
     return (
         <AppTheme {...props}>
@@ -60,13 +61,13 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
                 </Typography>
                 <hr /> <br />
                 <Typography gutterBottom variant="h2" component="div">
-                    {course.description}
+                    Proctor: {educator?.user?.firstName} {educator?.user?.lastName}
                 </Typography>
                 <Typography gutterBottom variant="h2" component="div">
-                    Educator ID: {course.educator.educatorId}
+                    {course.description}
                 </Typography>
                 {/* <Typography gutterBottom variant="h2" component="div">
-                    Educator: {educator?.user?.firstName}
+                    Educator ID: {course.educator.educatorId}
                 </Typography> */}
                 <Typography gutterBottom variant="h2" component="div">
                     Fees: ${course.fee}
@@ -74,8 +75,9 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
                 <Button size="large" onClick={() => navigate("/studentHomeMUI")}>
                     Back to Student Home
                 </Button>
-                {/* MUI Card to display the selected Course */}
-                <Card key={course.courseId} sx={{ maxWidth: 345 }}>
+
+
+                {/* <Card key={course.courseId} sx={{ maxWidth: 345 }}>
                     <CardContent>
                         <Typography gutterBottom variant="h3" component="div">
                             {course.name}
@@ -89,15 +91,12 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
                             ${course.fee}
                         </Typography>
                     </CardContent>
-                    {/* Button only for educators who had created the displayed course */}
                     {roleEd && (
                         <CardActions>
                             <Button size="small" onClick={() => navigate("/quizCreate", { state: { course } })}>Create Quiz</Button>
                         </CardActions>
                     )}
-                    
                 </Card>
-                 {/* Profile Button for Everyone (conditional render?) */}
                  <br/>
                  <br/>
                  <CardActions>
@@ -108,7 +107,7 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
                         >
                             Go to Profile
                         </Button>
-                    </CardActions>
+                    </CardActions> */}
 
             </div>
         </AppTheme>

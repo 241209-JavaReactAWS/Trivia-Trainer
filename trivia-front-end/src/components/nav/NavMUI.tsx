@@ -9,6 +9,10 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 function NavMUI(props: { disableCustomTheme?: boolean }) {
 
+    var eduId = localStorage.getItem("educator_id")
+
+    var stuId = localStorage.getItem("student_id")
+
     const navigate = useNavigate();
 
     const logout = () => {
@@ -59,15 +63,23 @@ function NavMUI(props: { disableCustomTheme?: boolean }) {
                         </Typography> */}
                         
                         <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-                            <Button color="inherit" onClick={() => navigate('/')}>General Home</Button>
+                            <Button color="inherit" onClick={() => navigate('/')}>Home</Button>
                             <Button color="inherit" onClick={() => navigate('/login')}>Login</Button>
                             {/*<Button color="inherit" onClick={() => navigate('/studentHomeMUI')}>Student Home</Button>*/}
                             {/*<Button color="inherit" onClick={() => navigate('/proctorHome')}>Proctor Home</Button>*/}
-                            <Button color="inherit" onClick={() => navigate('/profile')}>Profile</Button>
-                            <Button color="inherit" onClick={logout}>Log out</Button>
+                            { eduId && (
+                            <Button color="inherit" onClick={() => navigate("/proctorHome")}>Profile</Button>
+                            )}
+                            {stuId && (
+                            <Button color="inherit" onClick={() => navigate("/studentHomeMUI")}>Profile</Button>
+                            )}
+
+                            {stuId || eduId && (
+                            <Button color="inherit" onClick={logout}>Log Out</Button>
+                            )}
+                            {/* <Button color="inherit" onClick={logout}>Log out</Button> */}
                         </Box>
 
-                        
                         <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
                             {/* Color Mode Dropdown for smaller screens */}
                             <ColorModeIconDropdown />
