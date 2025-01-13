@@ -46,6 +46,9 @@ function ProctorHomeMUI(props: { disableCustomTheme?: boolean }) {
 
   const navigate = useNavigate();
 
+  const f_name = localStorage.getItem("first_name")
+  const l_name = localStorage.getItem("last_name")
+
   useEffect(() => {
     /*  Only display editable and deletable courses if the user is an educator, and if the educator is the creater of the courses. */
     const role = localStorage.getItem("roles");
@@ -156,7 +159,7 @@ function ProctorHomeMUI(props: { disableCustomTheme?: boolean }) {
       <CssBaseline enableColorScheme />
       <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
       <div>
-        <h1>Welcome to the Proctor's Home Page</h1>
+        <h1>Welcome {f_name} {l_name} </h1>
 
         <div>
           {/* <h1>Welcome, {f_name} {l_name}!</h1> */}
