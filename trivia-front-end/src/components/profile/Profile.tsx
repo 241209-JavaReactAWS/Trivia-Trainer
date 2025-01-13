@@ -27,10 +27,10 @@ function Profile(props: { disableCustomTheme?: boolean }) {
 
     // Use effect for educator details 
     useEffect(() => {
-        if (!eduId) {
+        {/*if (!eduId) {
             // alert("Please log in to view your profile");
             navigate("/login");
-        }
+        }*/}
         axios
             .get(`${backendUrl}/educator/${eduId}`)
             .then((response) => {
@@ -66,7 +66,7 @@ function Profile(props: { disableCustomTheme?: boolean }) {
             {/* STEP 1: Make sure educator can change their professional details */}
             {/* <button onClick={changeDetails}>Change Professional Details</button> */}
             {/* <h1>{userId}</h1> */}
-            {/* <button onClick={() => navigate("/changeDetails", { state: { eduId } })}>Change Professional Details</button> */}
+            
         </div>
 
         {/* Show current courses made by this user */}
@@ -76,7 +76,14 @@ function Profile(props: { disableCustomTheme?: boolean }) {
                 {educatorCourses?.map((course: any) => (
                     <li key={course.id}>{course.name}</li>
                 ))}
-            </ul>
+            </ul>n
+            { eduId && (
+                <button onClick={() => navigate("/courseCreateMUI")}>Proctor Home</button>
+            )}
+
+            {!eduId && (
+                <button onClick={() => navigate("/studentHomeMUI")}>Student Home</button>
+            )}
         </div>
 
 
