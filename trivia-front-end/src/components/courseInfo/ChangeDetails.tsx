@@ -22,7 +22,7 @@ function ChangeDetails() {
             console.log(res.data)
             // localStorage.setItem("professional-details", newDetails)
             alert("Professional Details Changed!")
-            navigate("/profile")
+            navigate("/proctorHome")
         }).catch((err) => {
             console.log(err)
         })
