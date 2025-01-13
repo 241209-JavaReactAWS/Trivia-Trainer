@@ -6,7 +6,6 @@ import Search from "./components/search/Search";
 import EnrollmentPage from "./components/enrollment/EnrollmentPage";
 import GeneralHome from "./components/generalHome/GeneralHome";
 import StudentHome from "./components/home/StudentHome";
-import CourseCreate from "./components/courseCreate/CourseCreate";
 import QuizCreate from "./components/quizCreate/QuizCreate";
 import Test1 from "./components/payment/MakePayment";
 import PaymentHistory from "./components/payment/PaymentHistory";
@@ -18,13 +17,13 @@ import ChangeDetails from "./components/profile/ChangeDetails";
 import EducatorProfile from "./components/profile/Profile";
 import SignInSide from "./components/login/SignInSide";
 import SignUp from "./components/signUp/SignUp";
-import CourseCreateMUI from "./components/courseCreate/CourseCreateMUI";
 import NavMUI from "./components/nav/NavMUI";
 import GeneralHomeMUI from "./components/generalHome/GeneralHomeMUI";
 import CourseInfoMUI from "./components/courseInfo/CourseInfoMUI";
 import { navigationCustomizations } from "./components/shared-theme/customizations/navigation";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import StudentHomeMUI from "./components/home/StudentHomeMUI";
+import ProctorHomeMUI from "./components/proctorHome/ProctorHomeMUI";
 
 function App() {
 
@@ -52,13 +51,13 @@ function App() {
           <Route path="/studentHomeMUI" element={<StudentHomeMUI></StudentHomeMUI>}></Route>
 
 
-          <Route path="/payment" element={<Test1></Test1>}></Route>
+          <Route path="/payment" element={<Test1></Test1>}></Route>y
           <Route path="/search" element={<Search></Search>}></Route>
           <Route path="/enroll" element={<EnrollmentPage></EnrollmentPage>}></Route>
 
           {/* <Route path="/courseCreate" element={<CourseCreate></CourseCreate>}></Route> */}
           {/* Course Create MUI Test Link */}
-          <Route path="/courseCreateMUI" element={<CourseCreateMUI></CourseCreateMUI>}></Route>
+          <Route path="/proctorHome" element={<ProctorHomeMUI></ProctorHomeMUI>}></Route>
 
           <Route path="/quizCreate" element={<QuizCreate></QuizCreate>}></Route>
           <Route path="/test1" element={<Test1></Test1>}></Route>

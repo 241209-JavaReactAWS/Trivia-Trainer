@@ -30,7 +30,7 @@ function StudentHomeMUI(props: { disableCustomTheme?: boolean }) {
 
     // Function responsible for redirection to the payment page 
     let goToPayment = () => {
-        navigate("/payment")
+        navigate("/paymentHistory")
     }
 
     // Function responsible for redirection to the course information page 
@@ -109,10 +109,10 @@ function StudentHomeMUI(props: { disableCustomTheme?: boolean }) {
                 </div>
                 <br></br>
                 <br></br>
-                <Button onClick={goToEnroll}>Enrollment Test</Button>
+                <Button onClick={goToEnroll}>Enrollments</Button>
                 <br></br>
                 <br></br>
-                <Button onClick={goToPayment}>Payment Test</Button>
+                <Button onClick={goToPayment}>Payment History</Button>
                 <br></br>
                 <br></br>
 

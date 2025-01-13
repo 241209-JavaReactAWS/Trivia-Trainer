@@ -13,6 +13,7 @@ function Profile(props: { disableCustomTheme?: boolean }) {
     const navigate = useNavigate();
 
     const [currentUser, setCurrentUser] = useState({});
+    const [educatorCourses, setEducatorCourses] = useState([]);
     const username = localStorage.getItem("username")
     /* Welcome message variables */
     const f_name = localStorage.getItem("first_name")
@@ -24,6 +25,7 @@ function Profile(props: { disableCustomTheme?: boolean }) {
         navigate("/changeDetails")
     }
 
+    // Use effect for educator details 
     useEffect(() => {
         if (!eduId) {
             // alert("Please log in to view your profile");
@@ -40,6 +42,19 @@ function Profile(props: { disableCustomTheme?: boolean }) {
             });
     }, [eduId]);
 
+    // UseEffect for educator courses
+    useEffect(() => {
+        axios
+            .get(`${backendUrl}/courses/proctor/${eduId}`)
+            .then((response) => {
+                setEducatorCourses(response.data);
+            })
+            .catch((error) => {
+                console.error("Error fetching educator courses:", error);
+            });
+    }, [eduId]);
+
+
     return (
         <AppTheme {...props }>
             <CssBaseline enableColorScheme />
@@ -51,9 +66,21 @@ function Profile(props: { disableCustomTheme?: boolean }) {
             {/* STEP 1: Make sure educator can change their professional details */}
             {/* <button onClick={changeDetails}>Change Professional Details</button> */}
             {/* <h1>{userId}</h1> */}
-            <button onClick={() => navigate("/changeDetails", { state: { eduId } })}>Change Professional Details</button>
+            {/* <button onClick={() => navigate("/changeDetails", { state: { eduId } })}>Change Professional Details</button> */}
         </div>
-        </AppTheme >    
+
+        {/* Show current courses made by this user */}
+        <div>
+            <h1>Your Courses</h1>
+            <ul>
+                {educatorCourses?.map((course: any) => (
+                    <li key={course.id}>{course.name}</li>
+                ))}
+            </ul>
+        </div>
+
+
+        </AppTheme> 
     )
 }
 
