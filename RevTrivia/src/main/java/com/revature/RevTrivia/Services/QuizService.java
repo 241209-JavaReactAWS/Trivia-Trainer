@@ -58,6 +58,10 @@ public class QuizService {
         return quizDAO.findAll();
     }
 
+    public List<Quiz> getQuizzesByCourse(int courseId){
+        return quizDAO.findAllByCourse_CourseId(courseId);
+    }
+
     public Optional<Quiz> getQuizById(int quizId){
         return quizDAO.findById(quizId);
     }
