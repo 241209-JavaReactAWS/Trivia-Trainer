@@ -13,7 +13,7 @@ import Course from "./components/Course/Course";
 import Quiz from "./components/quiz/quiz";
 import CourseInfo from "./components/courseInfo/CourseInfo";
 import Profile from "./components/profile/Profile";
-import ChangeDetails from "./components/profile/ChangeDetails";
+import ChangeDetails from "./components/courseInfo/ChangeDetails";
 import EducatorProfile from "./components/profile/Profile";
 import SignInSide from "./components/login/SignInSide";
 import SignUp from "./components/signUp/SignUp";

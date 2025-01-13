@@ -5,10 +5,12 @@ import AppTheme from "../shared-theme/AppTheme";
 import ColorModeSelect from "../shared-theme/ColorModeSelect";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Educator } from "../interfaces/Educator";
 
 function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
     /* Setting role to conditionally render create quiz option */
     const [roleEd, setRoleEd] = useState<boolean>(false);
+    const [educator, setEducator] = useState<Educator>();
 
     /// Usable things from react-router-dom
     const location = useLocation();
@@ -33,17 +35,86 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
     }, []
     )
 
+    useEffect(() => {
+        let edId = course.educator.educatorId;
+        axios.get<Educator>(`http://localhost:8080/educators/${edId}`)
+            .then((res) => {
+                setEducator(res.data)
+            })
+            .catch((error) => {
+                console.error("Could not fetch the educator object --> ", error)
+            });
+    }, []
+    )
+
     return (
+        // <AppTheme {...props}>
+        //     <CssBaseline enableColorScheme />
+        //     <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
+        //     <div>
+        //         <Card key={course.courseId} sx={{ maxWidth: 345 }}>
+        //             <CardContent>
+        //                 <Typography gutterBottom variant="h3" component="div">
+        //                     {course.name}
+        //                 </Typography><Typography gutterBottom variant="body1" component="div">
+        //                     {course.description}
+        //                 </Typography>
+        //                 <Typography gutterBottom variant="body2" component="div">
+        //                     Educator ID: {course.educator.educatorId}
+        //                 </Typography>
+        //                 <Typography gutterBottom variant="body1" component="div">
+        //                     ${course.fee}
+        //                 </Typography>
+        //             </CardContent>
+        //             {roleEd && (
+        //                 <CardActions>
+        //                     <Button size="small" onClick={() => navigate("/quizCreate", { state: { course } })}>Create Quiz</Button>
+        //                 </CardActions>
+        //             )}
+
+        //         </Card>
+
+        //     </div>
+        // </AppTheme>
+
         <AppTheme {...props}>
             <CssBaseline enableColorScheme />
             <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
             <div>
-                {/* MUI Card to display the selected Course */}
-                <Card key={course.courseId} sx={{ maxWidth: 345 }}>
+                <Typography gutterBottom variant="h1" component="div">
+                    {course.name}
+                </Typography>
+                <hr /> <br />
+                <Typography gutterBottom variant="h2" component="div">
+                    {course.description}
+                </Typography>
+                <Typography gutterBottom variant="h2" component="div">
+                    Educator ID: {course.educator.educatorId}
+                </Typography>
+                {/* <Typography gutterBottom variant="h2" component="div">
+                    Educator: {educator?.user?.firstName}
+                </Typography> */}
+                <Typography gutterBottom variant="h2" component="div">
+                    Fees: ${course.fee}
+                </Typography>
+                <Button size="large" onClick={() => navigate("/studentHomeMUI")}>
+                    Back to Student Home
+                </Button>
+                {/* <Card
+                    key={course.courseId}
+                    sx={{
+                        maxWidth: 800,
+                        width: '100%',
+                        margin: '20px auto',
+                        padding: 2,
+                        boxShadow: 4,
+                    }}
+                >
                     <CardContent>
                         <Typography gutterBottom variant="h3" component="div">
                             {course.name}
-                        </Typography><Typography gutterBottom variant="body1" component="div">
+                        </Typography>
+                        <Typography gutterBottom variant="body1" component="div">
                             {course.description}
                         </Typography>
                         <Typography gutterBottom variant="body2" component="div">
@@ -53,15 +124,14 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
                             ${course.fee}
                         </Typography>
                     </CardContent>
-                    {/* Button only for educators who had created the displayed course */}
                     {roleEd && (
                         <CardActions>
-                            <Button size="small" onClick={() => navigate("/quizCreate", { state: { course } })}>Create Quiz</Button>
+                            <Button size="small" onClick={() => navigate("/quizCreate", { state: { course } })}>
+                                Create Quiz
+                            </Button>
                         </CardActions>
                     )}
-
-                </Card>
-
+                </Card> */}
             </div>
         </AppTheme>
     );

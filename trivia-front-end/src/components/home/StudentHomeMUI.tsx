@@ -93,12 +93,12 @@ function StudentHomeMUI(props: { disableCustomTheme?: boolean }) {
                                     <Typography gutterBottom variant="body1" component="div">
                                         {course.description}
                                     </Typography>
-                                    <Typography gutterBottom variant="body1" component="div">
+                                    {/* <Typography gutterBottom variant="body1" component="div">
                                         Educator ID - {course.educator.educatorId}
                                     </Typography>
                                     <Typography gutterBottom variant="body1" component="div">
                                         ${course.fee}
-                                    </Typography>
+                                    </Typography> */}
                                 </CardContent>
                                 <CardActions>
                                     <Button size="large" onClick={() => goToCourseInfo(course)}>View Course</Button>
