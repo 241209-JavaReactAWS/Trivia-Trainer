@@ -16,6 +16,8 @@ import CourseInfo from "./components/courseInfo/CourseInfo";
 import Profile from "./components/profile/Profile";
 import ChangeDetails from "./components/profile/ChangeDetails";
 import EducatorProfile from "./components/profile/Profile";
+import SignInSide from "./components/login/SignInSide";
+import SignUp from "./components/signUp/SignUp";
 import CourseCreateMUI from "./components/courseCreate/CourseCreateMUI";
 import NavMUI from "./components/nav/NavMUI";
 import GeneralHomeMUI from "./components/generalHome/GeneralHomeMUI";
@@ -40,6 +42,8 @@ function App() {
         {/* </ThemeProvider> */}
 
         <Routes>
+          <Route path="/login" element={<SignInSide></SignInSide>}></Route>
+          <Route path="/signup" element={<SignUp></SignUp>}></Route>
           {/* <Route path="/" element={<GeneralHome></GeneralHome>}></Route> */}
           <Route path="/" element={<GeneralHomeMUI></GeneralHomeMUI>}></Route>
           <Route path="/login" element={<Login></Login>}></Route>
