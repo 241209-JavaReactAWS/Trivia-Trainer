@@ -18,6 +18,12 @@ import { SitemarkIcon } from '../shared-theme/CustomIcons';
 import ColorModeSelect from '../shared-theme/ColorModeSelect';
 import { useNavigate } from 'react-router-dom';
 import { FormHelperText, Radio, RadioGroup } from '@mui/material';
+import axios from 'axios';
+import { decodeAccessTokenInStorage } from '../../utils/JwtDecoder';
+import emailValidator from 'email-validator';
+
+
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const Card = styled(MuiCard)(({ theme }) => ({
   minHeight: 'auto',
@@ -40,7 +46,6 @@ const Card = styled(MuiCard)(({ theme }) => ({
 }));
 
 const SignUpContainer = styled(Stack)(({ theme }) => ({
-  height: 'calc((1 - var(--template-frame-height, 0)) * 100dvh)',
   minHeight: '100vh',
   padding: theme.spacing(2),
   [theme.breakpoints.up('sm')]: {
@@ -88,7 +93,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
   const validateInputs = () => {
     let isValid = true;
 
-    if (!username|| username.length < 4) {
+    if (!username || username.length < 4) {
       setUsernameError('Username must be at least 4 characters long.');
       isValid = false;
     } else {
@@ -112,6 +117,9 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
     if (!email) {
       setEmailError('Email is a required field')
       isValid = false;
+    } else if (!emailValidator.validate(email)){
+      setEmailError('Please enter a valid email')
+      isValid = false;
     } else {
       setEmailError('')
     }
@@ -134,26 +142,36 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     if (firstNameError || lastNameError || emailError || usernameError || passwordError || signupRoleError) {
       event.preventDefault();
       return;
     }
-    console.log({
-      firstName,
-      lastName,
-      email,
+    axios.post(`${backendUrl}/auth/register/${signupRole}`, {
+      username,
       password,
-      username
+      email,
+      firstName,
+      lastName
+    })
+    .then((response) => {
+      localStorage.clear()
+      localStorage.setItem("accessToken", response.data.accessToken);
+      localStorage.setItem("refreshToken", response.data.refreshToken);
+      decodeAccessTokenInStorage()
+      navigate("/")
+    })
+    .catch((error) => {
+      console.error("Register error:", error);
     });
   };
 
   return (
     <AppTheme {...props}>
       <CssBaseline enableColorScheme />
-      <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
+      
       <SignUpContainer direction="column" justifyContent="space-between">
-        {/* <Card variant="outlined"> */}
-          <SitemarkIcon />
+        <Card variant="outlined">
           <Typography
             component="h1"
             variant="h4"
@@ -169,62 +187,72 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
             <FormControl>
             <FormLabel sx={{ textAlign: 'left' }}>First Name</FormLabel>
               <TextField
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
                 required
                 fullWidth
                 placeholder="Jane"
-                error={firstNameError === ""}
+                error={firstNameError != ""}
                 helperText={firstNameError}
-                color={firstNameError === "" ? 'error' : 'primary'}
+                color={firstNameError != "" ? 'error' : 'primary'}
               />
             </FormControl>
             <FormControl>
             <FormLabel sx={{ textAlign: 'left' }}>Last Name</FormLabel>
               <TextField
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
                 required
                 fullWidth
                 placeholder="Doe"
-                error={lastNameError === ""}
+                error={lastNameError != ""}
                 helperText={lastNameError}
-                color={lastNameError === "" ? "error" : "primary"}
+                color={lastNameError != "" ? "error" : "primary"}
               />
             </FormControl>
             <FormControl>
             <FormLabel sx={{ textAlign: 'left' }}>Email</FormLabel>
               <TextField
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
                 fullWidth
                 type="email"
                 placeholder="example@email.com"
-                error={emailError === ""}
+                error={emailError != ""}
                 helperText={emailError}
-                color={emailError === "" ? "error" : "primary"}
+                color={emailError != "" ? "error" : "primary"}
               />
             </FormControl>
             <FormControl>
             <FormLabel sx={{ textAlign: 'left' }}>Username</FormLabel>
               <TextField
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 required
                 fullWidth
                 placeholder="Enter a username"
-                error={usernameError === ""}
+                error={usernameError != ""}
                 helperText={usernameError}
-                color={usernameError === "" ? "error" : "primary"}
+                color={usernameError != "" ? "error" : "primary"}
               />
             </FormControl>
             <FormControl>
             <FormLabel sx={{ textAlign: 'left' }}>Password</FormLabel>
               <TextField
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
                 fullWidth
                 type="password"
                 placeholder="Enter a password"
-                error={passwordError === ""}
+                error={passwordError != ""}
                 helperText={passwordError}
-                color={passwordError === "" ? "error" : "primary"}
+                color={passwordError != "" ? "error" : "primary"}
               />
             </FormControl>
             
-            <FormControl>
+            <FormControl error={signupRoleError !== ""} required>
               <FormLabel sx={{ textAlign: 'left' }}>Role</FormLabel>
               <RadioGroup
                 aria-label="role"
@@ -244,6 +272,9 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
                   label="Proctor"
                 />
               </RadioGroup>
+              {signupRoleError && (
+                <FormHelperText>{signupRoleError}</FormHelperText>
+              )}
             </FormControl>
 
             <Button
@@ -256,9 +287,13 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
               Sign up
             </Button>
           </Box>
-          <Divider>
+          </Card>
+      </SignUpContainer>
+      <Divider>
             <Typography sx={{ color: 'text.secondary' }}>or</Typography>
           </Divider>
+          <br></br>
+      <Card variant='outlined'>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, marginBottom: '2px' }}>
             <Typography sx={{ textAlign: 'center' }}>
               Already have an account?{' '}
@@ -271,8 +306,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
               </Link>
             </Typography>
           </Box>
-        {/* </Card> */}
-      </SignUpContainer>
+        </Card>
     </AppTheme>
   );
 }
