@@ -48,35 +48,6 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
     )
 
     return (
-        // <AppTheme {...props}>
-        //     <CssBaseline enableColorScheme />
-        //     <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
-        //     <div>
-        //         <Card key={course.courseId} sx={{ maxWidth: 345 }}>
-        //             <CardContent>
-        //                 <Typography gutterBottom variant="h3" component="div">
-        //                     {course.name}
-        //                 </Typography><Typography gutterBottom variant="body1" component="div">
-        //                     {course.description}
-        //                 </Typography>
-        //                 <Typography gutterBottom variant="body2" component="div">
-        //                     Educator ID: {course.educator.educatorId}
-        //                 </Typography>
-        //                 <Typography gutterBottom variant="body1" component="div">
-        //                     ${course.fee}
-        //                 </Typography>
-        //             </CardContent>
-        //             {roleEd && (
-        //                 <CardActions>
-        //                     <Button size="small" onClick={() => navigate("/quizCreate", { state: { course } })}>Create Quiz</Button>
-        //                 </CardActions>
-        //             )}
-
-        //         </Card>
-
-        //     </div>
-        // </AppTheme>
-
         <AppTheme {...props}>
             <CssBaseline enableColorScheme />
             <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
@@ -100,38 +71,6 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
                 <Button size="large" onClick={() => navigate("/studentHomeMUI")}>
                     Back to Student Home
                 </Button>
-                {/* <Card
-                    key={course.courseId}
-                    sx={{
-                        maxWidth: 800,
-                        width: '100%',
-                        margin: '20px auto',
-                        padding: 2,
-                        boxShadow: 4,
-                    }}
-                >
-                    <CardContent>
-                        <Typography gutterBottom variant="h3" component="div">
-                            {course.name}
-                        </Typography>
-                        <Typography gutterBottom variant="body1" component="div">
-                            {course.description}
-                        </Typography>
-                        <Typography gutterBottom variant="body2" component="div">
-                            Educator ID: {course.educator.educatorId}
-                        </Typography>
-                        <Typography gutterBottom variant="body1" component="div">
-                            ${course.fee}
-                        </Typography>
-                    </CardContent>
-                    {roleEd && (
-                        <CardActions>
-                            <Button size="small" onClick={() => navigate("/quizCreate", { state: { course } })}>
-                                Create Quiz
-                            </Button>
-                        </CardActions>
-                    )}
-                </Card> */}
             </div>
         </AppTheme>
     );

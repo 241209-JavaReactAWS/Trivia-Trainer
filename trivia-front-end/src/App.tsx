@@ -1,27 +1,23 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Nav from "./components/nav/Nav";
 import Login from "./components/login/Login";
 import Search from "./components/search/Search";
 import EnrollmentPage from "./components/enrollment/EnrollmentPage";
-import GeneralHome from "./components/generalHome/GeneralHome";
-import StudentHome from "./components/home/StudentHome";
 import QuizCreate from "./components/quizCreate/QuizCreate";
 import Test1 from "./components/payment/MakePayment";
 import PaymentHistory from "./components/payment/PaymentHistory";
 import Course from "./components/Course/Course";
 import Quiz from "./components/quiz/quiz";
-import CourseInfo from "./components/courseInfo/CourseInfo";
 import Profile from "./components/profile/Profile";
 import ChangeDetails from "./components/courseInfo/ChangeDetails";
-import EducatorProfile from "./components/profile/Profile";
 import SignInSide from "./components/login/SignInSide";
 import SignUp from "./components/signUp/SignUp";
+// import CourseCreateMUI from "./components/courseCreate/CourseCreateMUI";
 import NavMUI from "./components/nav/NavMUI";
 import GeneralHomeMUI from "./components/generalHome/GeneralHomeMUI";
 import CourseInfoMUI from "./components/courseInfo/CourseInfoMUI";
 import { navigationCustomizations } from "./components/shared-theme/customizations/navigation";
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
 import StudentHomeMUI from "./components/home/StudentHomeMUI";
 import ProctorHomeMUI from "./components/proctorHome/ProctorHomeMUI";
 
@@ -51,7 +47,7 @@ function App() {
           <Route path="/studentHomeMUI" element={<StudentHomeMUI></StudentHomeMUI>}></Route>
 
 
-          <Route path="/payment" element={<Test1></Test1>}></Route>y
+          <Route path="/payment" element={<Test1></Test1>}></Route>
           <Route path="/search" element={<Search></Search>}></Route>
           <Route path="/enroll" element={<EnrollmentPage></EnrollmentPage>}></Route>
 

@@ -109,7 +109,7 @@ function StudentHomeMUI(props: { disableCustomTheme?: boolean }) {
                 </div>
                 <br></br>
                 <br></br>
-                <Button onClick={goToEnroll}>Enrollments</Button>
+                <Button onClick={goToEnroll}>Manage Enrollments</Button>
                 <br></br>
                 <br></br>
                 <Button onClick={goToPayment}>Payment History</Button>
