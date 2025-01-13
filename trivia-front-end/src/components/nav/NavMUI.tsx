@@ -62,7 +62,7 @@ function NavMUI(props: { disableCustomTheme?: boolean }) {
                             <Button color="inherit" onClick={() => navigate('/')}>General Home</Button>
                             <Button color="inherit" onClick={() => navigate('/login')}>Login</Button>
                             <Button color="inherit" onClick={() => navigate('/studentHomeMUI')}>Student Home</Button>
-                            <Button color="inherit" onClick={() => navigate('/courseCreateMUI')}>Proctor Home</Button>
+                            <Button color="inherit" onClick={() => navigate('/proctorHome')}>Proctor Home</Button>
                             <Button color="inherit" onClick={() => navigate('/profile')}>Profile</Button>
                             <Button color="inherit" onClick={logout}>Log out</Button>
                         </Box>

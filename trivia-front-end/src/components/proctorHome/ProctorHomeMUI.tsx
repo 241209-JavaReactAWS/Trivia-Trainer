@@ -23,7 +23,7 @@ const style = {
   p: 4,
 };
 
-function CourseCreateMUI(props: { disableCustomTheme?: boolean }) {
+function ProctorHomeMUI(props: { disableCustomTheme?: boolean }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -31,6 +31,8 @@ function CourseCreateMUI(props: { disableCustomTheme?: boolean }) {
   // State variables 
   const [allCourses, setAllCourses] = useState<Course[]>([])
   const [edCourses, setEdCourses] = useState<Course[]>([])
+  const [profDetails, setProfDetails] = useState("");
+  
   /* Popup for editing an existing course */
   const [showAddCoursePopup, setShowAddCoursePopup] = useState(false);
   const [courseToEdit, setCourseToEdit] = useState<Course | null>(null);
@@ -71,6 +73,22 @@ function CourseCreateMUI(props: { disableCustomTheme?: boolean }) {
     }
   }, []
   )
+
+  var eduId = localStorage.getItem("educator_id")
+  useEffect(() => {
+    if (!eduId) {
+        // alert("Please log in to view your profile");
+        navigate("/login");
+    }
+    axios
+        .get(`${backendUrl}/educator/${eduId}`)
+        .then((response) => {
+            setProfDetails(response.data.details);
+        })
+        .catch((error) => {
+            console.error("Error fetching educator details:", error);
+        });
+}, [eduId]);
 
   /* Add new course */
   const addNewCourseToList = (newCourse: Course) => {
@@ -138,7 +156,19 @@ function CourseCreateMUI(props: { disableCustomTheme?: boolean }) {
       <CssBaseline enableColorScheme />
       <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
       <div>
-        <h1>Welcome to the Proctor's Course List Page</h1>
+        <h1>Welcome to the Proctor's Home Page</h1>
+
+        <div>
+          {/* <h1>Welcome, {f_name} {l_name}!</h1> */}
+          <h2>{profDetails}</h2>
+
+          {/* STEP 1: Make sure educator can change their professional details */}
+          {/* <button onClick={changeDetails}>Change Professional Details</button> */}
+          {/* <h1>{userId}</h1> */}
+          <button onClick={() => navigate("/changeDetails", { state: { eduId } })}>Change Professional Details</button>
+        </div>
+
+        <br />
 
         <div style={{
           display: 'flex',
@@ -249,4 +279,4 @@ function CourseCreateMUI(props: { disableCustomTheme?: boolean }) {
   )
 }
 
-export default CourseCreateMUI;
+export default ProctorHomeMUI;
