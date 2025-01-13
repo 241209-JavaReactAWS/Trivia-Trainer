@@ -8,6 +8,8 @@ interface NewCourseProps {
   courseToEdit: Course | null;
 }
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
 function NewCourse({ onClose, onCourseUpdated, courseToEdit }: NewCourseProps) {
   const [formData, setFormData] = useState({
     name: "",
@@ -37,7 +39,7 @@ function NewCourse({ onClose, onCourseUpdated, courseToEdit }: NewCourseProps) {
     e.preventDefault();
 
     axios
-      .patch<Course>(`http://localhost:8080/courses/${courseToEdit?.courseId}`, formData)
+      .patch<Course>(`${backendUrl}/courses/${courseToEdit?.courseId}`, formData)
       .then((response) => {
         console.log("Course updated successfully:", response.data);
         onCourseUpdated(response.data); // Pass the updated course back to the parent

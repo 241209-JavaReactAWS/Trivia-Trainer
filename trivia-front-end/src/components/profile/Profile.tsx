@@ -14,6 +14,9 @@ function Profile(props: { disableCustomTheme?: boolean }) {
 
     const [currentUser, setCurrentUser] = useState({});
     const username = localStorage.getItem("username")
+    /* Welcome message variables */
+    const f_name = localStorage.getItem("first_name")
+    const l_name = localStorage.getItem("last_name")
     const [profDetails, setProfDetails] = useState("");
     var eduId = localStorage.getItem("educator_id")
 
@@ -42,7 +45,7 @@ function Profile(props: { disableCustomTheme?: boolean }) {
             <CssBaseline enableColorScheme />
             <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
         <div>
-            <h1>Welcome, {username}!</h1>
+            <h1>Welcome, {f_name} {l_name}!</h1>
             <h2>Professional Details: {profDetails}</h2>
 
             {/* STEP 1: Make sure educator can change their professional details */}

@@ -24,7 +24,7 @@ import GeneralHomeMUI from "./components/generalHome/GeneralHomeMUI";
 import CourseInfoMUI from "./components/courseInfo/CourseInfoMUI";
 import { navigationCustomizations } from "./components/shared-theme/customizations/navigation";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-
+import StudentHomeMUI from "./components/home/StudentHomeMUI";
 
 function App() {
 
@@ -46,8 +46,12 @@ function App() {
           <Route path="/signup" element={<SignUp></SignUp>}></Route>
           {/* <Route path="/" element={<GeneralHome></GeneralHome>}></Route> */}
           <Route path="/" element={<GeneralHomeMUI></GeneralHomeMUI>}></Route>
+          <Route path="/login" element={<Login></Login>}></Route>
 
-          <Route path="/studentHome" element={<StudentHome></StudentHome>}></Route>
+          {/* <Route path="/studentHome" element={<StudentHome></StudentHome>}></Route> */}
+          <Route path="/studentHomeMUI" element={<StudentHomeMUI></StudentHomeMUI>}></Route>
+
+
           <Route path="/payment" element={<Test1></Test1>}></Route>
           <Route path="/search" element={<Search></Search>}></Route>
           <Route path="/enroll" element={<EnrollmentPage></EnrollmentPage>}></Route>

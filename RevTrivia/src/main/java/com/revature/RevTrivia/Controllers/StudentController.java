@@ -25,6 +25,15 @@ public class StudentController {
         return studentService.getAllStudents();
     }
 
+    @GetMapping("/{studentId}")
+    public ResponseEntity<Student> getStudentHandler(@PathVariable int studentId){
+        Optional<Student> gotStudent = studentService.getStudentByID(studentId);
+        if(gotStudent.isPresent())
+            return new ResponseEntity<>(gotStudent.get(), HttpStatus.OK);
+        else
+            return ResponseEntity.badRequest().build();
+    }
+
     @DeleteMapping("/{studentId}")
     public ResponseEntity<Student> deleteStudentHandler(@PathVariable int studentId){
         Optional<Student> deletedStudent = studentService.deleteStudentByID(studentId);
