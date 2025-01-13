@@ -39,7 +39,14 @@ function NavMUI(props: { disableCustomTheme?: boolean }) {
                             sx={{ mr: 2, display: { sm: 'none' } }}
                         >
                         </IconButton>
-                        <Typography
+                        <img src="src/components/shared-theme/RevTriviaLogo.png" style={{ 
+                            width: '70px', 
+                            height: '30px',  
+                            position: "absolute",
+                            left: "50%",
+                            transform: "translateX(-50%)",}}
+                        />
+                        {/* <Typography
                             variant="h6"
                             component="div"
                             sx={{
@@ -49,7 +56,8 @@ function NavMUI(props: { disableCustomTheme?: boolean }) {
                             }}
                         >
                             RevTrivia
-                        </Typography>
+                        </Typography> */}
+                        
                         <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                             <Button color="inherit" onClick={() => navigate('/')}>General Home</Button>
                             <Button color="inherit" onClick={() => navigate('/login')}>Login</Button>
@@ -58,6 +66,8 @@ function NavMUI(props: { disableCustomTheme?: boolean }) {
                             <Button color="inherit" onClick={() => navigate('/profile')}>Profile</Button>
                             <Button color="inherit" onClick={logout}>Log out</Button>
                         </Box>
+
+                        
                         <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
                             {/* Color Mode Dropdown for smaller screens */}
                             <ColorModeIconDropdown />

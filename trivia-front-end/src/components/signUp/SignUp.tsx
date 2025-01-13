@@ -292,6 +292,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
       <Divider>
             <Typography sx={{ color: 'text.secondary' }}>or</Typography>
           </Divider>
+          <br></br>
       <Card variant='outlined'>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, marginBottom: '2px' }}>
             <Typography sx={{ textAlign: 'center' }}>
