@@ -3,10 +3,6 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import AutoFixHighRoundedIcon from '@mui/icons-material/AutoFixHighRounded';
-import ConstructionRoundedIcon from '@mui/icons-material/ConstructionRounded';
-import SettingsSuggestRoundedIcon from '@mui/icons-material/SettingsSuggestRounded';
-import ThumbUpAltRoundedIcon from '@mui/icons-material/ThumbUpAltRounded';
 import CelebrationIcon from '@mui/icons-material/Celebration';
 import ExploreIcon from '@mui/icons-material/Explore';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
@@ -36,7 +32,9 @@ export default function Content() {
       sx={{ flexDirection: 'column', alignSelf: 'center', gap: 4, maxWidth: 450 }}
     >
       <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+        
       </Box>
+    
       {items.map((item, index) => (
         <Stack key={index} direction="row" sx={{ gap: 2 }}>
           {item.icon}

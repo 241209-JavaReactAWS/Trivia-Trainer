@@ -17,6 +17,7 @@ import Profile from "./components/profile/Profile";
 import ChangeDetails from "./components/profile/ChangeDetails";
 import EducatorProfile from "./components/profile/Profile";
 import SignInSide from "./components/login/SignInSide";
+import SignUpSide from "./components/signUp/SignUpSide";
 import SignUp from "./components/signUp/SignUp";
 import CourseCreateMUI from "./components/courseCreate/CourseCreateMUI";
 import NavMUI from "./components/nav/NavMUI";
@@ -25,6 +26,7 @@ import CourseInfoMUI from "./components/courseInfo/CourseInfoMUI";
 import { navigationCustomizations } from "./components/shared-theme/customizations/navigation";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import StudentHomeMUI from "./components/home/StudentHomeMUI";
+import { SettingsInputCompositeRounded, SettingsInputSvideoSharp } from "@mui/icons-material";
 
 function App() {
 
@@ -43,7 +45,7 @@ function App() {
 
         <Routes>
           <Route path="/login" element={<SignInSide></SignInSide>}></Route>
-          <Route path="/signup" element={<SignUp></SignUp>}></Route>
+          <Route path="/signup" element={<SignUpSide></SignUpSide>}></Route>
           {/* <Route path="/" element={<GeneralHome></GeneralHome>}></Route> */}
           <Route path="/" element={<GeneralHomeMUI></GeneralHomeMUI>}></Route>
           <Route path="/login" element={<Login></Login>}></Route>
