@@ -11,6 +11,7 @@ import Quiz from "./components/quiz/quiz";
 import Profile from "./components/profile/Profile";
 import ChangeDetails from "./components/courseInfo/ChangeDetails";
 import SignInSide from "./components/login/SignInSide";
+import SignUpSide from "./components/signUp/SignUpSide";
 import SignUp from "./components/signUp/SignUp";
 // import CourseCreateMUI from "./components/courseCreate/CourseCreateMUI";
 import NavMUI from "./components/nav/NavMUI";
@@ -39,7 +40,7 @@ function App() {
 
         <Routes>
           <Route path="/login" element={<SignInSide></SignInSide>}></Route>
-          <Route path="/signup" element={<SignUp></SignUp>}></Route>
+          <Route path="/signup" element={<SignUpSide></SignUpSide>}></Route>
           {/* <Route path="/" element={<GeneralHome></GeneralHome>}></Route> */}
           <Route path="/" element={<GeneralHomeMUI></GeneralHomeMUI>}></Route>
           <Route path="/login" element={<Login></Login>}></Route>
