@@ -33,6 +33,11 @@ function StudentHomeMUI(props: { disableCustomTheme?: boolean }) {
         navigate("/payment")
     }
 
+    // Function responsible for redirection to the payment history page 
+    let goToPaymentHistory = () => {
+        navigate("/paymentHistoryMUI")
+    }
+
     // Function responsible for redirection to the course information page 
     let goToCourseInfo = (course: Course) => {
         navigate("/courseInfoMUI", { state: { course: course } })
@@ -109,12 +114,10 @@ function StudentHomeMUI(props: { disableCustomTheme?: boolean }) {
                 </div>
                 <br></br>
                 <br></br>
-                <Button onClick={goToEnroll}>Enrollment Test</Button>
+                <Button onClick={goToEnroll}>Manage Enrollments</Button>
                 <br></br>
                 <br></br>
-                <Button onClick={goToPayment}>Payment Test</Button>
-                <br></br>
-                <br></br>
+                <Button onClick={goToPaymentHistory}>Payment History</Button>
 
                 {/* <h2>Change information</h2> */}
             </div>
