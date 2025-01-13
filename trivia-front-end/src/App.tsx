@@ -20,6 +20,7 @@ import { navigationCustomizations } from "./components/shared-theme/customizatio
 import { createTheme } from '@mui/material/styles';
 import StudentHomeMUI from "./components/home/StudentHomeMUI";
 import ProctorHomeMUI from "./components/proctorHome/ProctorHomeMUI";
+import PaymentHistoryMUI from "./components/payment/PaymentHistoryMUI";
 
 function App() {
 
@@ -58,6 +59,7 @@ function App() {
           <Route path="/quizCreate" element={<QuizCreate></QuizCreate>}></Route>
           <Route path="/test1" element={<Test1></Test1>}></Route>
           <Route path="/paymentHistory" element={<PaymentHistory></PaymentHistory>}></Route>
+          <Route path="/paymentHistoryMUI" element={<PaymentHistoryMUI></PaymentHistoryMUI>}></Route>
           <Route path="/quiz/:quizId" element={<Quiz />} />
           <Route path="/course" element={<Course></Course>}></Route>
 
