@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Course } from "../interfaces/Course";
 import axios from "axios";
 import { EnrollmentDTO } from "../interfaces/EnrollmentDTO";
@@ -20,12 +20,17 @@ function GeneralHomeMUI(props: { disableCustomTheme?: boolean }) {
 
     const [currentStudent, setCurrentStudent] = useState<number>(0)
 
+    const location = useLocation();
     const navigate = useNavigate();
+    let eduId = localStorage.getItem("educator_id");
+
     const goToSearch = () => {
         navigate("/search");
     };
 
     useEffect(() => {
+        eduId = localStorage.getItem("educator_id");
+
         const role = localStorage.getItem("roles");
         let studId = localStorage.getItem("student_id");
         if (role === "STUDENT" && studId !== null) {
@@ -151,6 +156,14 @@ function GeneralHomeMUI(props: { disableCustomTheme?: boolean }) {
                     </Stack>
                 )}
             </Box>
+            {/* <Button
+                size="small"
+                variant="contained"
+                onClick={() => navigate("/profile", { state: { educatorId: eduId } })}
+                // onClick={() => navigate("/profile")}
+            >
+                Go to Profile
+            </Button> */}
         </AppTheme>
     );
 }
