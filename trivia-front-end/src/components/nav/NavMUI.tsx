@@ -64,7 +64,10 @@ function NavMUI(props: { disableCustomTheme?: boolean }) {
                         
                         <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                             <Button color="inherit" onClick={() => navigate('/')}>Home</Button>
+                            {!(stuId || eduId) && (
                             <Button color="inherit" onClick={() => navigate('/login')}>Login</Button>
+                            )}
+                            {/* <Button color="inherit" onClick={() => navigate('/login')}>Login</Button> */}
                             {/*<Button color="inherit" onClick={() => navigate('/studentHomeMUI')}>Student Home</Button>*/}
                             {/*<Button color="inherit" onClick={() => navigate('/proctorHome')}>Proctor Home</Button>*/}
                             { eduId && (
@@ -74,10 +77,10 @@ function NavMUI(props: { disableCustomTheme?: boolean }) {
                             <Button color="inherit" onClick={() => navigate("/studentHomeMUI")}>Profile</Button>
                             )}
 
-                            {stuId || eduId && (
+                            {(stuId || eduId) && (
                             <Button color="inherit" onClick={logout}>Log Out</Button>
                             )}
-                            {/* <Button color="inherit" onClick={logout}>Log out</Button> */}
+
                         </Box>
 
                         <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
