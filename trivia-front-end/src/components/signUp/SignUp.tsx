@@ -18,6 +18,10 @@ import { SitemarkIcon } from '../shared-theme/CustomIcons';
 import ColorModeSelect from '../shared-theme/ColorModeSelect';
 import { useNavigate } from 'react-router-dom';
 import { FormHelperText, Radio, RadioGroup } from '@mui/material';
+import axios from 'axios';
+import { decodeAccessTokenInStorage } from '../../utils/JwtDecoder';
+
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const Card = styled(MuiCard)(({ theme }) => ({
   minHeight: 'auto',
@@ -40,7 +44,6 @@ const Card = styled(MuiCard)(({ theme }) => ({
 }));
 
 const SignUpContainer = styled(Stack)(({ theme }) => ({
-  height: 'calc((1 - var(--template-frame-height, 0)) * 100dvh)',
   minHeight: '100vh',
   padding: theme.spacing(2),
   [theme.breakpoints.up('sm')]: {
@@ -138,22 +141,31 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
       event.preventDefault();
       return;
     }
-    console.log({
-      firstName,
-      lastName,
-      email,
+    axios.post(`${backendUrl}/auth/register/${signupRole}`, {
+      username,
       password,
-      username
+      email,
+      firstName,
+      lastName
+    })
+    .then((response) => {
+      localStorage.clear()
+      localStorage.setItem("accessToken", response.data.accessToken);
+      localStorage.setItem("refreshToken", response.data.refreshToken);
+      decodeAccessTokenInStorage()
+      navigate("/")
+    })
+    .catch((error) => {
+      console.error("Register error:", error);
     });
   };
 
   return (
     <AppTheme {...props}>
       <CssBaseline enableColorScheme />
-      <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
+      
       <SignUpContainer direction="column" justifyContent="space-between">
-        {/* <Card variant="outlined"> */}
-          <SitemarkIcon />
+        <Card variant="outlined">
           <Typography
             component="h1"
             variant="h4"
@@ -256,9 +268,12 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
               Sign up
             </Button>
           </Box>
-          <Divider>
+          </Card>
+      </SignUpContainer>
+      <Divider>
             <Typography sx={{ color: 'text.secondary' }}>or</Typography>
           </Divider>
+      <Card variant='outlined'>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, marginBottom: '2px' }}>
             <Typography sx={{ textAlign: 'center' }}>
               Already have an account?{' '}
@@ -271,8 +286,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
               </Link>
             </Typography>
           </Box>
-        {/* </Card> */}
-      </SignUpContainer>
+        </Card>
     </AppTheme>
   );
 }
