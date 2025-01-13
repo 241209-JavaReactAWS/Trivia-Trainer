@@ -59,7 +59,17 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
                             <Button size="small" onClick={() => navigate("/quizCreate", { state: { course } })}>Create Quiz</Button>
                         </CardActions>
                     )}
-
+                    
+                    {/* Profile Button for Everyone (conditional render?) */}
+                    <CardActions>
+                        <Button
+                            size="small"
+                            variant="contained"
+                            onClick={() => navigate("/profile")}
+                        >
+                            Go to Profile
+                        </Button>
+                    </CardActions>
                 </Card>
 
             </div>
