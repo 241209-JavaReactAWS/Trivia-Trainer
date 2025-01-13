@@ -9,6 +9,7 @@ import axios from "axios";
 function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
     /* Setting role to conditionally render create quiz option */
     const [roleEd, setRoleEd] = useState<boolean>(false);
+    const [quizzes, setQuizzes] = useState<any[]>([]);
 
     /// Usable things from react-router-dom
     const location = useLocation();
@@ -30,6 +31,8 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
             setRoleEd(false);
             console.log("Create Quiz option disabled for normal user.")
         }
+
+        
     }, []
     )
 
@@ -60,8 +63,11 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
                         </CardActions>
                     )}
                     
-                    {/* Profile Button for Everyone (conditional render?) */}
-                    <CardActions>
+                </Card>
+                 {/* Profile Button for Everyone (conditional render?) */}
+                 <br/>
+                 <br/>
+                 <CardActions>
                         <Button
                             size="small"
                             variant="contained"
@@ -70,7 +76,6 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
                             Go to Profile
                         </Button>
                     </CardActions>
-                </Card>
 
             </div>
         </AppTheme>
