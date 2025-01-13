@@ -34,7 +34,7 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
             console.log("Create Quiz option disabled for normal user.")
         }
 
-        
+
     }, []
     )
 
@@ -71,21 +71,24 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
                 <Typography gutterBottom variant="h2" component="div">
                     Fees: ${course.fee}
                 </Typography>
-                <Button size="large" onClick={() => navigate("/studentHomeMUI")}>
-                    Back to Student Home
-                </Button>
-                 {/* Profile Button for Everyone (conditional render?) */}
-                 <br/>
-                 <br/>
-                 <CardActions>
-                        <Button
-                            size="small"
-                            variant="contained"
-                            onClick={() => navigate("/profile")}
-                        >
-                            Go to Profile
-                        </Button>
-                    </CardActions>
+                {/* Show the back to student home button only if user is a student. */}
+                {!roleEd && (
+                    <Button size="large" onClick={() => navigate("/studentHomeMUI")}>
+                        Back to Student Home
+                    </Button>
+                )}
+                {/* Profile Button for Everyone (conditional render?) */}
+                <br />
+                <br />
+                <CardActions>
+                    <Button
+                        size="small"
+                        variant="contained"
+                        onClick={() => navigate("/profile")}
+                    >
+                        Go to Profile
+                    </Button>
+                </CardActions>
 
             </div>
         </AppTheme>

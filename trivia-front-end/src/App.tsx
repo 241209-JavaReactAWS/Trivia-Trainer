@@ -22,6 +22,7 @@ import { createTheme } from '@mui/material/styles';
 import StudentHomeMUI from "./components/home/StudentHomeMUI";
 import ProctorHomeMUI from "./components/proctorHome/ProctorHomeMUI";
 import PaymentHistoryMUI from "./components/payment/PaymentHistoryMUI";
+import EnrollmentPageMUI from "./components/enrollment/EnrollmentPageMUI";
 
 function App() {
 
@@ -52,7 +53,7 @@ function App() {
           <Route path="/payment" element={<Test1></Test1>}></Route>
           <Route path="/search" element={<Search></Search>}></Route>
           <Route path="/enroll" element={<EnrollmentPage></EnrollmentPage>}></Route>
-
+          <Route path="/enrollMUI" element={<EnrollmentPageMUI></EnrollmentPageMUI>}></Route>
           {/* <Route path="/courseCreate" element={<CourseCreate></CourseCreate>}></Route> */}
           {/* Course Create MUI Test Link */}
           <Route path="/proctorHome" element={<ProctorHomeMUI></ProctorHomeMUI>}></Route>
