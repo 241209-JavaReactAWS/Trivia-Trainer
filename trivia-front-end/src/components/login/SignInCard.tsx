@@ -8,7 +8,6 @@ import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
-import { RevTriviaLogo } from '../shared-theme/RevTriviaLogo.png';
 import axios from 'axios';
 import { decodeAccessTokenInStorage } from '../../utils/JwtDecoder.ts';
 import { useNavigate } from 'react-router-dom';
@@ -92,6 +91,7 @@ export default function SignInCard() {
 
   return (
     <Card variant="outlined">
+      
       <Typography
         component="h1"
         variant="h4"
