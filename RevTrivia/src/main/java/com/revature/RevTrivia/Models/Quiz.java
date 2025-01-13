@@ -40,6 +40,9 @@ public class Quiz {
     @Column(name = "attempt_limit", nullable = false)
     private int attemptLimit;
 
+    @Column(name = "current_attempt", nullable = false)
+    private int currentAttempt;
+
     @OneToMany(mappedBy = "quiz")
     private List<Question> questions;
 

@@ -150,6 +150,11 @@ function Quiz() {
         }
     };
 
+    if (quizId && quizData) {
+        const newAttempt = (quizData.currentAttempt + 1);
+        localStorage.setItem(`quiz_${quizId}_currentAttempt`, newAttempt.toString());
+    }
+
     if (!quizData) {
         return <div>Loading...</div>;
     }
