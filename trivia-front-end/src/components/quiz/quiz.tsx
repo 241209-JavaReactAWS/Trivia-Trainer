@@ -5,6 +5,8 @@ import {
     Box, 
     Button, 
     Container, 
+    FormControl,
+    FormLabel,
     FormControlLabel, 
     Paper, 
     Radio, 
@@ -163,7 +165,7 @@ function Quiz() {
             </Typography>
 
             {/* Questions */}
-            
+            {/* 
             <ol type="1">
                 {quizData.questions.map((question) => (
                     <li key={question.question_id}>
@@ -189,6 +191,35 @@ function Quiz() {
                     </li>
                 ))}
             </ol>
+*/}
+
+{quizData.questions.map((question) => (
+        <Box key={question.question_id} sx={{ mb: 3 }}>
+          <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
+            {question.content}
+          </Typography>
+          
+          <RadioGroup
+            name={`question_${question.question_id}`}
+            onChange={(e) =>
+              setAnswers((prev) => ({
+                ...prev,
+                [question.question_id]: e.target.value,
+              }))
+            }
+          >
+            {question.options.map((option) => (
+              <FormControlLabel
+                key={option}
+                value={option}
+                control={<Radio />}
+                label={option}
+              />
+            ))}
+          </RadioGroup>
+        </Box>
+      ))}
+
             
             <Button variant="contained" color="primary"
                 onClick={submitQuiz}
