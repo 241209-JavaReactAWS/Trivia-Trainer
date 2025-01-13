@@ -1,6 +1,6 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Course } from "../interfaces/Course";
-import { Card, CardContent, Typography, CardActions, Button, CssBaseline } from "@mui/material";
+import { Card, CardContent, Typography, CardActions, Button, CssBaseline, Box } from "@mui/material";
 import AppTheme from "../shared-theme/AppTheme";
 import ColorModeSelect from "../shared-theme/ColorModeSelect";
 import { useEffect, useState } from "react";
@@ -36,7 +36,6 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
             console.log("Create Quiz option disabled for normal user.")
         }
 
-
     }, []
     )
 
@@ -60,9 +59,24 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
                     {course.name}
                 </Typography>
                 <hr /> <br />
-                <Typography gutterBottom variant="h2" component="div">
-                    Proctor: {educator?.user?.firstName} {educator?.user?.lastName}
+                <Typography variant="h2">
+                    Proctor:{" "}
+                    <Box
+                        component={Link}
+                        to={{ pathname: "/profile" }}
+                        state={{ educatorId: course.educator.educatorId }}
+                        sx={{
+                            color: "primary.main",
+                            textDecoration: "none",
+                            "&:hover": {
+                                textDecoration: "underline",
+                            },
+                        }}
+                    >
+                        {educator?.user?.firstName} {educator?.user?.lastName}
+                    </Box>
                 </Typography>
+                <br />
                 <Typography gutterBottom variant="h2" component="div">
                     {course.description}
                 </Typography>
@@ -81,15 +95,15 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
                 {/* Profile Button for Everyone (conditional render?) */}
                 <br />
                 <br />
-                <CardActions>
+                {/* <CardActions>
                     <Button
                         size="small"
                         variant="contained"
-                        onClick={() => navigate("/profile")}
+                        onClick={() => navigate("/profile", { state: { educatorId: course.educator.educatorId } })}
                     >
                         Go to Profile
                     </Button>
-                </CardActions>
+                </CardActions> */}
 
             </div>
         </AppTheme>

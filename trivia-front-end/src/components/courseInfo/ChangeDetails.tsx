@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import axios from "axios";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -47,7 +48,7 @@ function ChangeDetails() {
             </label>
             <br></br>
             <br></br>
-            <button onClick={confirmChanges}>Confirm Changes</button>
+            <Button onClick={confirmChanges}>Confirm Changes</Button>
         </div>
     )
 }
