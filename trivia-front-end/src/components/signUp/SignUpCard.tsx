@@ -185,7 +185,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
             onSubmit={handleSubmit}
             sx={{ display: 'flex', flexDirection: 'column', gap: 2, flexGrow: 1, }}
           >
-            <FormControl>
+            <FormControl required>
             <FormLabel sx={{ textAlign: 'left' }}>First Name</FormLabel>
               <TextField
                 value={firstName}
@@ -198,7 +198,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
                 color={firstNameError != "" ? 'error' : 'primary'}
               />
             </FormControl>
-            <FormControl>
+            <FormControl required>
             <FormLabel sx={{ textAlign: 'left' }}>Last Name</FormLabel>
               <TextField
                 value={lastName}
@@ -211,7 +211,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
                 color={lastNameError != "" ? "error" : "primary"}
               />
             </FormControl>
-            <FormControl>
+            <FormControl required>
             <FormLabel sx={{ textAlign: 'left' }}>Email</FormLabel>
               <TextField
                 value={email}
@@ -225,7 +225,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
                 color={emailError != "" ? "error" : "primary"}
               />
             </FormControl>
-            <FormControl>
+            <FormControl required>
             <FormLabel sx={{ textAlign: 'left' }}>Username</FormLabel>
               <TextField
                 value={username}
@@ -238,7 +238,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
                 color={usernameError != "" ? "error" : "primary"}
               />
             </FormControl>
-            <FormControl>
+            <FormControl required>
             <FormLabel sx={{ textAlign: 'left' }}>Password</FormLabel>
               <TextField
                 value={password}
