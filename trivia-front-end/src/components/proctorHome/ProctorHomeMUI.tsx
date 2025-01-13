@@ -32,7 +32,7 @@ function ProctorHomeMUI(props: { disableCustomTheme?: boolean }) {
   const [allCourses, setAllCourses] = useState<Course[]>([])
   const [edCourses, setEdCourses] = useState<Course[]>([])
   const [profDetails, setProfDetails] = useState("");
-  
+
   /* Popup for editing an existing course */
   const [showAddCoursePopup, setShowAddCoursePopup] = useState(false);
   const [courseToEdit, setCourseToEdit] = useState<Course | null>(null);
@@ -45,6 +45,9 @@ function ProctorHomeMUI(props: { disableCustomTheme?: boolean }) {
   const [roleEd, setRoleEd] = useState<boolean>(false);
 
   const navigate = useNavigate();
+
+  const f_name = localStorage.getItem("first_name")
+  const l_name = localStorage.getItem("last_name")
 
   useEffect(() => {
     /*  Only display editable and deletable courses if the user is an educator, and if the educator is the creater of the courses. */
@@ -77,18 +80,18 @@ function ProctorHomeMUI(props: { disableCustomTheme?: boolean }) {
   var eduId = localStorage.getItem("educator_id")
   useEffect(() => {
     if (!eduId) {
-        // alert("Please log in to view your profile");
-        navigate("/login");
+      // alert("Please log in to view your profile");
+      navigate("/login");
     }
     axios
-        .get(`${backendUrl}/educator/${eduId}`)
-        .then((response) => {
-            setProfDetails(response.data.details);
-        })
-        .catch((error) => {
-            console.error("Error fetching educator details:", error);
-        });
-}, [eduId]);
+      .get(`${backendUrl}/educator/${eduId}`)
+      .then((response) => {
+        setProfDetails(response.data.details);
+      })
+      .catch((error) => {
+        console.error("Error fetching educator details:", error);
+      });
+  }, [eduId]);
 
   /* Add new course */
   const addNewCourseToList = (newCourse: Course) => {
@@ -156,7 +159,7 @@ function ProctorHomeMUI(props: { disableCustomTheme?: boolean }) {
       <CssBaseline enableColorScheme />
       <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
       <div>
-        <h1>Welcome to the Proctor's Home Page</h1>
+        <h1>Welcome {f_name} {l_name} </h1>
 
         <div>
           {/* <h1>Welcome, {f_name} {l_name}!</h1> */}
@@ -165,7 +168,13 @@ function ProctorHomeMUI(props: { disableCustomTheme?: boolean }) {
           {/* STEP 1: Make sure educator can change their professional details */}
           {/* <button onClick={changeDetails}>Change Professional Details</button> */}
           {/* <h1>{userId}</h1> */}
-          <button onClick={() => navigate("/changeDetails", { state: { eduId } })}>Change Professional Details</button>
+          {/* <Button onClick={() => navigate("/changeDetails", { state: { eduId } })}>Change Professional Details</Button> */}
+          <Button
+            onClick={() => navigate("/changeDetails", { state: { eduId } })}
+            sx={{ border: "2px solid rgb(79, 79, 79)", borderRadius: "8px", padding: "8px 16px" }}
+          >
+            Change Professional Details
+          </Button>
         </div>
 
         <br />

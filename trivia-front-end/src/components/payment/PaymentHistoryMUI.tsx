@@ -41,16 +41,6 @@ function PaymentHistoryMUI(props: { disableCustomTheme?: boolean }) {
       border: 0,
     },
   }));
-  
-  function createData(
-    name: string,
-    calories: number,
-    fat: number,
-    carbs: number,
-    protein: number,
-  ) {
-    return { name, calories, fat, carbs, protein };
-  }
 
   return (
     <AppTheme {...props}>
@@ -64,8 +54,8 @@ function PaymentHistoryMUI(props: { disableCustomTheme?: boolean }) {
           <TableRow>
             <StyledTableCell>Payment ID</StyledTableCell>
             <StyledTableCell align="right">Student ID</StyledTableCell>
-            <StyledTableCell align="right">Course&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Amount ($)&nbsp;(g)</StyledTableCell>
+            <StyledTableCell align="right">Course&nbsp;</StyledTableCell>
+            <StyledTableCell align="right">Amount ($)&nbsp;</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>

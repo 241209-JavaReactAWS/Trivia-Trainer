@@ -1,4 +1,4 @@
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { Course } from "../interfaces/Course";
 import { Card, CardContent, Typography, CardActions, Button, CssBaseline, Box } from "@mui/material";
 import AppTheme from "../shared-theme/AppTheme";
@@ -142,6 +142,64 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
       </div>
     </AppTheme>
   );
+    return (
+        <AppTheme {...props}>
+            <CssBaseline enableColorScheme />
+            <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
+            <div>
+                <Typography gutterBottom variant="h1" component="div">
+                    {course.name}
+                </Typography>
+                <hr /> <br />
+                <Typography variant="h2">
+                    Proctor:{" "}
+                    <Box
+                        component={Link}
+                        to={{ pathname: "/profile" }}
+                        state={{ educatorId: course.educator.educatorId }}
+                        sx={{
+                            color: "primary.main",
+                            textDecoration: "none",
+                            "&:hover": {
+                                textDecoration: "underline",
+                            },
+                        }}
+                    >
+                        {educator?.user?.firstName} {educator?.user?.lastName}
+                    </Box>
+                </Typography>
+                <br />
+                <Typography gutterBottom variant="h2" component="div">
+                    {course.description}
+                </Typography>
+                {/* <Typography gutterBottom variant="h2" component="div">
+                    Educator ID: {course.educator.educatorId}
+                </Typography> */}
+                <Typography gutterBottom variant="h2" component="div">
+                    Fees: ${course.fee}
+                </Typography>
+                {/* Show the back to student home button only if user is a student. */}
+                {!roleEd && (
+                    <Button size="large" onClick={() => navigate("/studentHomeMUI")}>
+                        Back to Student Home
+                    </Button>
+                )}
+                {/* Profile Button for Everyone (conditional render?) */}
+                <br />
+                <br />
+                {/* <CardActions>
+                    <Button
+                        size="small"
+                        variant="contained"
+                        onClick={() => navigate("/profile", { state: { educatorId: course.educator.educatorId } })}
+                    >
+                        Go to Profile
+                    </Button>
+                </CardActions> */}
+
+            </div>
+        </AppTheme>
+    );
 }
 
 export default CourseInfoMUI;
