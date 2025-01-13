@@ -70,7 +70,7 @@ export default function SignInCard() {
 
   const validateInputs = () => {
     let isValid = true;
-    if (!username|| username.length < 4) {
+    if (!username) {
       setUsernameError(true);
       setUsernameErrorMessage('Username must be at least 4 characters long.');
       isValid = false;
@@ -79,7 +79,7 @@ export default function SignInCard() {
       setUsernameErrorMessage('');
     }
 
-    if (!password || password.length < 6) {
+    if (!password) {
       setPasswordError(true);
       setPasswordErrorMessage('Password must be at least 6 characters long.');
       isValid = false;

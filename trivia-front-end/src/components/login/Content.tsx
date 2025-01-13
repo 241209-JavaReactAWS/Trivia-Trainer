@@ -40,6 +40,7 @@ export default function Content() {
     <Stack
       sx={{ flexDirection: 'column', alignSelf: 'center', gap: 4, maxWidth: 450 }}
     >
+      <img src="src/components/shared-theme/RevTriviaLogo.png"></img>
       <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
       </Box>
       {items.map((item, index) => (
