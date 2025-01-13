@@ -18,6 +18,12 @@ public class StudentService {
     {
         return studentDAO.findAll();
     }
+    //Get Student by ID
+    public Optional<Student> getStudentByID(int studentId)
+    {
+        Optional<Student> retStudent = studentDAO.findById(studentId);
+        return retStudent;
+    }
     //Delete Student by ID
     public Optional<Student> deleteStudentByID(int studentId)
     {
