@@ -105,9 +105,10 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
                 <Typography gutterBottom variant="h2" component="div">
                     Fees: ${course.fee}
                 </Typography>
-                <Button size="large" onClick={() => navigate("/studentHomeMUI")}>
+                {/* <Button size="large" onClick={() => goToProctor(course)}>View Proctor</Button> */}
+                {/* <Button size="large" onClick={() => navigate("/studentHomeMUI")}>
                     Back to Student Home
-                </Button>
+                </Button> */}
 
         {/* Render Quizzes */}
         {quizzes.length === 0 ? (
