@@ -53,10 +53,11 @@ function StudentHomeMUI(props: { disableCustomTheme?: boolean }) {
                     axios.get<Student>(`${backendUrl}/students/${studId}`)
                         .then((resEns) => {
                             const enrollmentsStored = resEns.data.enrollments;
+                            console.log(enrollmentsStored);
                             setStudCourses(res.data.filter(course => enrollmentsStored.some(enrollment => enrollment.course.courseId === course.courseId)))
                         })
                         .catch((error) => {
-                            console.error("Could not fetch the student object or enrolled courses --> ", error)
+                            console.error("Could not fetch the student object or enrolled courses Shane --> ", error)
                         });
                 })
                 .catch((error) => {

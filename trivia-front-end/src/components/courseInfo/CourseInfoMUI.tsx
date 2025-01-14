@@ -98,11 +98,11 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
             const storedAttemptString = localStorage.getItem(
               `quiz_${quiz.quizId}_currentAttempt`
             );
-            // 2) Convert to number or fallback to quiz.currentAttempt
+            
             const storedAttempt = storedAttemptString
               ? parseInt(storedAttemptString, 10)
               : quiz.currentAttempt;
-            // 3) Attempts remaining
+            
           
             const attemptsRemaining = storedAttempt;
 
@@ -121,6 +121,7 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
                     <Button
                       variant="contained"
                       onClick={() => navigate(`/quiz/${quiz.quizId}`)}
+                      sx = {{top: '0.25rem', right: '-6.5rem'}}
                     >
                       Take Quiz
                     </Button>
@@ -180,7 +181,8 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
                 </Typography>
                 {/* Show the back to student home button only if user is a student. */}
                 {!roleEd && (
-                    <Button size="large" onClick={() => navigate("/studentHomeMUI")}>
+                    <Button size="large" onClick={() => navigate("/studentHomeMUI")}
+                    sx= {{top: '0.25rem', right: '-6.5rem' }}>
                         Back to Student Home
                     </Button>
                 )}
