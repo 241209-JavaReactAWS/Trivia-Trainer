@@ -1,4 +1,4 @@
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import {Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { Course } from "../interfaces/Course";
 import { Card, CardContent, Typography, CardActions, Button, CssBaseline } from "@mui/material";
 import AppTheme from "../shared-theme/AppTheme";
@@ -78,9 +78,24 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
                     {course.name}
                 </Typography>
                 <hr /> <br />
-                <Typography gutterBottom variant="h2" component="div">
-                    Proctor: {educator?.user?.firstName} {educator?.user?.lastName}
+                <Typography variant="h2">
+                    Proctor:{" "}
+                    <Box
+                        component={Link}
+                        to={{ pathname: "/profile" }}
+                        state={{ educatorId: course.educator.educatorId }}
+                        sx={{
+                            color: "primary.main",
+                            textDecoration: "none",
+                            "&:hover": {
+                                textDecoration: "underline",
+                            },
+                        }}
+                    >
+                        {educator?.user?.firstName} {educator?.user?.lastName}
+                    </Box>
                 </Typography>
+             
                 <Typography gutterBottom variant="h2" component="div">
                     {course.description}
                 </Typography>
