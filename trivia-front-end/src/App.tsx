@@ -23,6 +23,7 @@ import StudentHomeMUI from "./components/home/StudentHomeMUI";
 import ProctorHomeMUI from "./components/proctorHome/ProctorHomeMUI";
 import PaymentHistoryMUI from "./components/payment/PaymentHistoryMUI";
 import EnrollmentPageMUI from "./components/enrollment/EnrollmentPageMUI";
+import QuizCreateMUI from "./components/quizCreate/QuizCreateMUI";
 
 function App() {
 
@@ -59,14 +60,17 @@ function App() {
           <Route path="/proctorHome" element={<ProctorHomeMUI></ProctorHomeMUI>}></Route>
 
           <Route path="/quizCreate" element={<QuizCreate></QuizCreate>}></Route>
+          {/* <Route path="/quizCreate" element={<QuizCreateMUI></QuizCreateMUI>}></Route> */}
+
+
           <Route path="/test1" element={<Test1></Test1>}></Route>
           <Route path="/paymentHistory" element={<PaymentHistory></PaymentHistory>}></Route>
           <Route path="/paymentHistoryMUI" element={<PaymentHistoryMUI></PaymentHistoryMUI>}></Route>
           <Route path="/quiz/:quizId" element={<Quiz />} />
           <Route path="/course" element={<Course></Course>}></Route>
 
-          {/* <Route path="/courseInfo" element={<CourseInfo></CourseInfo>}></Route> */}
-          <Route path="/courseInfoMUI" element={<CourseInfoMUI></CourseInfoMUI>}></Route>
+          <Route path="/courseInfo" element={<CourseInfo></CourseInfo>}></Route>
+          {/* <Route path="/courseInfoMUI" element={<CourseInfoMUI></CourseInfoMUI>}></Route> */}
 
           <Route path="/profile" element={<Profile></Profile>}></Route>
           <Route path="/changeDetails" element={<ChangeDetails></ChangeDetails>}></Route>
