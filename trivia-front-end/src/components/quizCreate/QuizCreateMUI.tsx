@@ -2,7 +2,7 @@ import { SyntheticEvent, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Course } from "../interfaces/Course";
-import { Box, Button, TextField, Typography} from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -24,15 +24,16 @@ function QuizCreate() {
     const questionChange = (
         index: number,
         field: "content" | "correct" | "incorrectAnswers",
-        value: string
+        value: string,
+        incorrectIndex?: number
     ) => {
         const updatedQuestions = [...questions];
-        if (field === "incorrectAnswers") {
-            updatedQuestions[index].incorrectAnswers = value.split(",");
+        if (field === "incorrectAnswers" && incorrectIndex !== undefined) {
+            updatedQuestions[index].incorrectAnswers[incorrectIndex] = value
         } else if (field === "content") {
-            updatedQuestions[index].content = value;
+            updatedQuestions[index].content = value
         } else if (field === "correct") {
-            updatedQuestions[index].correct = value;
+            updatedQuestions[index].correct = value
         }
         setQuestions(updatedQuestions);
     };
@@ -51,6 +52,15 @@ function QuizCreate() {
         setQuestions(updatedQuestions);
     };
 
+    const shuffleArray = (array: string[]): string[] => {
+        let shuffledArray = [...array];
+        for (let i = shuffledArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1)); 
+            [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]]; 
+        }
+        return shuffledArray;
+    };
+
     // Function responsible for creating the quiz
     let createQuiz = () => {
         if (!quizName.trim()) {
@@ -58,8 +68,8 @@ function QuizCreate() {
             return;
         }
 
-        if (timer <= 0 || attemptLimit <= 0) {
-            alert("Please enter a valid time limit and attempt limit");
+        if (attemptLimit <= 0) {
+            alert("Please enter a valid attempt limit");
             return;
         }
 
@@ -75,11 +85,20 @@ function QuizCreate() {
             return;
         }
 
-        const questionObjects = questions.map((question) => ({
-            content: question.content,
-            options: [...question.incorrectAnswers, question.correct].join(","),
-            correct: question.correct,
-        }));
+        // const questionObjects = questions.map((question) => ({
+        //     content: question.content,
+        //     options: [...question.incorrectAnswers, question.correct].join(","),
+        //     correct: question.correct,
+        // }));
+
+        const questionObjects = questions.map((question) => {
+            const options = shuffleArray([...question.incorrectAnswers, question.correct]); 
+            return {
+                content: question.content,
+                options: options.join(","), 
+                correct: question.correct, 
+            };
+        });
 
         axios
             .post(`${backendUrl}/quizzes`, {
@@ -92,15 +111,16 @@ function QuizCreate() {
             .then((res) => {
                 console.log(res.data);
                 alert("Quiz Created!");
-                navigate("/proctorHomeMUI");
+                navigate("/proctorHome");
             })
             .catch((err) => {
                 console.log(err);
             });
+
     };
 
     return (
-        <Box p={3}>
+        <Box p={3} sx={{ marginTop: { xs: '80px', sm: '30px' } }}>
             <Typography variant="h4" gutterBottom>
                 Create a Quiz
             </Typography>
@@ -142,10 +162,25 @@ function QuizCreate() {
 
             <Box mt={3}>
                 {questions.map((question, index) => (
-                    <Box key={index} mb={3} p={2} border="1px solid #ccc" borderRadius="8px">
+                    <Box
+                        key={index}
+                        mb={3}
+                        p={4}
+                        border="1px solid #aaa"
+                        borderRadius="10px"
+                        sx={{
+                            width: "100%",
+                            maxWidth: "800px",
+                            margin: "0 auto",
+                        }}
+                    >
                         <Typography variant="h6">Question {index + 1}</Typography>
 
                         {/* Question Content */}
+                        <br />
+                        {/* <Typography variant="h6" align="left" gutterBottom>
+                            Question
+                        </Typography> */}
                         <TextField
                             label="Question"
                             fullWidth
@@ -155,6 +190,9 @@ function QuizCreate() {
                         />
 
                         {/* Correct Answer */}
+                        {/* <Typography variant="h6" align="left" gutterBottom>
+                            Correct Answer
+                        </Typography> */}
                         <TextField
                             label="Correct Answer"
                             fullWidth
@@ -164,55 +202,68 @@ function QuizCreate() {
                         />
 
                         {/* Incorrect Answers */}
-                        <TextField
-                            label="Incorrect Answers (comma-separated)"
-                            fullWidth
-                            value={question.incorrectAnswers.join(",")}
-                            onChange={(e) =>
-                                questionChange(index, "incorrectAnswers", e.target.value)
-                            }
-                            margin="normal"
-                        />
+                        {/* <Typography variant="h6" align="left" gutterBottom>
+                            Incorrect Answers
+                        </Typography> */}
+                        {question.incorrectAnswers.map((incorrectAnswer, incorrectIndex) => (
+                            <TextField
+                                key={incorrectIndex}
+                                label={`Incorrect Answer ${incorrectIndex + 1}`}
+                                fullWidth
+                                value={incorrectAnswer}
+                                onChange={(e) =>
+                                    questionChange(index, "incorrectAnswers", e.target.value, incorrectIndex)
+                                }
+                                margin="normal"
+                            />
+                        ))}
 
                         <Button
                             color="error"
                             onClick={() => removeQuestion(index)}
-                            sx={{ mt: 2 }}
-                        >
+                            sx={{mt: 2, padding: "10px", border:"1px solid #aaa", borderRadius:"10px"}}
+                            >
                             Remove Question
                         </Button>
                     </Box>
                 ))}
 
+                <br />
                 {/* Add Question Button */}
                 <Button
-                    variant="contained"
+                    // variant="contained"
                     color="primary"
                     onClick={addQuestion}
-                    sx={{ mt: 2 }}
+                    sx={{mt: 2, padding: "10px", border:"1px solid #aaa", borderRadius:"10px"}}
                 >
                     Add Another Question
                 </Button>
+
+                <Box sx={{ display: 'flex', justifyContent: 'center', gap: 4 }}>
+
+                    {/* Create Quiz Button */}
+                    <Button
+                        // variant="contained"
+                        color="primary"
+                        onClick={createQuiz}
+                        sx={{mt: 2, padding: "10px", border:"1px solid #aaa", borderRadius:"10px"}}
+                        >
+                        Create Quiz
+                    </Button>
+
+                    {/* Go Back Button */}
+                    <Button
+                        // variant="contained"
+                        color="primary"
+                        onClick={() => navigate("/proctorHome", { state: { course } })}
+                        sx={{mt: 2, padding: "10px", border:"1px solid #aaa", borderRadius:"10px"}}
+                        >
+                        Go Back
+                    </Button>
+                </Box>
             </Box>
 
             <Box mt={3}>
-                {/* Create Quiz Button */}
-                <Button
-                    color="primary"
-                    onClick={createQuiz}
-                    sx={{ mt: 4 }}
-                >
-                    Create Quiz
-                </Button>
-
-                {/* Go Back Button */}
-                <Button
-                    color="primary"
-                    onClick={() => navigate("/proctorHomeMUI", { state: { course } })}
-                    sx={{ mt: 2 }}
-                >
-                    Go Back
-                </Button>
             </Box>
         </Box>
     );

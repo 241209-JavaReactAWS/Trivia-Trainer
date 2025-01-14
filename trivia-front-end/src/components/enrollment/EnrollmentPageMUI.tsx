@@ -15,7 +15,7 @@ function EnrollmentPageMUI(props: { disableCustomTheme?: boolean }) {
 
     //Note: Remove from this page during integration with Sanjana's course search
     useEffect(() => {
-        axios.get(`${backendUrl}/enrollment/${localStorage.getItem("student_id")}`
+        axios.get<Enrollment[]>(`${backendUrl}/enrollment/${localStorage.getItem("student_id")}`
         ).then((res) => {
             console.log("Here are the current enrollments in the database: ", res.data);
             setEnrollments(res.data)
@@ -58,10 +58,15 @@ function EnrollmentPageMUI(props: { disableCustomTheme?: boolean }) {
 
     let leaveCourse = (enrollment: Enrollment) => {
         console.log(enrollment.enrollmentId)
+        console.log(enrollment)
+        console.log(typeof enrollment.status)
         let studentStr = localStorage.getItem("student_id")
         if (studentStr != null) {
             //Make a refund payment
-            if (enrollment.status == 2) {
+            console.log(enrollment.status)
+            var statusString = enrollment.status.toString()
+            console.log(statusString)
+            if (statusString === "ACTIVE") {
                 //Issue refund if payment ACTIVE
                 let newPaymentDTO: PaymentDTO = {
                     studentId: parseInt(studentStr),
@@ -72,6 +77,7 @@ function EnrollmentPageMUI(props: { disableCustomTheme?: boolean }) {
                 axios.post(`${backendUrl}/payment`, newPaymentDTO)
                     .then((res) => {
                         console.log(res.data)
+                        console.log("Refund issued")
                     }).catch((err) => {
                         console.log(err)
                     })

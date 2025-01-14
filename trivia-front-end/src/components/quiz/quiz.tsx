@@ -59,6 +59,7 @@ function Quiz() {
             console.log(question.correct);
             console.log(question.options.lastIndexOf(userAnswer));
 
+            /*
             if (question.options.lastIndexOf(userAnswer) == 0) {
                 ans = "A";
             } else if (question.options.lastIndexOf(userAnswer) == 1) {
@@ -68,15 +69,19 @@ function Quiz() {
             } else {
                 ans = "D";
             }
+            */
 
-            console.log(ans === question.correct);
-            if (ans === question.correct) {
+            if (userAnswers[question.question_id] == question.correct) {
                 correctCount++;
             }
+            console.log(userAnswers[question.question_id] === question.correct);
+            /*if (ans === question.correct) {
+                correctCount++;
+            }*/
         });
 
         const scorePercentage = (correctCount / quiz.questions.length) * 100;
-        return scorePercentage;
+        return parseFloat(scorePercentage.toFixed(1));
     }
 
     useEffect(() => {
@@ -150,10 +155,7 @@ function Quiz() {
         }
     };
 
-    if (quizId && quizData) {
-        const newAttempt = (quizData.currentAttempt + 1);
-        localStorage.setItem(`quiz_${quizId}_currentAttempt`, newAttempt.toString());
-    }
+
 
     if (!quizData) {
         return <div>Loading...</div>;
@@ -247,5 +249,3 @@ function Quiz() {
 }
 
 export default Quiz;
-
-
