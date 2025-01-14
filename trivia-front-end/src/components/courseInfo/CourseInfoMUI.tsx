@@ -15,6 +15,8 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
     const [roleEd, setRoleEd] = useState<boolean>(false);
     const [educator, setEducator] = useState<Educator>();
     const [quizzes, setQuizzes] = useState<Quiz[]>([]);
+    const [attempts, setAttempts] = useState<number>(0);
+    
     // const [firstName, setFirstName] = useState<string>("");
     // const [lastName, setLastName] = useState<string>("");
 
