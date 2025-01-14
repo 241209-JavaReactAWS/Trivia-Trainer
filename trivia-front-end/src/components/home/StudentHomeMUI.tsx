@@ -25,7 +25,7 @@ function StudentHomeMUI(props: { disableCustomTheme?: boolean }) {
 
     // Function responsible for redirection to the enroll page 
     let goToEnroll = () => {
-        navigate("/enroll")
+        navigate("/enrollMUI")
     }
 
     // Function responsible for redirection to the payment history page 
@@ -53,10 +53,11 @@ function StudentHomeMUI(props: { disableCustomTheme?: boolean }) {
                     axios.get<Student>(`${backendUrl}/students/${studId}`)
                         .then((resEns) => {
                             const enrollmentsStored = resEns.data.enrollments;
+                            console.log(enrollmentsStored);
                             setStudCourses(res.data.filter(course => enrollmentsStored.some(enrollment => enrollment.course.courseId === course.courseId)))
                         })
                         .catch((error) => {
-                            console.error("Could not fetch the student object or enrolled courses --> ", error)
+                            console.error("Could not fetch the student object or enrolled courses Shane --> ", error)
                         });
                 })
                 .catch((error) => {

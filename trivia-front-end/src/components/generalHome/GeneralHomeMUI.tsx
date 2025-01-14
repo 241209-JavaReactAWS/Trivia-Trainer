@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Course } from "../interfaces/Course";
 import axios from "axios";
 import { EnrollmentDTO } from "../interfaces/EnrollmentDTO";
@@ -20,12 +20,17 @@ function GeneralHomeMUI(props: { disableCustomTheme?: boolean }) {
 
     const [currentStudent, setCurrentStudent] = useState<number>(0)
 
+    const location = useLocation();
     const navigate = useNavigate();
+    let eduId = localStorage.getItem("educator_id");
+
     const goToSearch = () => {
         navigate("/search");
     };
 
     useEffect(() => {
+        eduId = localStorage.getItem("educator_id");
+
         const role = localStorage.getItem("roles");
         let studId = localStorage.getItem("student_id");
         if (role === "STUDENT" && studId !== null) {
@@ -119,11 +124,11 @@ function GeneralHomeMUI(props: { disableCustomTheme?: boolean }) {
                         Look up Course
                     </Button>
                 </Box>
-
+                {/* Only shows up when a specific course name or description is searched for */}
                 {showResCourses && (
                     <Stack spacing={2}>
                         {visibleCourses.map((course) => (
-                            <Card key={course.courseId} sx={{ backgroundColor: "#f9f9f9" }}>
+                            <Card key={course.courseId} sx={{ backgroundColor: "yellowgreen" }}>
                                 <CardContent>
                                     <Typography variant="h5">{course.name}</Typography>
                                     <Typography variant="body2" color="textSecondary">
@@ -150,7 +155,47 @@ function GeneralHomeMUI(props: { disableCustomTheme?: boolean }) {
                         ))}
                     </Stack>
                 )}
+
+                <br></br>
+                <br></br>
+                {/* Display a List of All the Courses for scrolling/enrolling. */}
+                <Stack spacing={2}>
+                    {allCourses.map((course) => (
+                        <Card key={course.courseId} sx={{ backgroundColor: "#f9f9f9" }}>
+                            <CardContent>
+                                <Typography variant="h5">{course.name}</Typography>
+                                <Typography variant="body2" color="textSecondary">
+                                    {course.description}
+                                </Typography>
+                                <Typography variant="body2" color="textSecondary">
+                                    Educator ID: {course.educator.educatorId}
+                                </Typography>
+                                <Typography variant="body2" color="textPrimary">
+                                    ${course.fee}
+                                </Typography>
+                                {currentStudent !== 0 && (
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={() => enrollInCourse(course.courseId)}
+                                        sx={{ marginTop: 1 }}
+                                    >
+                                        Enroll
+                                    </Button>
+                                )}
+                            </CardContent>
+                        </Card>
+                    ))}
+                </Stack>
             </Box>
+            {/* <Button
+                size="small"
+                variant="contained"
+                onClick={() => navigate("/profile", { state: { educatorId: eduId } })}
+                // onClick={() => navigate("/profile")}
+            >
+                Go to Profile
+            </Button> */}
         </AppTheme>
     );
 }

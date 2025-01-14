@@ -6,6 +6,7 @@ import axios from "axios";
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 function Nav() {
+  var eduId = localStorage.getItem("educator_id")
   const navigate = useNavigate();
   const logout = () => {
     const token = localStorage.getItem('accessToken');
@@ -26,16 +27,23 @@ function Nav() {
       <Link to="/">General Home Page</Link>
       {/* <Link to="/search">Search Test</Link> */}
       <Link to="/login">Login / Register Test</Link>
-      <Link to="/studentHome">Student Home</Link>
+      {/*<Link to="/studentHome">Student Home</Link>*/}
       {/* <Link to="/enroll">Enrollment Test</Link>
 
       <Link to="/payment">Payment Test</Link> */}
       {/* <Link to="/courseCreate">Course Creation Test</Link> */}
 
       {/* Course Create MUI Tester */}
-      <Link to="/courseCreateMUI">Proctor Courses</Link>
+      {/*<Link to="/courseCreateMUI">Proctor Courses</Link>*/}
       
-      <Link to="/profile">Profile</Link>
+      {/* <Link to="/profile">Profile</Link> */}
+      { eduId && (
+          <Link to="/proctorHome">Profile</Link>
+            )}
+
+            {!eduId && (
+              <Link to="/studentHomeMUI">Profile</Link>
+            )}
       <Button onClick={logout}>Log out</Button>
       {/* <Link to="/test1">Payment Test</Link>
       <Link to="/test2">Enrollment Test</Link>

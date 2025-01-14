@@ -26,18 +26,25 @@ public class EnrollmentService {
     
     // Create a new enrollment
     public Enrollment createNewEnrollment(EnrollmentDTO enrollmentDTO) {
-        Enrollment enrollment = new Enrollment();
-        //Set object fields
-        Optional<Course> course = courseDAO.findById(enrollmentDTO.getCourseId());
-        course.ifPresent(enrollment::setCourse);
         Optional<Student> student = studentDAO.findById(enrollmentDTO.getStudentId());
-        student.ifPresent(enrollment::setStudent);
-        //Set non-object fields
-        enrollment.setEnrollmentDate(enrollmentDTO.getEnrollmentDate());
-        enrollment.setStatus(enrollmentDTO.getEnrollStatus());
-        enrollment.setReview(enrollmentDTO.getReview());
-        enrollment.setRating(enrollmentDTO.getRating());
-        return enrollmentDAO.save(enrollment);
+        Optional<Course> course = courseDAO.findById(enrollmentDTO.getCourseId());
+        Optional<Enrollment> existingEnrollment = Optional.empty();
+        if(student.isPresent() && course.isPresent()) {
+            existingEnrollment = enrollmentDAO.findByStudentAndCourse(student.get(), course.get());
+        }
+        if(existingEnrollment.isEmpty()) {
+            Enrollment enrollment = new Enrollment();
+            //Set object fields
+            course.ifPresent(enrollment::setCourse);
+            student.ifPresent(enrollment::setStudent);
+            //Set non-object fields
+            enrollment.setEnrollmentDate(enrollmentDTO.getEnrollmentDate());
+            enrollment.setStatus(enrollmentDTO.getEnrollStatus());
+            enrollment.setReview(enrollmentDTO.getReview());
+            enrollment.setRating(enrollmentDTO.getRating());
+            return enrollmentDAO.save(enrollment);
+        }
+        return null;
     }
 
 

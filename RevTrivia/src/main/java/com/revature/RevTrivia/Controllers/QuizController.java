@@ -34,6 +34,10 @@ public class QuizController {
         return ResponseEntity.ok(quizService.getAllQuizzes());
     }
 
+    @GetMapping("/courses/{courseId}")
+    public ResponseEntity<List<Quiz>> getAllQuizzesByCourse(@PathVariable int courseId) {
+        return ResponseEntity.ok(quizService.getQuizzesByCourse(courseId));
+    }
     @GetMapping("/{quizId}")
     public ResponseEntity<Quiz> getQuizById(@PathVariable int quizId) {
         return quizService.getQuizById(quizId).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
