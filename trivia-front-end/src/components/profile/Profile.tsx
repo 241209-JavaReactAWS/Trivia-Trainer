@@ -9,12 +9,14 @@ import { EnrollmentDTO } from "../interfaces/EnrollmentDTO";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-function Profile(props: { disableCustomTheme?: boolean , educatorId: string}) {
+function Profile(props: { disableCustomTheme?: boolean}) {
 
     // Usable things from react-router-dom
     const navigate = useNavigate();
-    const location = useLocation();
-    const educatorId = location.state?.educatorId;
+    // const location = useLocation();
+    const location = useLocation(); const { educatorId } = location.state || {};
+    // const educatorId = location.state?.educatorId;
+    
 
     const [courseAdmin, setCourseAdmin] = useState({});
     const [adminFirstName, setAdminFirstName] = useState<string>("");

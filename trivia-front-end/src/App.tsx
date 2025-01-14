@@ -12,7 +12,6 @@ import Profile from "./components/profile/Profile";
 import ChangeDetails from "./components/courseInfo/ChangeDetails";
 import SignInSide from "./components/login/SignInSide";
 import SignUpSide from "./components/signUp/SignUpSide";
-import SignUp from "./components/signUp/SignUp";
 // import CourseCreateMUI from "./components/courseCreate/CourseCreateMUI";
 import NavMUI from "./components/nav/NavMUI";
 import GeneralHomeMUI from "./components/generalHome/GeneralHomeMUI";
@@ -59,6 +58,9 @@ function App() {
           <Route path="/proctorHome" element={<ProctorHomeMUI></ProctorHomeMUI>}></Route>
 
           <Route path="/quizCreate" element={<QuizCreate></QuizCreate>}></Route>
+          {/* <Route path="/quizCreate" element={<QuizCreateMUI></QuizCreateMUI>}></Route> */}
+
+
           <Route path="/test1" element={<Test1></Test1>}></Route>
           <Route path="/paymentHistory" element={<PaymentHistory></PaymentHistory>}></Route>
           <Route path="/paymentHistoryMUI" element={<PaymentHistoryMUI></PaymentHistoryMUI>}></Route>
