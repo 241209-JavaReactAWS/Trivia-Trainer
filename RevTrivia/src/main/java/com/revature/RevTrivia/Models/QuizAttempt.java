@@ -28,5 +28,7 @@ public class QuizAttempt {
 
     private Double score;
 
+    private Integer currentAttempt;
+
     private String attemptDate;
 }
