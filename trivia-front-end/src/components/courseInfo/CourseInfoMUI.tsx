@@ -9,6 +9,7 @@ import { Educator } from "../interfaces/Educator";
 import { Quiz } from "../interfaces/Quiz";
 import quizData from "../quiz/quiz";
 import { Box } from '@mui/material';
+import { QuizAttempt } from "../interfaces/QuizAttempt";
 
 function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
     /* Setting role to conditionally render create quiz option */
@@ -63,7 +64,14 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
                 const res = await axios.get<Quiz[]>(
                     `${backendUrl}/quizzes/courses/${course.courseId}`
                 );
+                for (let quiz of res.data) {
+                    const attempts = await axios.get<QuizAttempt[]>(
+                        `${backendUrl}/attempts/${quiz.quizId}/student/${localStorage.getItem("student_id")}`
+                    )
+                    quiz.currentAttempt = attempts.data.length;
+                }
                 setQuizzes(res.data);
+
             } catch (error) {
                 console.error("Error fetching quizzes", error)
             }
@@ -143,6 +151,7 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
                 <CardActions>
                   <Box alignItems="center">
                     <Button
+                      disabled={quiz.currentAttempt + 1 > quiz.attemptLimit}
                       variant="contained"
                       onClick={() => navigate(`/quiz/${quiz.quizId}`)}
                       sx = {{top: '0.25rem', right: '-6.5rem'}}
