@@ -25,10 +25,6 @@ import EnrollmentPageMUI from "./components/enrollment/EnrollmentPageMUI";
 
 function App() {
 
-  const theme = createTheme({
-    components: navigationCustomizations,  // Apply your custom navigation styles here
-  });
-
   return (
     <>
       <BrowserRouter>

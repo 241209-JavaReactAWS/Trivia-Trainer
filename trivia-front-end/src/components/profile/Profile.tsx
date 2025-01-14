@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import AppTheme from "../shared-theme/AppTheme";
 import ColorModeSelect from "../shared-theme/ColorModeSelect";
-import { Box, Button, Card, CardContent, CssBaseline, Paper, Stack, Typography } from "@mui/material";
+import { Button, Card, CardContent, CssBaseline, Stack, Typography } from "@mui/material";
 import { Course } from "../interfaces/Course";
 import { EnrollmentDTO } from "../interfaces/EnrollmentDTO";
 

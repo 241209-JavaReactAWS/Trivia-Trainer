@@ -2,8 +2,7 @@ import { SyntheticEvent, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Course } from "../interfaces/Course";
-import { Box, Button, TextField, Typography, IconButton } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
+import { Box, Button, TextField, Typography} from "@mui/material";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
