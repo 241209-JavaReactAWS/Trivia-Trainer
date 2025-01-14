@@ -30,4 +30,6 @@ public class QuizAttempt {
     private Double score;
 
     private String attemptDate;
+
+    private Integer currentAttempt;
 }

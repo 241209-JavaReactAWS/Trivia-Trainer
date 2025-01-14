@@ -126,16 +126,6 @@ function Quiz() {
         const student_Id = parseInt(studentIdString);
 
         try {
-            const response = await axios.post(`${backendUrl}/attempts`, {
-                quizId: quizData.quiz_id,
-                studentId:student_Id,
-                score: computedScore,
-                attemptDate: new Date().toUTCString(),
-            });
-            setAttemptResult(response.data);
-
-            alert("Quiz attempt submitted!");
-
             setQuizData((prev) =>
                 prev
                     ? {
@@ -144,6 +134,18 @@ function Quiz() {
                         }
                     : null
             );
+
+            const response = await axios.post(`${backendUrl}/attempts`, {
+                quizId: quizData.quiz_id,
+                studentId:student_Id,
+                score: computedScore,
+                attemptDate: new Date().toUTCString(),
+                currentAttempt: quizData.currentAttempt
+            });
+            setAttemptResult(response.data);
+
+            alert("Quiz attempt submitted!");
+
         } catch (err) {
             console.error(err);
             alert("Something went wrong submitting your quiz!");

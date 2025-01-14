@@ -8,4 +8,5 @@ public class QuizAttemptPostDTO {
     private Integer studentId;
     private Double score;
     private String attemptDate;
+    private Integer currentAttempt;
 }
