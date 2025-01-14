@@ -1,6 +1,6 @@
 import { SyntheticEvent, useState } from "react";
 import "./QuizCreate.css"
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Course } from "../interfaces/Course";
 

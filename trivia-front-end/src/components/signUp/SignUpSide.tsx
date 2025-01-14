@@ -1,10 +1,8 @@
-import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Stack from '@mui/material/Stack';
 import SignUpCard from './SignUpCard.tsx';
 import Content from './Content.tsx';
 import AppTheme from '../shared-theme/AppTheme.tsx';
-import ColorModeSelect from '../shared-theme/ColorModeSelect.tsx';
 
 export default function SignInSide(props: { disableCustomTheme?: boolean }) {
   return (
