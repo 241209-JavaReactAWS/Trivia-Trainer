@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import QuizAttempt from "../interfaces/QuizAttempt"
+
 import { 
     Box, 
     Button, 
@@ -47,6 +49,9 @@ function Quiz() {
     const [quizData, setQuizData] = useState<QuizData | null>(null);
     const [answers, setAnswers] = useState<Record<number, string>>({});
     const [attemptResult, setAttemptResult] = useState<QuizAttemptData | null>(null);
+
+    const [attemptCount, setAttemptCount] = useState<number>(0);
+
     const { quizId } = useParams();
 
     function calculateScore(quiz: QuizData, userAnswers: Record<number, string>): number {
@@ -115,6 +120,16 @@ function Quiz() {
         }
     }, [quizId]);
 
+    useEffect (() => {
+     axios.get<QuizAttempt[]>(
+            `${backendUrl}/attempts/${quizId}/student/${localStorage.getItem("student_id")}`
+        )
+        .then((res) => {
+            console.log(res.data);
+            setAttemptCount(res.data.length + 1);
+        })
+    }, [attemptResult])
+
     const submitQuiz = async () => {
         if (!quizData) return;
 
@@ -133,7 +148,7 @@ function Quiz() {
                 prev
                     ? {
                             ...prev,
-                            currentAttempt: prev.currentAttempt + 1,
+                            currentAttempt: quizData.currentAttempt + 1,
                         }
                     : null
             );
@@ -167,9 +182,16 @@ function Quiz() {
             <Paper elevation={30} sx={{ p: 9}}>
             <Typography variant ="h4" gutterBottom>{quizData.courseName}</Typography>
             <Typography variant ="h5" gutterBottom>{quizData.quizTitle}</Typography>
-            <Typography variant ="subtitle1" gutterBottom>
-                Attempt number {quizData.currentAttempt} of {quizData.attemptLimit}
-            </Typography>
+            {
+                attemptCount > quizData.attemptLimit ? 
+<               Typography variant ="subtitle1" gutterBottom>
+                No attempts remaining
+                </Typography>
+                :
+                <Typography variant ="subtitle1" gutterBottom>
+                Attempt number {attemptCount} of {quizData.attemptLimit}
+                </Typography>
+            }
 
             {/* Questions */}
             {/* 
@@ -230,7 +252,7 @@ function Quiz() {
             
             <Button variant="contained" color="primary"
                 onClick={submitQuiz}
-                disabled={quizData.currentAttempt >= quizData.attemptLimit}
+                disabled={attemptCount > quizData.attemptLimit}
             >
                 Submit Quiz
             </Button>

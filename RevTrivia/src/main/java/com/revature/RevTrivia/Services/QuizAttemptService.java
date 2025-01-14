@@ -9,6 +9,7 @@ import com.revature.RevTrivia.Models.QuizAttempt;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalInt;
 
 import com.revature.RevTrivia.Models.Student;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,12 @@ public class QuizAttemptService {
 
     public List<QuizAttempt> getAllAttempts(){
         return quizAttemptDAO.findAll();
+    }
+
+    public List<QuizAttempt> findAllFromStudent(int quizId, int studentId){
+        Optional<Student> student = studentDAO.findById(studentId);
+        Optional<Quiz> quiz = quizDAO.findById(quizId);
+        return quizAttemptDAO.findByStudentAndQuiz(student.get(), quiz.get());
     }
 
     public Optional<QuizAttempt> deleteAttemptById(int attemptId){
