@@ -52,6 +52,15 @@ function QuizCreate() {
         setQuestions(updatedQuestions);
     };
 
+    const shuffleArray = (array: string[]): string[] => {
+        let shuffledArray = [...array];
+        for (let i = shuffledArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1)); 
+            [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]]; 
+        }
+        return shuffledArray;
+    };
+
     // Function responsible for creating the quiz
     let createQuiz = () => {
         if (!quizName.trim()) {
@@ -76,11 +85,20 @@ function QuizCreate() {
             return;
         }
 
-        const questionObjects = questions.map((question) => ({
-            content: question.content,
-            options: [...question.incorrectAnswers, question.correct].join(","),
-            correct: question.correct,
-        }));
+        // const questionObjects = questions.map((question) => ({
+        //     content: question.content,
+        //     options: [...question.incorrectAnswers, question.correct].join(","),
+        //     correct: question.correct,
+        // }));
+
+        const questionObjects = questions.map((question) => {
+            const options = shuffleArray([...question.incorrectAnswers, question.correct]); 
+            return {
+                content: question.content,
+                options: options.join(","), 
+                correct: question.correct, 
+            };
+        });
 
         axios
             .post(`${backendUrl}/quizzes`, {
@@ -98,6 +116,7 @@ function QuizCreate() {
             .catch((err) => {
                 console.log(err);
             });
+
     };
 
     return (
