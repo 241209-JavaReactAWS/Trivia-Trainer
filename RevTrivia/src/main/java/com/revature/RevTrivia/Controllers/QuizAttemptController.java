@@ -29,9 +29,9 @@ public class QuizAttemptController {
         return quizAttemptService.getAllAttempts();
     }
 
-    @GetMapping("/student/attempts")
-    public  List<QuizAttempt> getAttemptsByStudentHandler(@RequestBody QuizAttemptPostDTO quizAttemptDTO){
-        return quizAttemptService.findAllFromStudent(quizAttemptDTO);
+    @GetMapping("{quizId}/student/{studentId}")
+    public  List<QuizAttempt> getAttemptsByQuizAndStudent(@PathVariable int quizId, @PathVariable int studentId){
+        return quizAttemptService.findAllFromStudent(quizId, studentId);
     }
 
     @DeleteMapping("/{attemptId}")

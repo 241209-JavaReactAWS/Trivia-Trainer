@@ -47,9 +47,9 @@ public class QuizAttemptService {
         return quizAttemptDAO.findAll();
     }
 
-    public List<QuizAttempt> findAllFromStudent(QuizAttemptPostDTO quizAttemptDTO){
-        Optional<Student> student = studentDAO.findById(quizAttemptDTO.getStudentId());
-        Optional<Quiz> quiz = quizDAO.findById(quizAttemptDTO.getQuizId());
+    public List<QuizAttempt> findAllFromStudent(int quizId, int studentId){
+        Optional<Student> student = studentDAO.findById(studentId);
+        Optional<Quiz> quiz = quizDAO.findById(quizId);
         return quizAttemptDAO.findByStudentAndQuiz(student.get(), quiz.get());
     }
 

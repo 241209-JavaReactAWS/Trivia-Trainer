@@ -26,10 +26,6 @@ import QuizCreateMUI from "./components/quizCreate/QuizCreateMUI";
 
 function App() {
 
-  const theme = createTheme({
-    components: navigationCustomizations,  // Apply your custom navigation styles here
-  });
-
   return (
     <>
       <BrowserRouter>
