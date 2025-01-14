@@ -135,7 +135,6 @@ function Quiz() {
                 prev
                     ? {
                             ...prev,
-                            currentAttempt: prev.currentAttempt + 1,
                         }
                     : null
             );
