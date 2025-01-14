@@ -29,6 +29,11 @@ public class QuizAttemptController {
         return quizAttemptService.getAllAttempts();
     }
 
+    @GetMapping("/student/attempts")
+    public  List<QuizAttempt> getAttemptsByStudentHandler(@RequestBody QuizAttemptPostDTO quizAttemptDTO){
+        return quizAttemptService.findAllFromStudent(quizAttemptDTO);
+    }
+
     @DeleteMapping("/{attemptId}")
     public ResponseEntity<QuizAttempt> deleteAttemptByIdHandler(@PathVariable int attemptId){
         Optional<QuizAttempt> deletedAttempt = quizAttemptService.deleteAttemptById(attemptId);
