@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Enrollment } from "../interfaces/Enrollment";
 import { Course } from "../interfaces/Course";
 import { PaymentDTO } from "../interfaces/PaymentDTO";
-import { CssBaseline, Paper, styled, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Button, CssBaseline, Paper, styled, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TableRow } from "@mui/material";
 import AppTheme from "../shared-theme/AppTheme";
 import ColorModeSelect from "../shared-theme/ColorModeSelect";
 
@@ -124,6 +124,8 @@ function EnrollmentPageMUI(props: { disableCustomTheme?: boolean }) {
                                 <StyledTableCell align="right">Course Name</StyledTableCell>
                                 <StyledTableCell align="right">Enrollment Status&nbsp;</StyledTableCell>
                                 <StyledTableCell align="right">Entrance Fee ($)&nbsp;</StyledTableCell>
+                                <StyledTableCell align="right">&nbsp;</StyledTableCell>
+                                <StyledTableCell align="right">&nbsp;</StyledTableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -135,6 +137,14 @@ function EnrollmentPageMUI(props: { disableCustomTheme?: boolean }) {
                                     <StyledTableCell align="right">{enrollment.course.name}</StyledTableCell>
                                     <StyledTableCell align="right">{enrollment.status}</StyledTableCell>
                                     <StyledTableCell align="right">{enrollment.course.fee}</StyledTableCell>
+                                    <StyledTableCell align="right">
+                                        <Button size="small" variant="contained" onClick={() => payFee(enrollment.course, enrollment.enrollmentId)}>Pay</Button>
+                                    </StyledTableCell>
+                                    <StyledTableCell align="right">
+                                        <Button size="small" variant="contained" onClick={() => leaveCourse(enrollment)}>Leave</Button>
+                                    </StyledTableCell>
+
+
                                 </StyledTableRow>
                             ))}
                         </TableBody>

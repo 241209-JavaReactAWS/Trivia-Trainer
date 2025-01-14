@@ -124,11 +124,11 @@ function GeneralHomeMUI(props: { disableCustomTheme?: boolean }) {
                         Look up Course
                     </Button>
                 </Box>
-
+                {/* Only shows up when a specific course name or description is searched for */}
                 {showResCourses && (
                     <Stack spacing={2}>
                         {visibleCourses.map((course) => (
-                            <Card key={course.courseId} sx={{ backgroundColor: "#f9f9f9" }}>
+                            <Card key={course.courseId} sx={{ backgroundColor: "yellowgreen" }}>
                                 <CardContent>
                                     <Typography variant="h5">{course.name}</Typography>
                                     <Typography variant="body2" color="textSecondary">
@@ -155,6 +155,38 @@ function GeneralHomeMUI(props: { disableCustomTheme?: boolean }) {
                         ))}
                     </Stack>
                 )}
+
+                <br></br>
+                <br></br>
+                {/* Display a List of All the Courses for scrolling/enrolling. */}
+                <Stack spacing={2}>
+                    {allCourses.map((course) => (
+                        <Card key={course.courseId} sx={{ backgroundColor: "#f9f9f9" }}>
+                            <CardContent>
+                                <Typography variant="h5">{course.name}</Typography>
+                                <Typography variant="body2" color="textSecondary">
+                                    {course.description}
+                                </Typography>
+                                <Typography variant="body2" color="textSecondary">
+                                    Educator ID: {course.educator.educatorId}
+                                </Typography>
+                                <Typography variant="body2" color="textPrimary">
+                                    ${course.fee}
+                                </Typography>
+                                {currentStudent !== 0 && (
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={() => enrollInCourse(course.courseId)}
+                                        sx={{ marginTop: 1 }}
+                                    >
+                                        Enroll
+                                    </Button>
+                                )}
+                            </CardContent>
+                        </Card>
+                    ))}
+                </Stack>
             </Box>
             {/* <Button
                 size="small"
