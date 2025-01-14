@@ -94,70 +94,115 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
                     Back to Student Home
                 </Button>
 
-                {quizzes.length === 0 ? (
-                    <Typography variant="body1">
-                        No quizzes found for this course.
-                    </Typography>) : (
-                        quizzes.map((quiz) => (
-                            <Card key={quiz.quizId} sx={{ maxWidth: 345, mb: 3}}>
-                                <CardContent>
-                                    <Typography gutterBottom variant="h5">
-                                        {quiz.title}
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                        Attempts Remaining: {quiz.attemptLimit - quiz.currentAttempt}
-                                    </Typography>
-                                </CardContent>
-                                <CardActions>
-                                    <Box alignItems="center">
-                                        <Button variant="contained" sx = {{top: '0.25rem', right: '-6.5rem' }}
-                                        onClick={() => navigate(`/quiz/${quiz.quizId}`)}>
-                                            Take Quiz
-                                        </Button>
-                                    </Box>
-                                </CardActions>
-                            </Card>
-                        ))
-                    )}
+        {/* Render Quizzes */}
+        {quizzes.length === 0 ? (
+          <Typography variant="body1">No quizzes found for this course.</Typography>
+        ) : (
+          quizzes.map((quiz) => {
+            // 1) Read localStorage to see how many attempts have been used
+            const storedAttemptString = localStorage.getItem(
+              `quiz_${quiz.quizId}_currentAttempt`
+            );
+            
+            const storedAttempt = storedAttemptString
+              ? parseInt(storedAttemptString, 10)
+              : quiz.currentAttempt;
+            
+          
+            const attemptsRemaining = storedAttempt;
 
-                {/* <Card key={course.courseId} sx={{ maxWidth: 345 }}>
-                    <CardContent>
-                        <Typography gutterBottom variant="h3" component="div">
-                            {course.name}
-                        </Typography><Typography gutterBottom variant="body1" component="div">
-                            {course.description}
-                        </Typography>
-                        <Typography gutterBottom variant="body2" component="div">
-                            Educator ID: {course.educator.educatorId}
-                        </Typography>
-                        <Typography gutterBottom variant="body1" component="div">
-                            ${course.fee}
-                        </Typography>
-                    </CardContent>
-                    {roleEd && (
-                        <CardActions>
-                            <Button size="small" onClick={() => navigate("/quizCreate", { state: { course } })}>Create Quiz</Button>
-                        </CardActions>
-                    )}
-                </Card>
-                 <br/>
-                 <br/>
-                 <CardActions>
-                        <Button
-                            size="small"
-                            variant="contained"
-                            onClick={() => navigate("/profile")}
-                        >
-                            Go to Profile
-                        </Button>
-                    </CardActions> */}
-                    <CardActions>
-                        {!roleEd && (
-                        <Button size="large" onClick={() => navigate("/studentHomeMUI")}>
-                            Back to Profile
-                        </Button>
+            return (
+              <Card key={quiz.quizId} sx={{ maxWidth: 345, mb: 3 }}>
+                <CardContent>
+                  <Typography gutterBottom variant="h5">
+                    {quiz.title}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Attempts Remaining: {attemptsRemaining}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Box alignItems="center">
+                    <Button
+                      variant="contained"
+                      onClick={() => navigate(`/quiz/${quiz.quizId}`)}
+                      sx = {{top: '0.25rem', right: '-6.5rem'}}
+                    >
+                      Take Quiz
+                    </Button>
+                  </Box>
+                </CardActions>
+              </Card>
+            );
+          })
+        )}
+
+        {/* If the user isn't the educator, show a "Back to Profile" button */}
+        <CardActions>
+          {!roleEd && (
+            <Button size="large" onClick={() => navigate("/studentHomeMUI")}>
+              Back to Profile
+            </Button>
+          )}
+        </CardActions>
+      </div>
+    </AppTheme>
+  );
+    return (
+        <AppTheme {...props}>
+            <CssBaseline enableColorScheme />
+            <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
+            <div>
+                <Typography gutterBottom variant="h1" component="div">
+                    {course.name}
+                </Typography>
+                <hr /> <br />
+                <Typography variant="h2">
+                    Proctor:{" "}
+                    <Box
+                        component={Link}
+                        to={{ pathname: "/profile" }}
+                        state={{ educatorId: course.educator.educatorId }}
+                        sx={{
+                            color: "primary.main",
+                            textDecoration: "none",
+                            "&:hover": {
+                                textDecoration: "underline",
+                            },
+                        }}
+                    >
+                        {educator?.user?.firstName} {educator?.user?.lastName}
+                    </Box>
+                </Typography>
+                <br />
+                <Typography gutterBottom variant="h2" component="div">
+                    {course.description}
+                </Typography>
+                {/* <Typography gutterBottom variant="h2" component="div">
+                    Educator ID: {course.educator.educatorId}
+                </Typography> */}
+                <Typography gutterBottom variant="h2" component="div">
+                    Fees: ${course.fee}
+                </Typography>
+                {/* Show the back to student home button only if user is a student. */}
+                {!roleEd && (
+                    <Button size="large" onClick={() => navigate("/studentHomeMUI")}
+                    sx= {{top: '0.25rem', right: '-6.5rem' }}>
+                        Back to Student Home
+                    </Button>
                 )}
-                    </CardActions>
+                {/* Profile Button for Everyone (conditional render?) */}
+                <br />
+                <br />
+                {/* <CardActions>
+                    <Button
+                        size="small"
+                        variant="contained"
+                        onClick={() => navigate("/profile", { state: { educatorId: course.educator.educatorId } })}
+                    >
+                        Go to Profile
+                    </Button>
+                </CardActions> */}
 
             </div>
         </AppTheme>
