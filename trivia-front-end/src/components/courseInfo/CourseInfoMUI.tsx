@@ -116,6 +116,7 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
         ) : (
           quizzes.map((quiz) => {
             // 1) Read localStorage to see how many attempts have been used
+            /*
             const storedAttemptString = localStorage.getItem(
               `quiz_${quiz.quizId}_currentAttempt`
             );
@@ -126,7 +127,7 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
             
           
             const attemptsRemaining = storedAttempt;
-
+*/
             return (
               <Card key={quiz.quizId} sx={{ maxWidth: 345, mb: 3 }}>
                 <CardContent>
@@ -134,7 +135,7 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
                     {quiz.title}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    Attempts Remaining: {attemptsRemaining}
+                    Attempts Remaining: {quiz.attemptLimit - quiz.currentAttempt}
                   </Typography>
                 </CardContent>
                 <CardActions>
