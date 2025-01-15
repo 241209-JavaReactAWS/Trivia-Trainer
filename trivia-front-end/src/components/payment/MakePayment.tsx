@@ -3,6 +3,7 @@ import { SyntheticEvent, useState } from "react";
 import { Link } from "react-router-dom";
 import { PaymentDTO } from "../interfaces/PaymentDTO";
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 function Test1() {
   //const [paymentId, setPaymentId] = useState<number>(0);
   const [studentId, setStudentId] = useState<number>(0);
@@ -23,7 +24,7 @@ function Test1() {
       amount: amount
     }
     console.log(newPaymentDTO)
-    axios.post("http://localhost:8080/payment", newPaymentDTO)
+    axios.post(`${backendUrl}/payment`, newPaymentDTO)
       .then((res) => {
         console.log(res.data)
       }).catch((err) => {

@@ -43,7 +43,7 @@ function NavMUI(props: { disableCustomTheme?: boolean }) {
                             sx={{ mr: 2, display: { sm: 'none' } }}
                         >
                         </IconButton>
-                        <img src="src/components/shared-theme/RevTriviaLogo.png" style={{ 
+                        <img src="RevTriviaLogo.png" style={{ 
                             width: '140px', 
                             height: '60px',  
                             position: "absolute",

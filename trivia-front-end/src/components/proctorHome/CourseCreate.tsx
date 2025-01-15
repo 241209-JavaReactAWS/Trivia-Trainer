@@ -20,7 +20,7 @@ function CourseCreate() {
   const [userRole, setUserRole] = useState<string>("");
   /* Setting role to conditionally render CRUD operations on courses */
   const [roleEd, setRoleEd] = useState<boolean>(false);
-
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,7 +29,7 @@ function CourseCreate() {
     let edId = localStorage.getItem("educator_id");
     if (role === "EDUCATOR" && edId !== null) {
       setRoleEd(true);
-      axios.get<Course[]>("http://localhost:8080/courses")
+      axios.get<Course[]>(`${backendUrl}/courses`)
       .then((res) => {
         setAllCourses(res.data)
         res.data.forEach(course => console.log("In res data Courses - Course Name --> ", course.name));
@@ -61,7 +61,7 @@ function CourseCreate() {
   };
 
   const delCourse = (courseId: number) => {
-    axios.delete(`http://localhost:8080/courses/${courseId}`)
+    axios.delete(`${backendUrl}/${courseId}`)
     .then(response => {
       console.log("Course deleted successfully --> ", response.data);
     })
@@ -86,7 +86,7 @@ function CourseCreate() {
     };
 
     axios
-      .post("http://localhost:8080/courses", newCourse)
+      .post(`${backendUrl}/courses`, newCourse)
       .then((res) => {
         console.log("New course created successfully --> ", res.data);
         setAllCourses((prevCourses) => [...prevCourses, res.data]);

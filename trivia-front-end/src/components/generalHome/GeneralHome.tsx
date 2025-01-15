@@ -69,7 +69,7 @@ function GeneralHome() {
           rating: 0
       }
       console.log(newEnrollment)
-      axios.post("http://localhost:8080/enrollment", newEnrollment)
+      axios.post(`${backendUrl}/enrollment`, newEnrollment)
       .then((res) => {
         console.log(res.data)
       }).catch((err) => {

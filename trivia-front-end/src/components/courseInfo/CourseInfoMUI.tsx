@@ -25,7 +25,7 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
     const location = useLocation();
     const navigate = useNavigate();
     var courseId = useParams();
-    const backendUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:8080";
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     // Get the course from a course in StudentHome.tsx and get the courseId
     const course: Course = location.state?.course;
@@ -48,7 +48,7 @@ function CourseInfoMUI(props: { disableCustomTheme?: boolean }) {
 
     useEffect(() => {
         let edId = course.educator.educatorId;
-        axios.get<Educator>(`http://localhost:8080/educator/${edId}`)
+        axios.get<Educator>(`${backendUrl}/educator/${edId}`)
             .then((res) => {
                 setEducator(res.data);
             })

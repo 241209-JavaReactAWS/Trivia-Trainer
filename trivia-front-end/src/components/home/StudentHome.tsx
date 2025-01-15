@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"
 import { Course } from "../interfaces/Course";
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 function StudentHome() {
 
   // Show all the quizzes 
@@ -27,7 +28,7 @@ function StudentHome() {
 
   // Get all enrolled courses whenever the page is loaded. 
   useEffect(() => {
-    axios.get<Course[]>("http://localhost:8080/courses")
+    axios.get<Course[]>(`${backendUrl}/courses`)
       .then((res) => {
         setAllCourses(res.data)
         console.log("Populated enrolled courses successfully")
