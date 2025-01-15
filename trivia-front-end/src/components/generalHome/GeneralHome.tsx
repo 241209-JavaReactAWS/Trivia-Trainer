@@ -15,7 +15,7 @@ function GeneralHome() {
     const [visibleCourses, setVisibleCourses] = useState<Course[]>([])
     const [showResCourses, setShowResCourses] = useState<boolean>(false);
     
-    const [currentStudent, setCurrentStudent] = useState<number>(+localStorage.getItem("student_id"))
+    const [currentStudent, setCurrentStudent] = useState<number>(+!localStorage.getItem("student_id"))
 
     
     const navigate = useNavigate();
